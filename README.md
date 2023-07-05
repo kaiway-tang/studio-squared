@@ -1,1 +1,1 @@
-# studio-squared
+# Studio Squared
