@@ -4,18 +4,32 @@ using UnityEngine;
 
 public class MobileEntity : HPEntity
 {
+    [SerializeField] Transform baseTrfm;
     [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] TerrainTrigger[] terrainTriggers;
     bool facingDirection;
-    const bool RIGHT = false, LEFT = true;
+    protected const bool RIGHT = false, LEFT = true;
 
-    Vector2 vect2; //cache a vector2 variable to avoid calling "new"
+    static Vector2 vect2; //cache a vector2 variable to avoid calling "new"
+    static Vector3 vect3;
     
     protected new void Start()
     {
         base.Start();
     }
 
+    protected void SetFacing(bool direction)
+    {
+        if (direction != facingDirection)
+        {
+            vect3 = baseTrfm.localScale;
+            vect3.x *= -1;
 
+            baseTrfm.localScale = vect3;
+
+            facingDirection = direction;
+        }
+    }
     protected bool IsFacingRight()
     {
         return !facingDirection;
@@ -33,14 +47,12 @@ public class MobileEntity : HPEntity
 
         rb.velocity = vect2;
     }
-
     void AddXVelocity(float amount)
     {
         vect2.x = amount;
         vect2.y = 0;
         rb.velocity += vect2;
     }
-
     protected void AddXVelocity(float amount, float max)
     {
         if (amount > 0)
@@ -66,7 +78,6 @@ public class MobileEntity : HPEntity
             }
         }
     }
-
     protected void AddForwardXVelocity(float amount, float max)
     {
         if (IsFacingLeft()) { amount *= -1; max *= -1; }
@@ -80,7 +91,6 @@ public class MobileEntity : HPEntity
 
         rb.velocity = vect2;
     }
-
     protected void AddYVelocity(float amount)
     {
         vect2.x = 0;
@@ -88,7 +98,6 @@ public class MobileEntity : HPEntity
 
         rb.velocity += vect2;
     }
-
     protected void AddYVelocity(float amount, float max)
     {
         if (amount > 0)
@@ -115,6 +124,7 @@ public class MobileEntity : HPEntity
         }
     }
 
+
     protected void ApplyXFriction(float amount)
     {
         if (Mathf.Abs(rb.velocity.x) < amount)
@@ -132,5 +142,10 @@ public class MobileEntity : HPEntity
                 AddXVelocity(amount);
             }
         }
+    }
+
+    protected bool IsOnGround()
+    {
+        return terrainTriggers[0].isTouching > 0;
     }
 }
