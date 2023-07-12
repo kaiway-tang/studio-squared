@@ -29,4 +29,14 @@ public class HPEntity : MonoBehaviour
             //Die
         }
     }
+
+    public void Heal(int amount, bool overheal = false)
+    {
+        HP += amount;
+
+        if (HP > maxHP && !overheal)
+        {
+            HP = maxHP;
+        }
+    }
 }
