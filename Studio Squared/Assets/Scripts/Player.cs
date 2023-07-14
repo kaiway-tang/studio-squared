@@ -5,13 +5,14 @@ using UnityEngine;
 public class Player : MobileEntity
 {
     [SerializeField] SimpleAnimator attackAnimator;
+    [SerializeField] Attack basicAttack;
 
     [SerializeField] float
         groundedAcceleration, aerialAcceleration, maxSpeed,
         groundedFriction, aerialFriction,
         jumpPower;
 
-    int remainingJumps;
+    [SerializeField] int remainingJumps;
 
     private void Awake()
     {
@@ -41,6 +42,9 @@ public class Player : MobileEntity
         if (Input.GetKeyDown(KeyCode.U))
         {
             attackAnimator.Play();
+
+            if (IsFacingLeft()) { basicAttack.Activate(1, 5); }
+            else { basicAttack.Activate(0, 5); }
         }
     }
 

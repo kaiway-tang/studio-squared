@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class MobileEntity : HPEntity
 {
-    [SerializeField] Transform baseTrfm;
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] TerrainTrigger[] terrainTriggers;
+    [SerializeField] float knockbackFactor = 1;
+
     bool facingDirection;
     protected const bool RIGHT = false, LEFT = true;
 
     static Vector2 vect2; //cache a vector2 variable to avoid calling "new"
-    static Vector3 vect3;
+    static Vector3 vect3; // ^
     
     protected new void Start()
     {
@@ -22,10 +23,10 @@ public class MobileEntity : HPEntity
     {
         if (direction != facingDirection)
         {
-            vect3 = baseTrfm.localScale;
+            vect3 = trfm.localScale;
             vect3.x *= -1;
 
-            baseTrfm.localScale = vect3;
+            trfm.localScale = vect3;
 
             facingDirection = direction;
         }
@@ -147,5 +148,18 @@ public class MobileEntity : HPEntity
     protected bool IsOnGround()
     {
         return terrainTriggers[0].isTouching > 0;
+    }
+
+
+    public override int TakeDamage(int amount, Vector2 knockback, EntityType entitySource = EntityType.Neutral, int attackID = 0)
+    {
+        int result = base.TakeDamage(amount, knockback, entitySource, attackID);
+
+        if (result == ALIVE)
+        {
+            rb.velocity = knockback * knockbackFactor;
+        }
+
+        return result;
     }
 }

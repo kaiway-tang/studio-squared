@@ -2,42 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class Attack : Hitbox
 {
-    [SerializeField] protected int damage;
-    [SerializeField] protected HPEntity.EntityType entityType;
-    public Transform trfm;
-    [SerializeField] Collider2D hitbox;
+    [SerializeField] Vector2[] knockbacks;
+    const int RIGHT = 0, LEFT = 1;
+    int knockbackIndex;
 
-    protected int takeDamageResult, attackID;
-
-    static int attackIDDistributor;
-
-    public void Activate(bool staticHitbox = false) //static hitboxes can damage opponents multiple times if they exit and re-enter the hitbox
+    // Start is called before the first frame update
+    public void Activate(int knockbackDirection = 0, int p_duration = 0)
     {
-        hitbox.enabled = true;
-
-        if (staticHitbox)
-        {
-            attackID = 0;
-        }
-        else
-        {
-            attackIDDistributor++;
-            attackID = attackIDDistributor;
-        }
+        knockbackIndex = knockbackDirection;
+        base.Activate(p_duration);
     }
 
-    public void Deactivate()
+    protected new void FixedUpdate()
     {
-        hitbox.enabled = false;
+        base.FixedUpdate();
     }
 
-    protected void OnTriggerEnter2D(Collider2D col)
+    protected new void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log("hit: " + col.gameObject);
+
         if (col.gameObject.layer == 9)
         {
-            takeDamageResult = col.GetComponent<HPEntity>().TakeDamage(damage, entityType, attackID);   
+            takeDamageResult = col.GetComponent<HPEntity>().TakeDamage(damage, knockbacks[knockbackIndex], entityType, attackID);
             return;
         }
         takeDamageResult = HPEntity.IGNORED;

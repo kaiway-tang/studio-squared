@@ -18,11 +18,14 @@ public class HPEntity : MonoBehaviour
     protected void Start()
     {
         if (HP == 0) { HP = maxHP; }
-
-        trackedAttackIDs = new int[3];
     }
 
-    public int TakeDamage(int amount, EntityType entitySource, int attackID)
+    public virtual int TakeDamage(int amount, Vector2 knockback, EntityType entitySource = EntityType.Neutral, int attackID = 0)
+    {
+        return TakeDamage(amount, entitySource, attackID);
+    }
+
+    public int TakeDamage(int amount, EntityType entitySource = EntityType.Neutral, int attackID = 0)
     {
         if (entitySource == entityType || !ValidAttackID(attackID)) { return IGNORED; }
 
@@ -36,7 +39,7 @@ public class HPEntity : MonoBehaviour
         return ALIVE;
     }
 
-    int[] trackedAttackIDs;
+    int[] trackedAttackIDs = new int[3];
     int latestAttackIDIndex;
     bool ValidAttackID(int attackID) //returns False if attackID is found, True otherwise; also handles attackID tracking
     {
