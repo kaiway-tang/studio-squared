@@ -22,6 +22,7 @@ public class BasicEnemy : MobileEntity
 
     //movement
     [SerializeField] private float movementSpeed;
+    [SerializeField] private float maxSpeed;
 
         
     protected new void Start()
@@ -56,13 +57,15 @@ public class BasicEnemy : MobileEntity
 
     private void UpdateWalkingState(){
         groundDetected = IsOnGround();
-        wallDetected = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance);//, whatIsGround);
-
-        if(groundDetected || wallDetected){ //flip enemy
+        wallDetected = false;//Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance);//, whatIsGround);
+        Debug.Log(groundDetected);
+        if(!groundDetected || wallDetected){ //flip enemy
             SetFacing(!IsFacingLeft()); //right = false, so if isfacingleft we want to go to right (aka false), and if facing right we want to go left (aka true)
         }
         else{ //move enemy
-            SetXVelocity(movementSpeed);
+            //SetXVelocity(movementSpeed, maxSpeed);
+            var speed = movementSpeed;
+            AddForwardXVelocity(speed, maxSpeed);
         }
         
         
