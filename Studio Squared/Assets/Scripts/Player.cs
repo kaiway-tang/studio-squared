@@ -12,7 +12,9 @@ public class Player : MobileEntity
         groundedFriction, aerialFriction,
         jumpPower;
 
-    [SerializeField] int remainingJumps;
+    int remainingJumps, flipLocked;
+
+    int slashCooldown;
 
     private void Awake()
     {
@@ -28,23 +30,37 @@ public class Player : MobileEntity
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (IsOnGround())
-            {
-                Jump();
-            }
-            else if (remainingJumps > 0)
-            {
-                Jump();
-                remainingJumps--;
-            }
+            DoJump();
         }
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            attackAnimator.Play();
+            DoAttack();
+        }
+    }
 
-            if (IsFacingLeft()) { basicAttack.Activate(1, 5); }
-            else { basicAttack.Activate(0, 5); }
+    void DoAttack()
+    {
+        if (slashCooldown > 0) { return; }
+        attackAnimator.Play();
+
+        if (IsFacingLeft()) { basicAttack.Activate(1, 16); }
+        else { basicAttack.Activate(0, 16); }
+
+        LockFacing(18);
+        slashCooldown = 25;
+    }
+
+    void DoJump()
+    {
+        if (IsOnGround())
+        {
+            Jump();
+        }
+        else if (remainingJumps > 0)
+        {
+            Jump();
+            remainingJumps--;
         }
     }
 
@@ -57,6 +73,13 @@ public class Player : MobileEntity
         }
 
         HandleHorizontalMovement();
+        DecrementTimers();
+    }
+
+    void DecrementTimers()
+    {
+        if (flipLocked > 0) { flipLocked--; }
+        if (slashCooldown > 0) { slashCooldown--; }
     }
 
     float ActiveAcceleration() //can modify later to handle speed/slow effects
@@ -98,5 +121,20 @@ public class Player : MobileEntity
         {
             SetYVelocity(jumpPower);
         }
+    }
+
+    public Vector2 GetPredictedPosition(float time)
+    {
+        return trfm.position;
+    }
+
+    new void SetFacing(bool direction)
+    {
+        if (flipLocked < 1) { base.SetFacing(direction); }
+    }
+
+    void LockFacing(int duration)
+    {
+        if (flipLocked < duration) { flipLocked = duration; }
     }
 }

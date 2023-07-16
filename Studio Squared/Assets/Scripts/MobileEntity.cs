@@ -19,6 +19,11 @@ public class MobileEntity : HPEntity
         base.Start();
     }
 
+    protected void FlipFacing()
+    {
+        SetFacing(!facingDirection);
+    }
+
     protected void SetFacing(bool direction)
     {
         if (direction != facingDirection)

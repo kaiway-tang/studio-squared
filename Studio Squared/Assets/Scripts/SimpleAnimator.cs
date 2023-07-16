@@ -21,18 +21,18 @@ public class SimpleAnimator : MonoBehaviour
             if (timer > 0)
             {
                 timer--;
-            }
-            else
-            {
-                timer = ticksPerFrame;
-                currentSprite++;
-                if (currentSprite == sprites.Length)
+                if (timer <= 0)
                 {
-                    spriteRenderer.sprite = null;
-                }
-                else
-                {
-                    spriteRenderer.sprite = sprites[currentSprite];
+                    timer = ticksPerFrame;
+                    currentSprite++;
+                    if (currentSprite == sprites.Length)
+                    {
+                        spriteRenderer.sprite = null;
+                    }
+                    else
+                    {
+                        spriteRenderer.sprite = sprites[currentSprite];
+                    }
                 }
             }
         }
