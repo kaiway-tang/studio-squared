@@ -5,7 +5,7 @@ using UnityEngine;
 public class MobileEntity : HPEntity
 {
     [SerializeField] protected Rigidbody2D rb;
-    [SerializeField] TerrainTrigger[] terrainTriggers;
+    [SerializeField] protected TerrainTrigger[] terrainTriggers;
     [SerializeField] float knockbackFactor = 1;
 
     bool facingDirection;

@@ -6,7 +6,7 @@ public class BasicEnemy : MobileEntity
 {
 
     //state machine 
-    private enum State
+    public enum State
     {
         Walking,
         Knockback,
@@ -17,8 +17,8 @@ public class BasicEnemy : MobileEntity
 
     //wall & ground detection
     private bool wallDetected, groundDetected;
-    [SerializeField] private float wallCheckDistance; //groundCheckDistance, 
-    [SerializeField] private Transform groundCheck, wallCheck;
+    //[SerializeField] private float wallCheckDistance; //groundCheckDistance, 
+    //[SerializeField] private Transform groundCheck, wallCheck;
 
     //movement
     [SerializeField] private float movementSpeed;
@@ -33,6 +33,73 @@ public class BasicEnemy : MobileEntity
 
 
     private void Update() {
+        DoSwitch();
+        DoUpdate();
+    }
+
+    //Walking------------------------
+
+    protected virtual void EnterWalkingState(){
+
+    }
+
+    protected virtual void UpdateWalkingState(){
+        groundDetected = IsOnGround();
+        wallDetected = IsTouchingWall();//false;//Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance);//, whatIsGround);
+        Debug.Log(groundDetected);
+        if(!groundDetected || wallDetected){ //flip enemy
+            SetFacing(!IsFacingLeft()); //right = false, so if isfacingleft we want to go to right (aka false), and if facing right we want to go left (aka true)
+        }
+        else{ //move enemy
+            //SetXVelocity(movementSpeed, maxSpeed);
+            var speed = movementSpeed;
+            AddForwardXVelocity(speed, maxSpeed);
+        }
+        
+        
+
+    }
+
+    protected virtual void ExitWalkingState(){
+
+    }
+
+
+    //knockback----------------------
+
+
+    protected virtual void EnterKnockbackState(){
+
+    }
+
+    protected virtual void UpdateKnockbackState(){
+
+    }
+
+    protected virtual void ExitKnockbackState(){
+        
+    }
+
+    //dead---------------------------
+
+    
+    protected virtual void EnterDeadState(){
+
+    }
+
+    protected virtual void UpdateDeadState(){
+
+    }
+
+    protected virtual void ExitDeadState(){
+        
+    }
+
+
+
+    //functions-----------------------
+
+    protected virtual void DoSwitch(){
         switch(currentState){
             case State.Walking:
                 UpdateWalkingState();
@@ -49,69 +116,12 @@ public class BasicEnemy : MobileEntity
         }
     }
 
-    //Walking------------------------
-
-    private void EnterWalkingState(){
-
-    }
-
-    private void UpdateWalkingState(){
-        groundDetected = IsOnGround();
-        wallDetected = false;//Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance);//, whatIsGround);
-        Debug.Log(groundDetected);
-        if(!groundDetected || wallDetected){ //flip enemy
-            SetFacing(!IsFacingLeft()); //right = false, so if isfacingleft we want to go to right (aka false), and if facing right we want to go left (aka true)
-        }
-        else{ //move enemy
-            //SetXVelocity(movementSpeed, maxSpeed);
-            var speed = movementSpeed;
-            AddForwardXVelocity(speed, maxSpeed);
-        }
-        
-        
-
-    }
-
-    private void ExitWalkingState(){
-
+    protected virtual void DoUpdate(){
+        //Put anything else you need to be done on update here
     }
 
 
-    //knockback----------------------
-
-
-    private void EnterKnockbackState(){
-
-    }
-
-    private void UpdateKnockbackState(){
-
-    }
-
-    private void ExitKnockbackState(){
-        
-    }
-
-    //dead---------------------------
-
-    
-    private void EnterDeadState(){
-
-    }
-
-    private void UpdateDeadState(){
-
-    }
-
-    private void ExitDeadState(){
-        
-    }
-
-
-
-    //functions-----------------------
-
-    private void SwitchState(State state){
+    protected virtual void SwitchState(State state){
         switch(currentState){
             case State.Walking:
                 ExitWalkingState();
@@ -142,5 +152,12 @@ public class BasicEnemy : MobileEntity
                 break;
         }
         currentState = state;
+    }
+
+
+
+    protected bool IsTouchingWall()
+    {
+        return terrainTriggers[1].isTouching > 0;
     }
 }
