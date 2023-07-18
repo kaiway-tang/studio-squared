@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FiniteStateMachine : MonoBehaviour
+//https://youtu.be/UeNKl5HZI3o
+public class FiniteStateMachine
 {
 
     public State currentState{get; private set;}
