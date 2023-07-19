@@ -260,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108521131}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.41, y: 1.29, z: -0.016140468}
+  m_LocalPosition: {x: 8.35, y: -2.65, z: -0.016140468}
   m_LocalScale: {x: 0.42611402, y: 2.9389915, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -472,12 +472,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171261183}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.039074, y: -2.26, z: 0}
+  m_LocalPosition: {x: -8.7, y: -2.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 711550762}
   - {fileID: 762310785}
+  - {fileID: 926421982}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -502,9 +503,10 @@ MonoBehaviour:
   - {fileID: 711550759}
   - {fileID: 762310782}
   knockbackFactor: 1
-  isTouchingGround: 0
-  isTouchingWall: 0
+  baseData: {fileID: 11400000, guid: 52804de9c50a7d44fba6d749b4ffb172, type: 2}
+  playerCheck: {fileID: 926421982}
   moveStateData: {fileID: 11400000, guid: 15a1985f6e5e6c3468bef23cf03d5d08, type: 2}
+  playerDetectedData: {fileID: 11400000, guid: 9cf4ce92ce9ae0348aa9bb341d5a018e, type: 2}
 --- !u!1 &265250565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,7 +1354,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711550758}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.042, y: -0.657, z: 0}
+  m_LocalPosition: {x: 1.023, y: -0.721, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1732,6 +1734,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1809672611}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &926421981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 926421982}
+  m_Layer: 0
+  m_Name: PlayerCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &926421982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926421981}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.566, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 171261188}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &953758846
 GameObject:
@@ -2658,7 +2691,7 @@ GameObject:
   - component: {fileID: 2068461952}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
