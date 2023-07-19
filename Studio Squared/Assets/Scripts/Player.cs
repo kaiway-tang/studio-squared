@@ -10,11 +10,11 @@ public class Player : MobileEntity
     [SerializeField] float
         groundedAcceleration, aerialAcceleration, maxSpeed,
         groundedFriction, aerialFriction,
-        jumpPower;
+        jumpPower, wallJumpSpeed;
 
     int remainingJumps, flipLocked;
 
-    int slashCooldown;
+    int wallKickWindow, slashCooldown;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class Player : MobileEntity
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            DoJump();
+            JumpPressed();
         }
 
         if (Input.GetKeyDown(KeyCode.U))
@@ -51,7 +51,16 @@ public class Player : MobileEntity
         slashCooldown = 25;
     }
 
-    void DoJump()
+    void JumpPressed()
+    {
+        wallKickWindow = 4;
+        if (!HandleWallKickInput())
+        {
+            AttemptJump();
+        }
+    }
+
+    void AttemptJump()
     {
         if (IsOnGround())
         {
@@ -61,6 +70,48 @@ public class Player : MobileEntity
         {
             Jump();
             remainingJumps--;
+        }
+    }
+
+    bool HandleWallKickInput()
+    {
+        if (Input.GetKey(KeyCode.D))
+        {
+            if (!Input.GetKey(KeyCode.A))
+            {
+                if (TerrainTriggerTouching(2))
+                {
+                    WallJump(RIGHT);
+                    return true;
+                }
+            }
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            if (TerrainTriggerTouching(1))
+            {
+                WallJump(LEFT);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void WallJump(bool direction)
+    {
+        if (wallKickWindow > 0)
+        {
+            remainingJumps++;
+            wallKickWindow = 0;
+        }
+        
+        Jump();
+        if (direction == RIGHT)
+        {
+            AddXVelocity(99, wallJumpSpeed);
+        } else
+        {
+            AddXVelocity(-99, -wallJumpSpeed);
         }
     }
 
@@ -80,6 +131,11 @@ public class Player : MobileEntity
     {
         if (flipLocked > 0) { flipLocked--; }
         if (slashCooldown > 0) { slashCooldown--; }
+        if (wallKickWindow > 0)
+        {
+            HandleWallKickInput();
+            wallKickWindow--;
+        }
     }
 
     float ActiveAcceleration() //can modify later to handle speed/slow effects
@@ -100,19 +156,25 @@ public class Player : MobileEntity
         {
             if (!Input.GetKey(KeyCode.A))
             {
-                AddXVelocity(ActiveAcceleration(), maxSpeed);
+                if (!AddXVelocity(ActiveAcceleration(), maxSpeed))
+                {
+                    ApplyXFriction(ActiveFriction());
+                }
                 SetFacing(RIGHT);
+                return;
             }
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            AddXVelocity(-ActiveAcceleration(), -maxSpeed);
+            if (!AddXVelocity(-ActiveAcceleration(), -maxSpeed))
+            {
+                ApplyXFriction(ActiveFriction());
+            }
             SetFacing(LEFT);
+            return;
         }
-        else
-        {
-            ApplyXFriction(ActiveFriction());
-        }
+
+        ApplyXFriction(ActiveFriction());
     }
 
     void Jump()

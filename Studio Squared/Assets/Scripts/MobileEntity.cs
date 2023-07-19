@@ -6,6 +6,7 @@ public class MobileEntity : HPEntity
 {
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected TerrainTrigger[] terrainTriggers;
+    [SerializeField] Transform reflectionTrfm;
     [SerializeField] float knockbackFactor = 1;
 
     bool facingDirection;
@@ -17,6 +18,8 @@ public class MobileEntity : HPEntity
     protected new void Start()
     {
         base.Start();
+
+        if (!reflectionTrfm) { reflectionTrfm = trfm; }
     }
 
     protected void FlipFacing()
@@ -28,10 +31,10 @@ public class MobileEntity : HPEntity
     {
         if (direction != facingDirection)
         {
-            vect3 = trfm.localScale;
+            vect3 = reflectionTrfm.localScale;
             vect3.x *= -1;
 
-            trfm.localScale = vect3;
+            reflectionTrfm.localScale = vect3;
 
             facingDirection = direction;
         }
@@ -59,10 +62,11 @@ public class MobileEntity : HPEntity
         vect2.y = 0;
         rb.velocity += vect2;
     }
-    protected void AddXVelocity(float amount, float max)
+    protected bool AddXVelocity(float amount, float max)
     {
         if (amount > 0)
         {
+            if (rb.velocity.x > max) { return false; }
             if (rb.velocity.x + amount > max)
             {
                 SetXVelocity(max);
@@ -74,6 +78,7 @@ public class MobileEntity : HPEntity
         }
         else
         {
+            if (rb.velocity.x < max) { return false; }
             if (rb.velocity.x + amount < max)
             {
                 SetXVelocity(max);
@@ -83,6 +88,8 @@ public class MobileEntity : HPEntity
                 AddXVelocity(amount);
             }
         }
+
+        return true;
     }
     protected void AddForwardXVelocity(float amount, float max)
     {
@@ -108,6 +115,7 @@ public class MobileEntity : HPEntity
     {
         if (amount > 0)
         {
+            if (rb.velocity.y > max) { return; }
             if (rb.velocity.y + amount > max)
             {
                 SetYVelocity(max);
@@ -119,6 +127,7 @@ public class MobileEntity : HPEntity
         }
         else
         {
+            if (rb.velocity.y < max) { return; }
             if (rb.velocity.y + amount < max)
             {
                 SetYVelocity(max);
@@ -153,6 +162,11 @@ public class MobileEntity : HPEntity
     protected bool IsOnGround()
     {
         return terrainTriggers[0].isTouching > 0;
+    }
+
+    protected bool TerrainTriggerTouching(int index)
+    {
+        return terrainTriggers[index].isTouching > 0;
     }
 
 

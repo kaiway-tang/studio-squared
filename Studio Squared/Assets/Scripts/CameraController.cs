@@ -27,15 +27,15 @@ public class CameraController : MonoBehaviour
     {
         if (mode == TRACKING_PLAYER)
         {
-            TrackTarget(GameManager.playerTrfm);
+            TrackTarget(GameManager.playerTrfm.position + Vector3.up);
         }
     }
 
     float xDiff, yDiff;
-    void TrackTarget(Transform target)
+    void TrackTarget(Vector2 targetPos)
     {
-        xDiff = target.position.x - trfm.position.x;
-        yDiff = target.position.y - trfm.position.y;
+        xDiff = targetPos.x - trfm.position.x;
+        yDiff = targetPos.y - trfm.position.y;
 
         if (Mathf.Abs(xDiff) > deadzoneDimensions.x)
         {
@@ -64,5 +64,10 @@ public class CameraController : MonoBehaviour
         vect3.z = 0;
 
         trfm.position += vect3;
+    }
+
+    public static void AddDirectionalTrauma(int amount, Vector2 direction)
+    {
+
     }
 }
