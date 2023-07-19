@@ -15,7 +15,12 @@ public class BasicEnemy1_Move : MoveState
 
     public override void LogicUpdate()
     {
-        if ((!entity.isTouchingGround || entity.isTouchingWall) && flipCooldown <= 0)
+        base.LogicUpdate();
+        if (isPlayerInMinAggroRange)
+        {
+            stateMachine.ChangeState(enemy.playerDetectedState);
+        }
+        if ((!isTouchingGround || isTouchingWall) && flipCooldown <= 0)
         {
             entity.Flip();
             flipCooldown = 0.25f;
@@ -26,6 +31,7 @@ public class BasicEnemy1_Move : MoveState
 
     public override void PhysicsUpdate()
     {
+        base.PhysicsUpdate();
         entity.AddForwardVelocity(stateData.moveSpeed, stateData.maxSpeed);
     }
 

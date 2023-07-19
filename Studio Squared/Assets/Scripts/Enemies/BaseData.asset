@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cf71e2418afcb549a65433cdf0b3035, type: 3}
-  m_Name: BasicEnemy1_Move
+  m_Script: {fileID: 11500000, guid: 77f6588c9802f1a4da88b31b039295ff, type: 3}
+  m_Name: BaseData
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  maxSpeed: 5
+  maxAggroDistance: 10
+  minAggroDistance: 5
+  attackDistance: 1

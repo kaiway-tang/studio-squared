@@ -7,11 +7,10 @@ public class StateEntity : MobileEntity
 
     public FiniteStateMachine stateMachine;
 
+    [SerializeField] protected D_StateEntity baseData;
 
-    //wall/ground
-    public bool isTouchingGround;
-    public bool isTouchingWall;
-
+    //detect player
+    [SerializeField] private Transform playerCheck;
 
     protected virtual void Start(){
         base.Start();
@@ -26,13 +25,16 @@ public class StateEntity : MobileEntity
     protected virtual void FixedUpdate()
     {
         stateMachine.currentState.PhysicsUpdate();
-        isTouchingGround = IsOnGround();
-        isTouchingWall = IsTouchingWall();
     }
 
-    protected bool IsTouchingWall()
+    public bool IsTouchingWall()
     {
         return terrainTriggers[1].isTouching > 0;
+    }
+ 
+    public bool IsTouchingGround()
+    {
+        return IsOnGround();
     }
 
     public void Flip()
@@ -45,4 +47,32 @@ public class StateEntity : MobileEntity
         AddForwardXVelocity(x, y);
     }
 
+    public virtual bool CheckPlayerInMaxAggroRange()
+    {
+        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right, baseData.maxAggroDistance);
+        if(res.transform.tag == "Player")
+        {
+            Debug.Log("Saw Player");
+            return true;
+        }
+        return false;
+    }
+
+    public virtual bool CheckPlayerInMinAggroRange()
+    {
+        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right, baseData.minAggroDistance);
+        Debug.Log(res.transform.name);
+        if (res.transform.tag == "Player")
+        {
+            Debug.Log("Saw Player");
+            return true;
+        }
+        return false;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, transform.right * baseData.minAggroDistance);
+    }
 }
