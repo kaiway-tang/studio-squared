@@ -13,8 +13,11 @@ public class Player : MobileEntity
         jumpPower, wallJumpSpeed;
 
     int remainingJumps, flipLocked;
+    bool refundableJump;
 
-    int wallKickWindow, slashCooldown;
+    [SerializeField] int wallKickWindow, slashCooldown;
+    [SerializeField] TrailRenderer wallJumpTrail;
+    int trailTimer;
 
     private void Awake()
     {
@@ -53,9 +56,9 @@ public class Player : MobileEntity
 
     void JumpPressed()
     {
-        wallKickWindow = 4;
         if (!HandleWallKickInput())
         {
+            wallKickWindow = 5;
             AttemptJump();
         }
     }
@@ -69,6 +72,7 @@ public class Player : MobileEntity
         else if (remainingJumps > 0)
         {
             Jump();
+            refundableJump = true;
             remainingJumps--;
         }
     }
@@ -99,9 +103,16 @@ public class Player : MobileEntity
 
     void WallJump(bool direction)
     {
+        wallJumpTrail.emitting = true;
+        trailTimer = 15;
+
         if (wallKickWindow > 0)
         {
-            remainingJumps++;
+            if (refundableJump)
+            {
+                remainingJumps++;
+                refundableJump = false;
+            }
             wallKickWindow = 0;
         }
         
@@ -131,10 +142,24 @@ public class Player : MobileEntity
     {
         if (flipLocked > 0) { flipLocked--; }
         if (slashCooldown > 0) { slashCooldown--; }
+
         if (wallKickWindow > 0)
         {
-            HandleWallKickInput();
             wallKickWindow--;
+            HandleWallKickInput();
+            if (wallKickWindow == 0)
+            {
+                refundableJump = false;
+            }
+        }
+
+        if (trailTimer > 0)
+        {
+            trailTimer--;
+            if (trailTimer == 0)
+            {
+                wallJumpTrail.emitting = false;
+            }
         }
     }
 

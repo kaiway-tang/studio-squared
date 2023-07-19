@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attack : Hitbox
 {
     [SerializeField] Vector2[] knockbacks;
+    [SerializeField] int traumaAmount;
     const int RIGHT = 0, LEFT = 1;
     int knockbackIndex;
 
@@ -27,6 +28,7 @@ public class Attack : Hitbox
         if (col.gameObject.layer == 9)
         {
             takeDamageResult = col.GetComponent<HPEntity>().TakeDamage(damage, knockbacks[knockbackIndex], entityType, attackID);
+            CameraController.SetTrauma(traumaAmount);
             return;
         }
         takeDamageResult = HPEntity.IGNORED;
