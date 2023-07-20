@@ -179,7 +179,7 @@ public class Player : MobileEntity
     
         if (inputVector.x  == 1)
         {
-            Debug.Log("right");
+
             if (inputVector.x  != -1)
             {
                 if (!AddXVelocity(ActiveAcceleration(), maxSpeed))
