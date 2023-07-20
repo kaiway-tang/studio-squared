@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
     {
         if (mode == TRACKING_PLAYER)
         {
-            TrackTarget(GameManager.playerTrfm.position + Vector3.up);
+             TrackTarget(GameManager.playerTrfm.position + Vector3.up);
         }
 
         ProcessTrauma();

@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class Player : MobileEntity
 {
     [SerializeField] SimpleAnimator attackAnimator;
     [SerializeField] Attack basicAttack;
-
+    
     [SerializeField] float
         groundedAcceleration, aerialAcceleration, maxSpeed,
         groundedFriction, aerialFriction,
@@ -14,35 +15,30 @@ public class Player : MobileEntity
 
     int remainingJumps, flipLocked;
     bool refundableJump;
+    private PlayerInput playerInput; 
+    private InputAction moveaAction;
 
     [SerializeField] int wallKickWindow, slashCooldown;
     [SerializeField] TrailRenderer wallJumpTrail;
     int trailTimer;
+    private Vector2 inputVector;
 
     private void Awake()
     {
+        playerInput = GetComponent<PlayerInput>();
         GameManager.playerTrfm = trfm;
+        moveaAction = playerInput.actions["Move"];
     }
 
     new void Start()
     {
         base.Start();
     }
+   
+   
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            JumpPressed();
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            DoAttack();
-        }
-    }
-
-    void DoAttack()
+    
+    private void OnAttack ()  
     {
         if (slashCooldown > 0) { return; }
         attackAnimator.Play();
@@ -54,7 +50,7 @@ public class Player : MobileEntity
         slashCooldown = 25;
     }
 
-    void JumpPressed()
+    private void OnJump()
     {
         if (!HandleWallKickInput())
         {
@@ -79,9 +75,11 @@ public class Player : MobileEntity
 
     bool HandleWallKickInput()
     {
-        if (Input.GetKey(KeyCode.D))
+        inputVector = moveaAction.ReadValue<Vector2>();
+
+        if (inputVector.x ==1f)
         {
-            if (!Input.GetKey(KeyCode.A))
+            if (inputVector.x !=-1f)
             {
                 if (TerrainTriggerTouching(2))
                 {
@@ -90,7 +88,7 @@ public class Player : MobileEntity
                 }
             }
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (inputVector.x ==-1f)
         {
             if (TerrainTriggerTouching(1))
             {
@@ -133,7 +131,6 @@ public class Player : MobileEntity
         {
             remainingJumps = 1;
         }
-
         HandleHorizontalMovement();
         DecrementTimers();
     }
@@ -177,9 +174,13 @@ public class Player : MobileEntity
 
     void HandleHorizontalMovement()
     {
-        if (Input.GetKey(KeyCode.D))
+        
+        inputVector = moveaAction.ReadValue<Vector2>();
+    
+        if (inputVector.x  == 1)
         {
-            if (!Input.GetKey(KeyCode.A))
+            Debug.Log("right");
+            if (inputVector.x  != -1)
             {
                 if (!AddXVelocity(ActiveAcceleration(), maxSpeed))
                 {
@@ -189,7 +190,7 @@ public class Player : MobileEntity
                 return;
             }
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (inputVector.x  == -1)
         {
             if (!AddXVelocity(-ActiveAcceleration(), -maxSpeed))
             {
@@ -201,6 +202,7 @@ public class Player : MobileEntity
 
         ApplyXFriction(ActiveFriction());
     }
+    
 
     void Jump()
     {
