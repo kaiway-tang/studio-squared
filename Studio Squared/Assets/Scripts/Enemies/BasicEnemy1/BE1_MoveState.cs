@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicEnemy1_Move : MoveState
+public class BE1_MoveState : MoveState
 {
     private BasicEnemy1 enemy;
     private float flipCooldown;
 
     protected bool isPlayerInMaxAggroRange;
 
-    public BasicEnemy1_Move(StateEntity entity, FiniteStateMachine stateMachine, D_MoveState stateData, BasicEnemy1 enemy) : base(entity, stateMachine, stateData)
+    public BE1_MoveState(StateEntity entity, FiniteStateMachine stateMachine, D_MoveState stateData, BasicEnemy1 enemy) : base(entity, stateMachine, stateData)
     {
         this.enemy = enemy;
         flipCooldown = 0;

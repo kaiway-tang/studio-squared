@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BE1_AttackState : AttackState
+{
+
+    BasicEnemy1 enemy;
+
+    public BE1_AttackState(StateEntity entity, FiniteStateMachine stateMachine, D_AttackState stateData, BasicEnemy1 enemy) : base(entity, stateMachine, stateData)
+    {
+        this.enemy = enemy;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        if (!player)
+        {
+            stateMachine.ChangeState(enemy.moveState);
+        }
+        else if (enemy.getCountdownA() <= 0) {
+            Debug.Log("Punch!");
+            enemy.startCountdownA(stateData.cooldown); //done inside entity to prevent "attack cancelling" if player moves out and back in range 
+        }
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+}

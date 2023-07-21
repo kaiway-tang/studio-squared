@@ -38,7 +38,7 @@ public class BE1_PlayerDetectedState : PlayerDetectedState
         this.isTouchingWall = enemy.IsTouchingWall();
         if (this.player) //not equal to null
         {
-            //Debug.Log("SHOULD ATTACK");
+            stateMachine.ChangeState(enemy.attackState);
         }
         else if(!isTouchingGround || isTouchingWall)
         {

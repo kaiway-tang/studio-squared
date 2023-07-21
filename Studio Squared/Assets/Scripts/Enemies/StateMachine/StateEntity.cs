@@ -12,6 +12,8 @@ public class StateEntity : MobileEntity
     //detect player
     [SerializeField] private Transform playerCheck;
 
+    private float timerA; //usually used for attacking
+
     protected virtual void Start(){
         base.Start();
         stateMachine = new FiniteStateMachine();
@@ -19,12 +21,26 @@ public class StateEntity : MobileEntity
 
     protected virtual void Update()
     {
+        timerA -= Time.deltaTime;
         stateMachine.currentState.LogicUpdate();
+        EntityLogicUpdate();
+    }
+    
+
+    public virtual void EntityLogicUpdate()
+    {
+        //pass
     }
 
     protected virtual void FixedUpdate()
     {
         stateMachine.currentState.PhysicsUpdate();
+        EntityPhysicsUpdate();
+    }
+
+    public virtual void EntityPhysicsUpdate()
+    {
+        //pass
     }
 
     public bool IsTouchingWall()
@@ -116,6 +132,17 @@ public class StateEntity : MobileEntity
         }
         return null;
     }
+
+    public virtual void startCountdownA(float startValue)
+    {
+        this.timerA = startValue;
+    }
+
+    public virtual float getCountdownA()
+    {
+        return this.timerA;
+    }
+
 
     void OnDrawGizmosSelected()
     {
