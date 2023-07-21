@@ -15,6 +15,7 @@ public class BasicEnemy1 : StateEntity
         base.Start();
         moveState = new BasicEnemy1_Move(this, stateMachine, moveStateData, this);
         playerDetectedState = new BE1_PlayerDetectedState(this, stateMachine, playerDetectedData, this);
+        Debug.Log(moveState);
         stateMachine.Initialize(moveState);
     }
 }

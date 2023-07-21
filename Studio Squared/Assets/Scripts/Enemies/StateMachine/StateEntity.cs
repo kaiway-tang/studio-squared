@@ -49,25 +49,72 @@ public class StateEntity : MobileEntity
 
     public virtual bool CheckPlayerInMaxAggroRange()
     {
-        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right, baseData.maxAggroDistance);
-        if(res.transform.tag == "Player")
+        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right * transform.localScale.x, baseData.maxAggroDistance);
+        if (res)
         {
-            Debug.Log("Saw Player");
-            return true;
+            Debug.Log(res.transform.name);
+            if (res.transform.tag == "Player")
+            {
+                //Debug.Log("Saw Player");
+                return true;
+            }
         }
         return false;
     }
 
+    public virtual Transform GetPlayerInMaxAggroRange()
+    {
+        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right * transform.localScale.x, baseData.maxAggroDistance);
+        if (res)
+        {
+            if (res.transform.tag == "Player")
+            {
+                return res.transform;
+            }
+        }
+        return null;
+    }
+
+
     public virtual bool CheckPlayerInMinAggroRange()
     {
-        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right, baseData.minAggroDistance);
-        Debug.Log(res.transform.name);
-        if (res.transform.tag == "Player")
+        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right * transform.localScale.x, baseData.minAggroDistance);
+        if (res)
         {
-            Debug.Log("Saw Player");
-            return true;
+            if (res.transform.tag == "Player")
+            {
+                //Debug.Log("Saw Player");
+                return true;
+            }
         }
         return false;
+    }
+
+
+    public virtual Transform GetPlayerInMinAggroRange()
+    {
+        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right * transform.localScale.x, baseData.minAggroDistance);
+        if (res)
+        {
+            if (res.transform.tag == "Player")
+            {
+                return res.transform;
+            }
+        }
+        return null;
+    }
+
+    public virtual Transform GetPlayerInAttackRange()
+    {
+        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right * transform.localScale.x, baseData.attackDistance);
+        if (res)
+        {
+            if (res.transform.tag == "Player")
+            {
+                return res.transform;
+            }
+        }
+        return null;
     }
 
     void OnDrawGizmosSelected()

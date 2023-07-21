@@ -5,7 +5,6 @@ using UnityEngine;
 //https://youtu.be/UeNKl5HZI3o
 public class FiniteStateMachine
 {
-
     public State currentState{get; private set;}
   
     public void Initialize(State startingState){
@@ -14,6 +13,8 @@ public class FiniteStateMachine
     }
 
     public void ChangeState(State newState){
+        Debug.Log("Changing states to");
+        Debug.Log(newState);
         currentState.Exit();
         currentState = newState;
         newState.Enter();

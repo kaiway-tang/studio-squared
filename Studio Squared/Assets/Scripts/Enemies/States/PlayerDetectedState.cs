@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerDetectedState : State
 {
     protected D_PlayerDetected stateData;
-    protected bool playerInMinAggroRange;
-    protected bool playerInMaxAggroRange;
+    //protected bool playerInMinAggroRange;
+    //protected bool playerInMaxAggroRange;
     
     public PlayerDetectedState(StateEntity entity, FiniteStateMachine stateMachine, D_PlayerDetected stateData) : base(entity, stateMachine)
     {
@@ -16,8 +16,8 @@ public class PlayerDetectedState : State
     public override void Enter()
     {
         base.Enter();
-        playerInMinAggroRange = entity.CheckPlayerInMinAggroRange();
-        playerInMaxAggroRange = entity.CheckPlayerInMaxAggroRange();
+        //playerInMinAggroRange = entity.CheckPlayerInMinAggroRange();
+        //playerInMaxAggroRange = entity.CheckPlayerInMaxAggroRange();
     }
 
     public override void Exit()
