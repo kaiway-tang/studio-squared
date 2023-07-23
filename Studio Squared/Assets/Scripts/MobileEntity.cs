@@ -97,6 +97,12 @@ public class MobileEntity : HPEntity
         AddXVelocity(amount, max);
     }
 
+    protected void AddBackwardXVelocity(float amount, float max)
+    {
+        if (IsFacingRight()) { amount *= -1; max *= -1; }
+        AddXVelocity(amount, max);
+    }
+
     protected void SetYVelocity(float value)
     {
         vect2.x = rb.velocity.x;

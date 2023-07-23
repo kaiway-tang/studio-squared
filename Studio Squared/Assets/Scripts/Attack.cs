@@ -25,12 +25,17 @@ public class Attack : Hitbox
     {
         Debug.Log("hit: " + col.gameObject);
 
-        if (col.gameObject.layer == 9)
+        if (col.gameObject.layer > 10 && col.gameObject.layer < 14)
         {
             takeDamageResult = col.GetComponent<HPEntity>().TakeDamage(damage, knockbacks[knockbackIndex], entityType, attackID);
             CameraController.SetTrauma(traumaAmount);
             return;
         }
+        else
+        {
+            
+        }
+
         takeDamageResult = HPEntity.IGNORED;
     }
 }
