@@ -133,6 +133,11 @@ public class StateEntity : MobileEntity
         return null;
     }
 
+    new public void ApplyXFriction(float amount)
+    {
+        base.ApplyXFriction(amount);
+    }
+
     public virtual void startCountdownA(float startValue)
     {
         this.timerA = startValue;
@@ -146,7 +151,7 @@ public class StateEntity : MobileEntity
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.right * baseData.minAggroDistance);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawRay(transform.position, transform.right * baseData.minAggroDistance);
     }
 }

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BE1_AttackState : AttackState
+public class BS1_AttackState : AttackState
 {
 
-    BasicEnemy1 enemy;
+    BasicShooter1 enemy;
 
-    public BE1_AttackState(StateEntity entity, FiniteStateMachine stateMachine, D_AttackState stateData, BasicEnemy1 enemy) : base(entity, stateMachine, stateData)
+    public BS1_AttackState(StateEntity entity, FiniteStateMachine stateMachine, D_AttackState stateData, BasicShooter1 enemy) : base(entity, stateMachine, stateData)
     {
         this.enemy = enemy;
     }
@@ -29,8 +29,9 @@ public class BE1_AttackState : AttackState
         {
             stateMachine.ChangeState(enemy.moveState);
         }
-        else if (enemy.getCountdownA() <= 0) {
-            Debug.Log("Punch!");
+        else if (enemy.getCountdownA() <= 0)
+        {
+            Debug.Log("Shoot!");
             enemy.startCountdownA(stateData.cooldown); //done inside entity to prevent "attack cancelling" if player moves out and back in range 
         }
     }
@@ -38,6 +39,6 @@ public class BE1_AttackState : AttackState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        enemy.ApplyXFriction(10);
+        enemy.ApplyXFriction(10); //friction
     }
 }
