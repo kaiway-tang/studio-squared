@@ -49,14 +49,14 @@ public class MobileEntity : HPEntity
     }
 
 
-    void SetXVelocity(float value)
+    protected void SetXVelocity(float value)
     {
         vect2.x = value;
         vect2.y = rb.velocity.y;
 
         rb.velocity = vect2;
     }
-    void AddXVelocity(float amount)
+    protected void AddXVelocity(float amount)
     {
         vect2.x = amount;
         vect2.y = 0;
@@ -159,6 +159,39 @@ public class MobileEntity : HPEntity
         }
     }
 
+    float magnitude, ratio;
+    protected void ApplyDirectionalFriction(float amount)
+    {
+        if (Mathf.Abs(rb.velocity.x) > 0.0001f || Mathf.Abs(rb.velocity.y) > 0.0001f)
+        {
+            vect2.x = rb.velocity.x;
+            vect2.y = rb.velocity.y;
+            magnitude = vect2.magnitude;
+            ratio = (magnitude - amount) / magnitude;
+
+            if (ratio > 0)
+            {
+                vect2.x = rb.velocity.x * ratio;
+                vect2.y = rb.velocity.y * ratio;
+
+                rb.velocity = vect2;
+            }
+            else
+            {
+                vect2.x = 0;
+                vect2.y = 0;
+
+                rb.velocity = vect2;
+            }
+        }
+        else
+        {
+            vect2.x = 0;
+            vect2.y = 0;
+
+            rb.velocity = vect2;
+        }
+    }
     protected bool IsOnGround()
     {
         return terrainTriggers[0].isTouching > 0;

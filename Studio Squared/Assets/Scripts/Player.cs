@@ -11,17 +11,17 @@ public class Player : MobileEntity
     [SerializeField] float
         groundedAcceleration, aerialAcceleration, maxSpeed,
         groundedFriction, aerialFriction,
-        jumpPower, wallJumpSpeed;
+        jumpPower, wallJumpSpeed, dashSpeed, dashFriction;
 
     int remainingJumps, flipLocked;
     bool refundableJump;
     private PlayerInput playerInput; 
     private InputAction moveaAction;
 
-    [SerializeField] int wallKickWindow, slashCooldown;
+    [SerializeField] int wallKickWindow, slashCooldown, dashCooldown;
     [SerializeField] TrailRenderer wallJumpTrail;
     int trailTimer;
-    private Vector2 inputVector;
+    [SerializeField] private Vector2 inputVector;
 
     private void Awake()
     {
@@ -34,10 +34,48 @@ public class Player : MobileEntity
     {
         base.Start();
     }
-   
-   
 
-    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OnDash();
+        }
+    }
+
+    void OnDash()
+    {
+        if (dashCooldown > 0) { return; }
+
+        rb.velocity = moveaAction.ReadValue<Vector2>() * dashSpeed;
+
+        if (Mathf.Abs(rb.velocity.y) < .01f)
+        {
+            if (Mathf.Abs(rb.velocity.x) < .01f)
+            {
+                if (IsFacingLeft())
+                {
+                    SetXVelocity(-dashSpeed);
+                }
+                else
+                {
+                    SetXVelocity(dashSpeed);
+                }
+            }
+
+            SetYVelocity(8);
+        }
+        else
+        {
+            SetYVelocity(rb.velocity.y * .8f);
+        }
+
+        dashCooldown = 75;
+
+        wallJumpTrail.emitting = true;
+        trailTimer = 10;
+    }
+
     private void OnAttack ()  
     {
         if (slashCooldown > 0) { return; }
@@ -102,7 +140,7 @@ public class Player : MobileEntity
     void WallJump(bool direction)
     {
         wallJumpTrail.emitting = true;
-        trailTimer = 15;
+        trailTimer = 14;
 
         if (wallKickWindow > 0)
         {
@@ -139,6 +177,19 @@ public class Player : MobileEntity
     {
         if (flipLocked > 0) { flipLocked--; }
         if (slashCooldown > 0) { slashCooldown--; }
+        if (dashCooldown > 0)
+        {
+            dashCooldown--;
+            if (dashCooldown < 72 && dashCooldown > 62 && !IsOnGround() && Mathf.Abs(rb.velocity.magnitude) > wallJumpSpeed)
+            {
+                ApplyDirectionalFriction(dashFriction);
+            }
+
+            if (dashCooldown == 50)
+            {
+                dashCooldown = 0;
+            }
+        }
 
         if (wallKickWindow > 0)
         {
