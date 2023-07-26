@@ -130,34 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3234346978196379748, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_Parameters.colorGradient.ctime1
-      value: 13837
-      objectReference: {fileID: 0}
-    - target: {fileID: 3234346978196379748, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3234346978196379748, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3234346978196379748, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3234346978196379748, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3234346978196379748, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3234346978196379748, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.r
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3234346978212411459, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
       propertyPath: m_Name
       value: Player
@@ -205,18 +177,6 @@ PrefabInstance:
     - target: {fileID: 3234346978212411583, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3234346978816412709, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.29803923
-      objectReference: {fileID: 0}
-    - target: {fileID: 3234346978816412709, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.36862746
-      objectReference: {fileID: 0}
-    - target: {fileID: 3234346978816412709, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.26666668
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 075dea39e338e364682c2ddf812f4c2b, type: 3}

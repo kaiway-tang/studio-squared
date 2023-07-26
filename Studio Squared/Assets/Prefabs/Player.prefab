@@ -230,7 +230,7 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 0}
+      key1: {r: 0, g: 0, b: 0, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -238,7 +238,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 65535
+      ctime1: 13837
       ctime2: 0
       ctime3: 0
       ctime4: 0
@@ -361,8 +361,10 @@ MonoBehaviour:
   aerialFriction: 0.5
   jumpPower: 25
   wallJumpSpeed: 25
-  dashSpeed: 50
-  dashFriction: 2.4
+  dashSpeed: 47
+  dashFriction: 8
+  flatYDashVelocity: 0
+  YVelocityFactor: 0.5
   wallKickWindow: 0
   slashCooldown: 0
   dashCooldown: 0
@@ -735,7 +737,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.22535984, g: 0.22361162, b: 0.23584908, a: 0}
+  m_BackGroundColor: {r: 0.26666668, g: 0.36862746, b: 0.29803923, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

@@ -11,7 +11,8 @@ public class Player : MobileEntity
     [SerializeField] float
         groundedAcceleration, aerialAcceleration, maxSpeed,
         groundedFriction, aerialFriction,
-        jumpPower, wallJumpSpeed, dashSpeed, dashFriction;
+        jumpPower, wallJumpSpeed, dashSpeed, dashFriction,
+        flatYDashVelocity, YVelocityFactor;
 
     int remainingJumps, flipLocked;
     bool refundableJump;
@@ -63,11 +64,11 @@ public class Player : MobileEntity
                 }
             }
 
-            SetYVelocity(8);
+            SetYVelocity(flatYDashVelocity);
         }
-        else
+        else if (rb.velocity.y > 0)
         {
-            SetYVelocity(rb.velocity.y * .8f);
+            SetYVelocity(rb.velocity.y * YVelocityFactor);
         }
 
         dashCooldown = 75;
@@ -180,9 +181,16 @@ public class Player : MobileEntity
         if (dashCooldown > 0)
         {
             dashCooldown--;
-            if (dashCooldown < 72 && dashCooldown > 62 && !IsOnGround() && Mathf.Abs(rb.velocity.magnitude) > wallJumpSpeed)
+            if (dashCooldown < 72 && dashCooldown > 62 && Mathf.Abs(rb.velocity.magnitude) > wallJumpSpeed)
             {
-                ApplyDirectionalFriction(dashFriction);
+                if (IsOnGround())
+                {
+                    ApplyDirectionalFriction(dashFriction - groundedFriction);
+                }
+                else
+                {
+                    ApplyDirectionalFriction(dashFriction);
+                }
             }
 
             if (dashCooldown == 50)
@@ -228,20 +236,17 @@ public class Player : MobileEntity
         
         inputVector = moveaAction.ReadValue<Vector2>();
     
-        if (inputVector.x  == 1)
+        if (inputVector.x  > 0.01f)
         {
 
-            if (inputVector.x  != -1)
+            if (!AddXVelocity(ActiveAcceleration(), maxSpeed))
             {
-                if (!AddXVelocity(ActiveAcceleration(), maxSpeed))
-                {
-                    ApplyXFriction(ActiveFriction());
-                }
-                SetFacing(RIGHT);
-                return;
+                ApplyXFriction(ActiveFriction());
             }
+            SetFacing(RIGHT);
+            return;
         }
-        else if (inputVector.x  == -1)
+        else if (inputVector.x < -.01f)
         {
             if (!AddXVelocity(-ActiveAcceleration(), -maxSpeed))
             {
