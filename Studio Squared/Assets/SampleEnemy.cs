@@ -48,7 +48,7 @@ public class SampleEnemy : MobileEntity
 
     void Leap()
     { 
-        attackTimer = 25;
+        attackTimer = 35;
         SetXVelocity((Player.GetPredictedPosition(leapDuration).x - trfm.position.x)/leapDuration);
         SetYVelocity(leapDuration * rb.gravityScale * 5);
     }

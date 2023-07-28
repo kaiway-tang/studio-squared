@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HPEntity : MonoBehaviour
 {
-    [SerializeField] protected int maxHP, HP;
+    [SerializeField] public int maxHP, HP;
     [SerializeField] protected Transform trfm;
     [SerializeField] EntityType entityType;
 
@@ -33,9 +33,9 @@ public class HPEntity : MonoBehaviour
 
         GameManager.BloodFXPooler.Instantiate(trfm.position);
 
-        if (HP < 0)
+        if (HP <= 0)
         {
-            Destroy(gameObject);
+            Destroy(trfm.gameObject);
             return DEAD;
         }
         return ALIVE;

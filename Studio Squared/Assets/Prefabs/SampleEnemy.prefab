@@ -273,8 +273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e15e0feac4af240b292619fe717839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 30
-  HP: 30
+  maxHP: 60
+  HP: 60
   trfm: {fileID: 7883087084981684467}
   entityType: 0
   rb: {fileID: 7883087084981684470}

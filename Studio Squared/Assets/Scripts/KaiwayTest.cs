@@ -4,20 +4,11 @@ using UnityEngine;
 
 public class KaiwayTest : MonoBehaviour
 {
-    int airtime;
+    [SerializeField] HPEntity hpEntity;
+    [SerializeField] Transform scalerTrfm;
 
     private void FixedUpdate()
     {
-        airtime++;
-    }
-
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        Debug.Log("hit: " + col.gameObject + "after: " + airtime + " ticks");
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        airtime = 0;
+        scalerTrfm.localScale = new Vector3((float)hpEntity.HP/hpEntity.maxHP, 1, 1);
     }
 }
