@@ -220,4 +220,10 @@ public class MobileEntity : HPEntity
 
         return result;
     }
+
+    public void AddVelocity(Vector2 velocity, float max)
+    {
+        AddXVelocity(velocity.x, velocity.normalized.x * max);
+        AddYVelocity(velocity.y, velocity.normalized.y * max);
+    }
 }

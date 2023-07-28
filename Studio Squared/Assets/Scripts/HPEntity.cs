@@ -31,9 +31,11 @@ public class HPEntity : MonoBehaviour
 
         HP -= amount;
 
+        GameManager.BloodFXPooler.Instantiate(trfm.position);
+
         if (HP < 0)
         {
-            //Die
+            Destroy(gameObject);
             return DEAD;
         }
         return ALIVE;

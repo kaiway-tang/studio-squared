@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class KaiwayTest : MonoBehaviour
 {
-    [SerializeField] HPEntity hpEntity;
-    // Start is called before the first frame update
-    void Start()
+    int airtime;
+
+    private void FixedUpdate()
     {
-        hpEntity.TakeDamage(20);
-        GetComponent<Rigidbody2D>().velocity = new Vector2(2,0);
+        airtime++;
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        Debug.Log("hit: " + col.gameObject + "after: " + airtime + " ticks");
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        airtime = 0;
     }
 }

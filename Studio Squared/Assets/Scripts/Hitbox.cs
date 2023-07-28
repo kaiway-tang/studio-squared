@@ -47,8 +47,6 @@ public class Hitbox : MonoBehaviour
 
     protected void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("Hitbox hit: " + col.gameObject);
-
         if (col.gameObject.layer == 9)
         {
             takeDamageResult = col.GetComponent<HPEntity>().TakeDamage(damage, Vector2.zero, entityType, attackID);   

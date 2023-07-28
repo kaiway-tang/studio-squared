@@ -16,19 +16,19 @@ public class Player : MobileEntity
 
     int remainingJumps, flipLocked;
     bool refundableJump;
-    private PlayerInput playerInput; 
-    private InputAction moveaAction;
 
-    [SerializeField] int wallKickWindow, slashCooldown, dashCooldown;
+    [SerializeField] int wallJumpWindow, slashCooldown, dashCooldown;
     [SerializeField] TrailRenderer wallJumpTrail;
     int trailTimer;
     [SerializeField] private Vector2 inputVector;
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
         GameManager.playerTrfm = trfm;
-        moveaAction = playerInput.actions["Move"];
+        self = GetComponent<Player>();
+
+        //playerInput = GetComponent<PlayerInput>();
+        //moveaAction = playerInput.actions["Move"];
     }
 
     new void Start()
@@ -38,9 +38,9 @@ public class Player : MobileEntity
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (PlayerInput.JumpPressed())
         {
-            OnDash();
+            OnJump();
         }
     }
 
@@ -48,7 +48,7 @@ public class Player : MobileEntity
     {
         if (dashCooldown > 0) { return; }
 
-        rb.velocity = moveaAction.ReadValue<Vector2>() * dashSpeed;
+        rb.velocity = PlayerInput.GetVectorInput() * dashSpeed;
 
         if (Mathf.Abs(rb.velocity.y) < .01f)
         {
@@ -82,8 +82,8 @@ public class Player : MobileEntity
         if (slashCooldown > 0) { return; }
         attackAnimator.Play();
 
-        if (IsFacingLeft()) { basicAttack.Activate(1, 16); }
-        else { basicAttack.Activate(0, 16); }
+        if (IsFacingLeft()) { basicAttack.Activate(1, 12); }
+        else { basicAttack.Activate(0, 12); }
 
         LockFacing(18);
         slashCooldown = 25;
@@ -91,9 +91,9 @@ public class Player : MobileEntity
 
     private void OnJump()
     {
-        if (!HandleWallKickInput())
+        if (!HandleWallJumpInput())
         {
-            wallKickWindow = 5;
+            wallJumpWindow = 3;
             AttemptJump();
         }
     }
@@ -112,22 +112,19 @@ public class Player : MobileEntity
         }
     }
 
-    bool HandleWallKickInput()
+    bool HandleWallJumpInput()
     {
-        inputVector = moveaAction.ReadValue<Vector2>();
+        inputVector = PlayerInput.GetVectorInput();
 
-        if (inputVector.x ==1f)
+        if (inputVector.x > 0.01f)
         {
-            if (inputVector.x !=-1f)
+            if (TerrainTriggerTouching(2))
             {
-                if (TerrainTriggerTouching(2))
-                {
-                    WallJump(RIGHT);
-                    return true;
-                }
+                WallJump(RIGHT);
+                return true;
             }
         }
-        else if (inputVector.x ==-1f)
+        else if (inputVector.x < -.01f)
         {
             if (TerrainTriggerTouching(1))
             {
@@ -143,17 +140,21 @@ public class Player : MobileEntity
         wallJumpTrail.emitting = true;
         trailTimer = 14;
 
-        if (wallKickWindow > 0)
+        if (wallJumpWindow < 1 || (remainingJumps < 1 && !refundableJump))
+        {
+            Debug.Log("free jump granted");
+            Jump();
+        }
+        if (wallJumpWindow > 0)
         {
             if (refundableJump)
             {
                 remainingJumps++;
                 refundableJump = false;
             }
-            wallKickWindow = 0;
+            wallJumpWindow = 0;
         }
-        
-        Jump();
+
         if (direction == RIGHT)
         {
             AddXVelocity(99, wallJumpSpeed);
@@ -170,6 +171,10 @@ public class Player : MobileEntity
         {
             remainingJumps = 1;
         }
+
+        if (PlayerInput.AttackHeld()) { OnAttack(); }
+        if (PlayerInput.DashHeld()) { OnDash(); }
+
         HandleHorizontalMovement();
         DecrementTimers();
     }
@@ -199,14 +204,14 @@ public class Player : MobileEntity
             }
         }
 
-        if (wallKickWindow > 0)
+        if (wallJumpWindow > 0)
         {
-            wallKickWindow--;
-            HandleWallKickInput();
-            if (wallKickWindow == 0)
+            HandleWallJumpInput();
+            if (wallJumpWindow == 0)
             {
                 refundableJump = false;
             }
+            wallJumpWindow--;
         }
 
         if (trailTimer > 0)
@@ -234,7 +239,7 @@ public class Player : MobileEntity
     void HandleHorizontalMovement()
     {
         
-        inputVector = moveaAction.ReadValue<Vector2>();
+        inputVector = PlayerInput.GetVectorInput();
     
         if (inputVector.x  > 0.01f)
         {
@@ -268,11 +273,6 @@ public class Player : MobileEntity
         }
     }
 
-    public Vector2 GetPredictedPosition(float time)
-    {
-        return trfm.position;
-    }
-
     new void SetFacing(bool direction)
     {
         if (flipLocked < 1) { base.SetFacing(direction); }
@@ -281,5 +281,11 @@ public class Player : MobileEntity
     void LockFacing(int duration)
     {
         if (flipLocked < duration) { flipLocked = duration; }
+    }
+
+    static Player self;
+    public static Vector2 GetPredictedPosition(float time) //in seconds
+    {
+        return self.trfm.position + (Vector3)self.rb.velocity * time;
     }
 }
