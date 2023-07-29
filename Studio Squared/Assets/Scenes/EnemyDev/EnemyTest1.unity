@@ -1504,6 +1504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24214615541d5a646801db76708137d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_BloodFXPooler: {fileID: 0}
 --- !u!1 &698208175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1800,7 +1801,8 @@ GameObject:
   - component: {fileID: 795101576}
   - component: {fileID: 795101575}
   - component: {fileID: 795101574}
-  - component: {fileID: 795101580}
+  - component: {fileID: 795101581}
+  - component: {fileID: 795101582}
   m_Layer: 0
   m_Name: FlierTest
   m_TagString: Untagged
@@ -1815,7 +1817,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795101573}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1440fc8013a0234bada70384f0de4ab, type: 3}
   m_Name: 
@@ -1834,6 +1836,7 @@ MonoBehaviour:
   playerCheck: {fileID: 1810835847}
   moveStateData: {fileID: 11400000, guid: 15a1985f6e5e6c3468bef23cf03d5d08, type: 2}
   targetPosition: {fileID: 1690903156}
+  aiPath: {fileID: 795101582}
 --- !u!50 &795101575
 Rigidbody2D:
   serializedVersion: 4
@@ -1854,7 +1857,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &795101576
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1959,7 +1962,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795101573}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.42, y: 0.41, z: 0}
+  m_LocalPosition: {x: 9.99, y: 0.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1969,7 +1972,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &795101580
+--- !u!114 &795101581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1978,14 +1981,53 @@ MonoBehaviour:
   m_GameObject: {fileID: 795101573}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a98f8e30bbed544785cbafd63b4d247, type: 3}
+  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {fileID: 1690903156}
-  speed: 2
-  nextWaypointDistance: 3
-  repathRate: 0.5
-  reachedEndOfPath: 0
+  version: 1
+  target: {fileID: 1690903156}
+--- !u!114 &795101582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795101573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+  radius: 0.59
+  height: 3.32
+  canMove: 1
+  maxSpeed: 1
+  gravity: {x: NaN, y: NaN, z: NaN}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  centerOffsetCompatibility: NaN
+  repathRateCompatibility: NaN
+  canSearchCompability: 0
+  orientation: 1
+  enableRotation: 0
+  autoRepath:
+    mode: 2
+    interval: 0.5
+    sensitivity: 10
+    maximumInterval: 1.36
+    visualizeSensitivity: 0
+  targetCompatibility: {fileID: 0}
+  maxAcceleration: -2.5
+  rotationSpeed: 360
+  slowdownDistance: 0.6
+  pickNextWaypointDist: 0.65
+  endReachedDistance: 0.2
+  alwaysDrawGizmos: 1
+  slowWhenNotFacingTarget: 1
+  whenCloseToDestination: 0
+  constrainInsideGraph: 0
 --- !u!1 &833732739
 GameObject:
   m_ObjectHideFlags: 0
@@ -2569,7 +2611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACAn+ubO0aLgAIAADgFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1zmzAQ/SsenWsPYGxMby1xnB6SeOJ0cuGioMVoLCRGH7GdjP97JQGGuL5YvLf7dvdp4QtRrhootJAbScmjIIB+TpA7ox+TgXyAE94LvqOf0Me8UaIrF4R9zAvWVFg8dGlK1KAlLX7xPXPBgQUNp6WQ9ZrsIRNKKwuXmCmwlBTaZXMLfU3Qyf5NU5dytqcocadPe0qDycUeC+Aa5BCazMIomaeL5bzLmIazZbwKk3kUdplTG7OIFot4PQ0SL2J4wXDdAHETDVqLuK8azwL3C1Mfzu3MXaTTLARjVHUNI31uvCEZbpSx49oAQrE1wHfp4iug+0o72XHyc1kq0J07Ep/vqLQ+tqrot2jNrbE6tP19YGZcnWXsW2o1H/+jp6GnSynqh75sGLgSuqLF4QWfC6z0yPwxfPe9b8OPmB3wO4O3CviT2EhhOLGklsalGgXR3fB4nSyroDgMeNvqDWiawfb+rvubdjNc/PCnjNH63VGzuAV2THi7/YKAtBfzxzbs10d1EhZ1XfxV8Ir34z3riHsqlbZUNyV37b0LI10oWnvP3DRGZ0Jy8HDXdAMcM33eWhl9e4M33KjsDXOP3RvVFe+4/kW5SfHwEB8EN9RWHK+XpSpxfARVPRvNKIehaUc8WZ8ywXm7YGNP+rSdkSUuRml7Q8n31UJkHgWrJI1WywWBEpbTVbGMwrhMk4Kk8xQi5HePcjsnZtu20c4ee2t8EOd2z/oPzWQjceOXnUh83NDPWowsp7wUu0IC8OdW4do4SFvEvpRkTag1aAdaU+7vG33liIniACS/CuV+0vVJS5wPKjlq6IfQDslR5r8sOXLwdZe3Ej4oHF3xXuyCLv8AUEsDBBQAAAgIAACAn+vHlagObQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrRSirGRgYW5pZGFmWlKalqqma5FspmRoUmapXlyiqWxZaqRUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAACAn+ubO0aLgAIAADgFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACAn+vHlagObQAAAHgAAAAJACQAAAAAAAAAAAAAAM0CAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAhQMAAAAA
+    dataString: UEsDBBQAAAgIAACAn+u1UIb8bQIAACEFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMziWDHYJxb61DSA9JmNJOLr4o1hprkCWPPgIkw3/vSraxQ0+I9/bjvdXKn4RL00BhlV5rzp4UA/J9QvyZfJsM5CMc6U7JLf+APuaVM1v5IBpiflPLFeKRTzOqBqt58UPuhA+eIegkL5WuV2wHmTLWIFxSYQAprazPlgh9TsgRf6apTznhKU786QNP6WxyxmMB0oIeQpObKE5u03kXP41uFvNllMRdVpvkZCFo3QDzDobcaJF2acldiJNorgvxRgolBDedMmJPTXCe0cY49IUBjFN0GuT4+Ar4rrJe9Tj5pSwN2G4Mmp7uucaBtVXJT9VOsaZm3wp7p8L5Pot5kNTWfPqPnkaBLrWqH/u20cy3sBUv9r/pqaDGjqY8hu+/6nbyQMWevgl4rUA+q7VWTjIkrXY+1RmI74e/F2dZBcV+wFupV6Brhnn3l9pfqfdwDuaPmeD1m6du5i2wFSqMO2wCaLyYXyg47InpSiDqVfw18IfuxgvVEQ9cG4tU51J6eW/KaR9KVmFm3o2zmdISAtyJbkBSYU8bLGOvb/CKG7W9Yh6ofzpd847rX8RVSoCH+Nnsitqow+WyTKUOT2CqF2cFlzCI9sQzzilTUrYLNp5Jn7Z1uqTFKG3nOPu6WoTdxrNlksbLxR2DEhbTZbGIo3mZJgVLb1OISdg9LtEnFZtWaDcevDU5FJe4Z/0XZbLWtAnLzjQ9rPlHrUYj57JU20IDyJe2wkU4aGyCj5KtGMcBbcFaLsN9k8+cCFXsgeWXQnlwujpaTfOhSk4a/q6sR3KShU9ITjx82eWNhncOB9+8L3Ym539QSwMEFAAACAgAAICf68eVqA5tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tFKKsZGBhbmlkYWZaUpqWqqZrkWymZGhSZqleXKKpbFlqpFSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAICf67VQhvxtAgAAIQUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAICf68eVqA5tAAAAeAAAAAkAJAAAAAAAAAAAAAAAugIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAAByAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -2633,7 +2675,7 @@ MonoBehaviour:
   heuristic: 2
   heuristicScale: 1
   threadCount: 1
-  maxFrameTime: 1
+  maxFrameTime: 10
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
   euclideanEmbedding:
@@ -3370,7 +3412,7 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 2
+  pickNextWaypointDist: 0.5
   endReachedDistance: 0.2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1

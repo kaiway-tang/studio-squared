@@ -21,16 +21,17 @@ public class BasicFlyer1 : StateEntity
     //pathfind vars from enemy
     public Transform targetPosition;
     private Seeker seeker;
-    public Path path;
+    public AIPath aiPath;
 
     protected override void Start()
     {
         base.Start();
         seeker = GetComponent<Seeker>();
-        moveState = new BF1_MoveState(this, stateMachine, moveStateData, this, targetPosition, seeker, path);
+        moveState = new BF1_MoveState(this, stateMachine, moveStateData, this, targetPosition, seeker, aiPath);
         //playerDetectedState = new BE1_PlayerDetectedState(this, stateMachine, playerDetectedData, this);
         //attackState = new BE1_AttackState(this, stateMachine, attackStateData, this);
         stateMachine.Initialize(moveState);
+        aiPath.canMove = false;
     }
 
 
