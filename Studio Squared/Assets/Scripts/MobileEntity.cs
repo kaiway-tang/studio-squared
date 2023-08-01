@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MobileEntity : HPEntity
 {
-    [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
     [SerializeField] protected TerrainTrigger[] terrainTriggers;
     [SerializeField] Transform reflectionTrfm;
     [SerializeField] float knockbackFactor = 1;
 
     bool facingDirection;
-    protected const bool RIGHT = false, LEFT = true;
+    public const bool RIGHT = false, LEFT = true;
 
     static Vector2 vect2; //cache a vector2 variable to avoid calling "new"
     static Vector3 vect3; // ^
@@ -27,7 +27,7 @@ public class MobileEntity : HPEntity
         SetFacing(!facingDirection);
     }
 
-    protected void SetFacing(bool direction)
+    public void SetFacing(bool direction)
     {
         if (direction != facingDirection)
         {
@@ -49,20 +49,20 @@ public class MobileEntity : HPEntity
     }
 
 
-    protected void SetXVelocity(float value)
+    public void SetXVelocity(float value)
     {
         vect2.x = value;
         vect2.y = rb.velocity.y;
 
         rb.velocity = vect2;
     }
-    protected void AddXVelocity(float amount)
+    public void AddXVelocity(float amount)
     {
         vect2.x = amount;
         vect2.y = 0;
         rb.velocity += vect2;
     }
-    protected bool AddXVelocity(float amount, float max)
+    public bool AddXVelocity(float amount, float max)
     {
         if (amount > 0)
         {
@@ -91,33 +91,33 @@ public class MobileEntity : HPEntity
 
         return true;
     }
-    protected void AddForwardXVelocity(float amount, float max)
+    public void AddForwardXVelocity(float amount, float max)
     {
         if (IsFacingLeft()) { amount *= -1; max *= -1; }
         AddXVelocity(amount, max);
     }
 
-    protected void AddBackwardXVelocity(float amount, float max)
+    public void AddBackwardXVelocity(float amount, float max)
     {
         if (IsFacingRight()) { amount *= -1; max *= -1; }
         AddXVelocity(amount, max);
     }
 
-    protected void SetYVelocity(float value)
+    public void SetYVelocity(float value)
     {
         vect2.x = rb.velocity.x;
         vect2.y = value;
 
         rb.velocity = vect2;
     }
-    protected void AddYVelocity(float amount)
+    public void AddYVelocity(float amount)
     {
         vect2.x = 0;
         vect2.y = amount;
 
         rb.velocity += vect2;
     }
-    protected void AddYVelocity(float amount, float max)
+    public void AddYVelocity(float amount, float max)
     {
         if (amount > 0)
         {
@@ -146,7 +146,7 @@ public class MobileEntity : HPEntity
     }
 
 
-    protected void ApplyXFriction(float amount)
+    public void ApplyXFriction(float amount)
     {
         if (Mathf.Abs(rb.velocity.x) < amount)
         {
@@ -166,7 +166,7 @@ public class MobileEntity : HPEntity
     }
 
     float magnitude, ratio;
-    protected void ApplyDirectionalFriction(float amount)
+    public void ApplyDirectionalFriction(float amount)
     {
         if (Mathf.Abs(rb.velocity.x) > 0.0001f || Mathf.Abs(rb.velocity.y) > 0.0001f)
         {

@@ -57,7 +57,8 @@ public class BF1_MoveState : MoveState
         // Actually move the AI
         //aiPath.FinalizeMovement(nextPosition, nextRotation);
         velocity = nextPosition - enemy.transform.position;
-        enemy.AddVelocity(velocity, 1); //TODO: fix vel
+        enemy.AddVelocity(velocity, 3); //TODO: fix vel
+        //enemy.ApplyXFriction(0.5f);
     }
 
     /*
