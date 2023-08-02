@@ -2,33 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEntity : StateEntity
+
+public class StateDict
 {
+    public Dictionary<string, List<State>> dict;
 
-    [SerializeField] public BossEnv bossEnv;
+    public StateDict()
+    {
+        dict = new Dictionary<string, List<State>>();
+    }
 
-    public Dictionary<string, List<State>> randStateDict;
-
-    public string currentStage;
-
-
-    public void AddRandState(string stateListName, State state)
+    public void AddStateList(List<State> list, string stateListName = "1")
+    {
+        if (dict.ContainsKey(stateListName))
+        {
+            dict[stateListName].AddRange(list);
+        }
+        else
+        {
+            dict[stateListName] = list;
+        }
+    }
+    public void AddRandState(State state, string stateListName = "1")
     {
         try
         {
-            randStateDict[stateListName].Add(state);
+            dict[stateListName].Add(state);
         }
         catch
         {
-            randStateDict[stateListName] = new List<State>() { state };
+            dict[stateListName] = new List<State>() { state };
 
         }
     }
 
-    public State SelectRandState()
+    public State SelectRandState(string stateListName = "1") //stages start at 1
     {
-        return randStateDict[currentStage][Random.Range(0, randStateDict[currentStage].Count)];
+        return dict[stateListName][Random.Range(0, dict[stateListName].Count)];
     }
+}
+
+
+
+public class BossEntity : StateEntity
+{
+
+    //[SerializeField] public BossEnv bossEnv;
+
+
+
+    public string currentStage;
+
+    public StateDict stateDict;
 
     public void ChangeStage(string stage)
     {

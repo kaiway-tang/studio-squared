@@ -8,8 +8,10 @@ public class TB_MoveState : MoveState
     private float flipCooldown;
     private Transform playerInAttackRange;    
     private TestBoss enemy;
+    private float locationDiff;
     private Vector2 playerPos;
 
+    float attackTimer;
 
     public TB_MoveState(StateEntity entity, FiniteStateMachine stateMachine, D_MoveState stateData, TestBoss enemy) : base(entity, stateMachine, stateData)
     {
@@ -17,38 +19,38 @@ public class TB_MoveState : MoveState
         this.enemy = enemy;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override void Enter()
     {
-        
+        base.Enter();
     }
-
-    // Update is called once per frame
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        /*
         playerInAttackRange = entity.GetPlayerInAttackRange();
         if (playerInAttackRange)
         {
             //stateMachine.ChangeState(enemy.playerDetectedState);
-        }
-        /*
-        if ((!isTouchingGround || isTouchingWall) && flipCooldown <= 0)
-        {
-            entity.Flip();
-            flipCooldown = 0.25f;
-            //maybe make this a "flipstate", but that's probably not needed
-        }
-        */
+        }*/
+
         playerPos = Player.GetPredictedPosition(0);
-        if(flipCooldown <= 0)
+        locationDiff = enemy.transform.position.x - playerPos.x; //negative if player to RIGHT of the boss
+
+        if (enemy.GetCountdownA() <= 0)
         {
-            if (playerPos.x < enemy.transform.position.x)
+            enemy.stateMachine.ChangeState(enemy.AttackDecider(locationDiff));
+        }
+
+
+        if (flipCooldown <= 0)
+        {
+            //don't need to check for wall because just always face player (who should not be clipped behind the wall anyway)
+            if (locationDiff > 0)
             {
                 entity.SetFacing(true); //left = true
             }
-            else if(playerPos.x > enemy.transform.position.x)
+            else
             {
                 entity.SetFacing(false);
             }
@@ -61,4 +63,7 @@ public class TB_MoveState : MoveState
         base.PhysicsUpdate();
         entity.AddForwardVelocity(stateData.moveSpeed, stateData.maxSpeed);
     }
+
+
+
 }
