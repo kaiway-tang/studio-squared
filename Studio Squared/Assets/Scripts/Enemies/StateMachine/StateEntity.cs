@@ -138,12 +138,12 @@ public class StateEntity : MobileEntity
         base.ApplyXFriction(amount);
     }
 
-    public virtual void startCountdownA(float startValue)
+    public virtual void StartCountdownA(float startValue)
     {
         this.timerA = startValue;
     }
 
-    public virtual float getCountdownA()
+    public virtual float GetCountdownA()
     {
         return this.timerA;
     }

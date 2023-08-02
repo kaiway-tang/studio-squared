@@ -29,9 +29,9 @@ public class BE1_AttackState : AttackState
         {
             stateMachine.ChangeState(enemy.moveState);
         }
-        else if (enemy.getCountdownA() <= 0) {
+        else if (enemy.GetCountdownA() <= 0) {
             Debug.Log("Punch!");
-            enemy.startCountdownA(stateData.cooldown); //done inside entity to prevent "attack cancelling" if player moves out and back in range 
+            enemy.StartCountdownA(stateData.cooldown); //done inside entity to prevent "attack cancelling" if player moves out and back in range 
         }
     }
 

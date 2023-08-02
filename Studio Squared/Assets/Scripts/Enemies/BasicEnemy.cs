@@ -46,7 +46,7 @@ public class BasicEnemy : MobileEntity
     protected virtual void UpdateWalkingState(){
         groundDetected = IsOnGround();
         wallDetected = IsTouchingWall();//false;//Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance);//, whatIsGround);
-        Debug.Log(groundDetected);
+        //Debug.Log(groundDetected);
         if(!groundDetected || wallDetected){ //flip enemy
             SetFacing(!IsFacingLeft()); //right = false, so if isfacingleft we want to go to right (aka false), and if facing right we want to go left (aka true)
         }
