@@ -19,8 +19,13 @@ public class Player : MobileEntity
 
     [SerializeField] int wallJumpWindow, slashCooldown, dashCooldown;
     [SerializeField] TrailRenderer wallJumpTrail;
+    [SerializeField] CircleCollider2D hurtbox;
+    int hurtboxDisable;
     int trailTimer;
     [SerializeField] private Vector2 inputVector;
+
+    [SerializeField] ObjectPooler perfectDodgePooler;
+    [SerializeField] ParticleSystem healFX;
 
     private void Awake()
     {
@@ -47,6 +52,8 @@ public class Player : MobileEntity
     void OnDash()
     {
         if (dashCooldown > 0) { return; }
+
+        DisableHurtbox();
 
         rb.velocity = PlayerInput.GetVectorInput() * dashSpeed;
 
@@ -197,10 +204,9 @@ public class Player : MobileEntity
                     ApplyDirectionalFriction(dashFriction);
                 }
             }
-
-            if (dashCooldown == 50)
+            else if (dashCooldown == 55)
             {
-                dashCooldown = 0;
+                EnableHurtbox();
             }
         }
 
@@ -283,7 +289,32 @@ public class Player : MobileEntity
         if (flipLocked < duration) { flipLocked = duration; }
     }
 
-    static Player self;
+    void EnableHurtbox()
+    {
+        hurtboxDisable--;
+        if (hurtboxDisable < 1)
+        {
+            hurtbox.enabled = true;
+            hurtboxDisable = 0;
+        }
+    }
+    void DisableHurtbox()
+    {
+        if (hurtboxDisable < 1)
+        {
+            perfectDodgePooler.Instantiate(trfm.position, 0);
+            hurtbox.enabled = false;
+        }
+        hurtboxDisable++;
+    }
+
+    protected override void OnHeal(int amount)
+    {
+        healFX.Play();
+    }
+
+
+    public static Player self;
     public static Vector2 GetPredictedPosition(float time) //in seconds
     {
         return self.trfm.position + (Vector3)self.rb.velocity * time;
