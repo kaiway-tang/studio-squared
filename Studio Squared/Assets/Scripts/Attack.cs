@@ -37,7 +37,7 @@ public class Attack : Hitbox
                 knockbackDirections[0] = (col.transform.position - source.position).normalized * knockbackPower;
             }
             takeDamageResult = col.GetComponent<HPEntity>().TakeDamage(damage, knockbackDirections[knockbackIndex], entityType, attackID);
-            CameraController.SetTrauma(traumaAmount);
+            if (takeDamageResult != HPEntity.IGNORED) { CameraController.SetTrauma(traumaAmount); }
             return;
         }
         else

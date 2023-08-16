@@ -12,7 +12,7 @@ public class HPEntity : MonoBehaviour
 
     public enum EntityType
     {
-        Enemy, Player, Neutral
+        Enemy, Player, PlayerPerfectDodge, Neutral
     }
 
     protected void Start()
@@ -31,6 +31,9 @@ public class HPEntity : MonoBehaviour
 
         HP -= amount;
 
+        OnDamageTaken(amount);
+        if (entityType == EntityType.PlayerPerfectDodge) { return IGNORED; }
+
         GameManager.BloodFXPooler.Instantiate(trfm.position);
 
         if (HP <= 0)
@@ -40,6 +43,9 @@ public class HPEntity : MonoBehaviour
         }
         return ALIVE;
     }
+
+    protected virtual void OnDamageTaken(int amount) { }
+    protected virtual void OnHeal(int amount) { }
 
     int[] trackedAttackIDs = new int[3];
     int latestAttackIDIndex;
@@ -62,5 +68,7 @@ public class HPEntity : MonoBehaviour
         {
             HP = maxHP;
         }
+
+        OnHeal(amount);
     }
 }

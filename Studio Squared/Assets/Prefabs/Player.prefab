@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 3234346978212411581}
   - component: {fileID: 931733880}
   - component: {fileID: 258351863}
+  - component: {fileID: 8706680795441157637}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -395,6 +396,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64fd83c5193ff54c83d009b313ea700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8706680795441157637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234346978212411459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5aa50b6f812f8a458e52953c08aeab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4660906822623942124, guid: 3668ed33d11d667479ed5ed51c8222db, type: 3}
+  poolSize: 1
 --- !u!1 &3234346978233282566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,7 +1253,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1284,7 +1299,9 @@ MonoBehaviour:
   slashCooldown: 0
   dashCooldown: 0
   wallJumpTrail: {fileID: 3234346978196379748}
+  hurtbox: {fileID: 567718131350914662}
   inputVector: {x: 0, y: 0}
+  perfectDodgePooler: {fileID: 8706680795441157637}
 --- !u!1 &6761042817291118963
 GameObject:
   m_ObjectHideFlags: 0
