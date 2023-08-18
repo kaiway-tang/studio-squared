@@ -10,7 +10,13 @@ public class TextManager : MonoBehaviour
     public static Dictionary<string, int> VarStorage;
     public static TextManager Instance;
 
+
     public DialogueRunner dialogueRunner;
+
+
+     
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -96,4 +102,29 @@ public class TextManager : MonoBehaviour
     {
         dialogueRunner.StartDialogue(_npc.dialog);
     }
+
+
+
+
+    [SerializeField] public GameObject demoBox; //TODO: REMOVE
+
+    [YarnCommand("DemoDrop")]
+    public void DemoDrop()
+    {
+        for (int i = 0; i < 10; i++)
+        { 
+            Vector3 pos = new Vector3(transform.position.x + Random.Range(-2, 2), transform.position.y + Random.Range(-2, 2), transform.position.z + Random.Range(-2, 2));
+            GameObject.Instantiate(demoBox, pos, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }
