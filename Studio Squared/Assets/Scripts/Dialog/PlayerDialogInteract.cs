@@ -6,6 +6,7 @@ public class PlayerDialogInteract : MonoBehaviour
 {
 
     public NPC npc;
+    public TextManager textManager;
 
     // Start is called before the first frame update
     void Start()
@@ -39,8 +40,8 @@ public class PlayerDialogInteract : MonoBehaviour
     {
         if (npc)
         {
-            npc.StartDialog();
-            npc = null; //TODO: maybe do this somewhere else, but this *should* make it so we can only interact once
+            textManager.RunNPCDialog(npc);//npc.StartDialog();
+            npc = null; //TODO: maybe do this somewhere else, but this *should* make it so we can only interact once. Maybe check if dialog running?
             Debug.Log("Interacting!!!");
         }
         else

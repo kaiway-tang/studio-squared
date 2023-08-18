@@ -5,6 +5,8 @@ using Yarn;
 
 public class NPC : MonoBehaviour
 {
+
+    [SerializeField] public string dialog;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +28,9 @@ public class NPC : MonoBehaviour
         }
     }
 
+    /*
     public void StartDialog()
     {
         Debug.Log("Hello World!");
-    }
+    }*/
 }
