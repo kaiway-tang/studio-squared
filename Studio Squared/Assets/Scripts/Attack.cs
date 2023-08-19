@@ -8,6 +8,7 @@ public class Attack : Hitbox
     [SerializeField] Transform source; //only used when knockback type is 'away from source'
     [SerializeField] float knockbackPower; // ^^
     [SerializeField] int traumaAmount;
+    [SerializeField] bool useSlashFX;
     const int RIGHT = 0, LEFT = 1;
     int knockbackIndex;
 
@@ -37,7 +38,15 @@ public class Attack : Hitbox
                 knockbackDirections[0] = (col.transform.position - source.position).normalized * knockbackPower;
             }
             takeDamageResult = col.GetComponent<HPEntity>().TakeDamage(damage, knockbackDirections[knockbackIndex], entityType, attackID);
-            if (takeDamageResult != HPEntity.IGNORED) { CameraController.SetTrauma(traumaAmount); }
+            if (takeDamageResult != HPEntity.IGNORED)
+            {
+                CameraController.SetTrauma(traumaAmount);
+
+                if (useSlashFX)
+                {
+                    GameManager.SlashFXPooler.Instantiate(col.transform.position, Random.Range(0,360));
+                }
+            }
             return;
         }
         else
