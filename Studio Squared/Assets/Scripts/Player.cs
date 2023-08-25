@@ -61,10 +61,10 @@ public class Player : MobileEntity
                 LockMovement(false);
                 if (attackCharge > 49)
                 {
-                    attackCharge = 0;
                     DashSlash();
                 }
             }
+            attackCharge = 0;
         }
     }
 
@@ -110,6 +110,7 @@ public class Player : MobileEntity
         LockMovement(true);
         LockFacing(25);
         dashSlashTrail.emitting = true;
+        SetYVelocity(0);
 
         if (IsFacingLeft())
         {
@@ -239,6 +240,7 @@ public class Player : MobileEntity
 
         HandleHorizontalMovement();
         DecrementTimers();
+        HandlePositionPredicting();
     }
 
     void DecrementTimers()
@@ -387,8 +389,31 @@ public class Player : MobileEntity
 
 
     public static Player self;
-    public static Vector2 GetPredictedPosition(float time) //in seconds
+
+    int velocityLogTimer;
+    Vector2[] loggedVelocities = new Vector2[4];
+    Vector2 averageVelocity;
+    int nextIndex;
+    void HandlePositionPredicting()
     {
-        return self.trfm.position + (Vector3)self.rb.velocity * time;
+        if (velocityLogTimer > 0) { velocityLogTimer--; }
+        else
+        {
+            loggedVelocities[nextIndex] = rb.velocity;
+            averageVelocity = (loggedVelocities[0] + loggedVelocities[1] + loggedVelocities[2] + loggedVelocities[3] + loggedVelocities[nextIndex]) * .2f;
+
+            nextIndex++;
+            if (nextIndex > 3) { nextIndex = 0; }
+
+            velocityLogTimer = 5;
+        }
+    }
+
+    static Vector2 vect2;
+    public static Vector2 GetPredictedPosition(float seconds)
+    {
+        vect2 = self.trfm.position;
+        if (seconds > 1) { seconds = 1; }
+        return self.averageVelocity * seconds + vect2;
     }
 }
