@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] ObjectPooler m_SlashFXPooler;
     public static ObjectPooler BloodFXPooler;
     public static ObjectPooler SlashFXPooler;
+    public static int terrainLayerMask;
 
     private void Awake()
     {
+        terrainLayerMask = LayerMask.GetMask("Terrain");
         BloodFXPooler = m_BloodFXPooler;
         SlashFXPooler = m_SlashFXPooler;
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KaiwayTest : MonoBehaviour
+public class HPBar : MonoBehaviour
 {
     [SerializeField] HPEntity hpEntity;
     [SerializeField] Transform scalerTrfm;

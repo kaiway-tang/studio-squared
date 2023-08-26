@@ -22,7 +22,7 @@ public class Player : MobileEntity
     [SerializeField] CircleCollider2D hurtbox;
     [SerializeField] GameObject sparkle;
     [SerializeField] TrailRenderer dashSlashTrail;
-    int hurtboxDisable, attackCharge, dashSlashRecovery;
+    int hurtboxDisable, attackCharge, dashSlashRecovery, dashSlashRange = 9;
     int trailTimer;
     [SerializeField] private Vector2 inputVector;
 
@@ -112,14 +112,30 @@ public class Player : MobileEntity
         dashSlashTrail.emitting = true;
         SetYVelocity(0);
 
+        RaycastHit2D hitInfo;
         if (IsFacingLeft())
         {
-            trfm.position += Vector3.right * -9;
+            if (hitInfo = Physics2D.Linecast(trfm.position, trfm.position + Vector3.right * dashSlashRange, GameManager.terrainLayerMask))
+            {
+                trfm.position += Vector3.right * -(hitInfo.distance - 1);
+                Debug.Log("hit: " + hitInfo.collider.gameObject);
+            }
+            else
+            {
+                trfm.position += Vector3.right * -dashSlashRange;
+            }
             dashSlashAttack.Activate(1, 5);
         }
         else
         {
-            trfm.position += Vector3.right * 9;
+            if (hitInfo = Physics2D.Linecast(trfm.position, trfm.position + Vector3.right * dashSlashRange, GameManager.terrainLayerMask))
+            {
+                trfm.position += Vector3.right * (hitInfo.distance - 1);
+            }
+            else
+            {
+                trfm.position += Vector3.right * dashSlashRange;
+            }
             dashSlashAttack.Activate(0, 5);
         }
     }
