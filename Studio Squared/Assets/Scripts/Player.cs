@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Player : MobileEntity
 {
     [SerializeField] SimpleAnimator attackAnimator;
-    [SerializeField] Attack basicAttack;
+    [SerializeField] Attack basicAttack, dashSlashAttack;
     
     [SerializeField] float
         groundedAcceleration, aerialAcceleration, maxSpeed,
@@ -14,13 +14,15 @@ public class Player : MobileEntity
         jumpPower, wallJumpSpeed, dashSpeed, dashFriction,
         flatYDashVelocity, YVelocityFactor;
 
-    int remainingJumps, flipLocked;
+    int remainingJumps, facingLocked, movementLocked;
     bool refundableJump;
 
     [SerializeField] int wallJumpWindow, slashCooldown, dashCooldown;
     [SerializeField] TrailRenderer wallJumpTrail;
     [SerializeField] CircleCollider2D hurtbox;
-    int hurtboxDisable;
+    [SerializeField] GameObject sparkle;
+    [SerializeField] TrailRenderer dashSlashTrail;
+    int hurtboxDisable, attackCharge, dashSlashRecovery;
     int trailTimer;
     [SerializeField] private Vector2 inputVector;
 
@@ -46,6 +48,23 @@ public class Player : MobileEntity
         if (PlayerInput.JumpPressed())
         {
             OnJump();
+        }
+
+        if (PlayerInput.AttackPressed())
+        {
+            OnAttack();
+        }
+        if (PlayerInput.AttackReleased())
+        {
+            if (attackCharge > 6)
+            {
+                LockMovement(false);
+                if (attackCharge > 49)
+                {
+                    DashSlash();
+                }
+            }
+            attackCharge = 0;
         }
     }
 
@@ -82,6 +101,27 @@ public class Player : MobileEntity
 
         wallJumpTrail.emitting = true;
         trailTimer = 10;
+    }
+
+    void DashSlash()
+    {
+
+        dashSlashRecovery = 25;
+        LockMovement(true);
+        LockFacing(25);
+        dashSlashTrail.emitting = true;
+        SetYVelocity(0);
+
+        if (IsFacingLeft())
+        {
+            trfm.position += Vector3.right * -9;
+            dashSlashAttack.Activate(1, 5);
+        }
+        else
+        {
+            trfm.position += Vector3.right * 9;
+            dashSlashAttack.Activate(0, 5);
+        }
     }
 
     private void OnAttack ()  
@@ -179,16 +219,45 @@ public class Player : MobileEntity
             remainingJumps = 1;
         }
 
-        if (PlayerInput.AttackHeld()) { OnAttack(); }
+        if (PlayerInput.AttackHeld())
+        {
+            if (attackCharge < 50)
+            {
+                attackCharge++;
+                if (attackCharge == 7)
+                {
+                    LockMovement(true);
+                }
+
+                if (attackCharge > 49)
+                {
+                    Instantiate(sparkle, trfm.position, trfm.rotation);
+                }
+            }
+        }
+
         if (PlayerInput.DashHeld()) { OnDash(); }
 
         HandleHorizontalMovement();
         DecrementTimers();
+        HandlePositionPredicting();
     }
 
     void DecrementTimers()
     {
-        if (flipLocked > 0) { flipLocked--; }
+        if (dashSlashRecovery > 0)
+        {
+            dashSlashRecovery--;
+            if (dashSlashRecovery == 23)
+            {
+                dashSlashTrail.emitting = false;
+            }
+            if (dashSlashRecovery < 1)
+            {
+                LockMovement(false);            
+            }
+        }
+        if (facingLocked > 0) { facingLocked--; }
         if (slashCooldown > 0) { slashCooldown--; }
         if (dashCooldown > 0)
         {
@@ -244,10 +313,9 @@ public class Player : MobileEntity
 
     void HandleHorizontalMovement()
     {
-        
         inputVector = PlayerInput.GetVectorInput();
-    
-        if (inputVector.x  > 0.01f)
+
+        if (inputVector.x > 0.01f)
         {
 
             if (!AddXVelocity(ActiveAcceleration(), maxSpeed))
@@ -281,12 +349,18 @@ public class Player : MobileEntity
 
     new void SetFacing(bool direction)
     {
-        if (flipLocked < 1) { base.SetFacing(direction); }
+        if (facingLocked < 1) { base.SetFacing(direction); }
     }
 
     void LockFacing(int duration)
     {
-        if (flipLocked < duration) { flipLocked = duration; }
+        if (facingLocked < duration) { facingLocked = duration; }
+    }
+
+    void LockMovement(bool _lock)
+    {
+        if (_lock) { movementLocked++; }
+        else { movementLocked--; }
     }
 
     void EnableHurtbox()
@@ -315,8 +389,31 @@ public class Player : MobileEntity
 
 
     public static Player self;
-    public static Vector2 GetPredictedPosition(float time) //in seconds
+
+    int velocityLogTimer;
+    Vector2[] loggedVelocities = new Vector2[4];
+    Vector2 averageVelocity;
+    int nextIndex;
+    void HandlePositionPredicting()
     {
-        return self.trfm.position + (Vector3)self.rb.velocity * time;
+        if (velocityLogTimer > 0) { velocityLogTimer--; }
+        else
+        {
+            loggedVelocities[nextIndex] = rb.velocity;
+            averageVelocity = (loggedVelocities[0] + loggedVelocities[1] + loggedVelocities[2] + loggedVelocities[3] + loggedVelocities[nextIndex]) * .2f;
+
+            nextIndex++;
+            if (nextIndex > 3) { nextIndex = 0; }
+
+            velocityLogTimer = 5;
+        }
+    }
+
+    static Vector2 vect2;
+    public static Vector2 GetPredictedPosition(float seconds)
+    {
+        vect2 = self.trfm.position;
+        if (seconds > 1) { seconds = 1; }
+        return self.averageVelocity * seconds + vect2;
     }
 }

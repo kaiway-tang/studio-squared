@@ -19,7 +19,7 @@ TagManager:
   - PlayerHurtbox
   - EnemyHurtbox
   - NeutralHurtbox
-  - 
+  - NPC
   - 
   - 
   - 
@@ -43,6 +43,12 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 1632902633
+    locked: 0
+  - name: Foreground
+    uniqueID: 236245575
     locked: 0
   - name: VFX
     uniqueID: 1278562839

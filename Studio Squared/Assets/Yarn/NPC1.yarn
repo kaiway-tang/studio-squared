@@ -1,0 +1,46 @@
+﻿﻿title: Start
+tags:
+---
+<<set $Branch = GetVar("intro")>>
+<<if $Branch == 0>>
+	<<jump Dialog1>>
+<<elseif $Branch == 1>>
+	<<jump Dialog2>>
+<<endif>>
+===
+
+title: Dialog1
+tags:
+---
+
+NPC: Hello! I'm talking to you now :3
+Player: ???
+NPC: :3 :3 :3
+
+-> wtf
+	NPC: what
+-> ::3
+	NPC: :3
+NPC: Anyway, once this ends, if you come talk to me again the dialog will change! Cool, right?
+-> Yes
+-> No
+NPC: See you soon!
+
+<<SetVar TextManager "intro" 1>>
+
+===
+title: Dialog2
+tags:
+---
+NPC: :3
+Player: Not again
+NPC: ok fine I'll show you something cool: I'm gonna call a unity function now!
+NPC: just respond "show me the function" to this to see it
+-> Show me the function
+	NPC: Showing function!
+	<<DemoDrop TextManager>>
+-> Nah
+	NPC: Alright, no function will be shown.
+NPC: Btw, if you come back this dialog will play again.
+ 
+===
