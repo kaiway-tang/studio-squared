@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class TextManager : MonoBehaviour
 {
@@ -13,10 +14,18 @@ public class TextManager : MonoBehaviour
 
     public DialogueRunner dialogueRunner;
 
+    public bool monitorDialog;
 
-     
 
 
+    UnityEvent dialogStartEvent;
+    UnityEvent dialogEndEvent;
+
+
+    public Player player;
+    public PlayerDialogInteract playerDialogInteract;
+
+    private NPC currentNpc;
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,6 +34,12 @@ public class TextManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             Instance = this;
             VarStorage = new Dictionary<string, int>();
+            monitorDialog = false;
+
+            dialogStartEvent = dialogueRunner.onDialogueStart;
+            dialogEndEvent = dialogueRunner.onDialogueComplete;
+            dialogStartEvent.AddListener(DialogStart);
+            dialogEndEvent.AddListener(DialogEnd);
             //varStore = GetComponent<InMemoryVariableStorage>();
 
         }
@@ -32,12 +47,11 @@ public class TextManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        var temp = GameObject.Find("Player"); //does this get called at the loading of a new scene?
+        player = temp.GetComponentInChildren<Player>();
+        playerDialogInteract = temp.GetComponentInChildren<PlayerDialogInteract>();
     }
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 
     [YarnCommand("SetVar")]
     public void SetVar(string name, int number)
@@ -120,7 +134,18 @@ public class TextManager : MonoBehaviour
 
 
 
+    public void DialogStart()
+    {
+        currentNpc = playerDialogInteract.npc;
+        playerDialogInteract.npc = null;
+        player.SetFrozen(true);
+    }
 
+    public void DialogEnd()
+    {
+        player.SetFrozen(false);
+        playerDialogInteract.npc = currentNpc;
+    }
 
 
 
