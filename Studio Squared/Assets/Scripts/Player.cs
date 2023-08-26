@@ -29,6 +29,10 @@ public class Player : MobileEntity
     [SerializeField] ObjectPooler perfectDodgePooler;
     [SerializeField] ParticleSystem healFX;
 
+
+    private bool frozen;
+
+
     private void Awake()
     {
         GameManager.playerTrfm = trfm;
@@ -45,6 +49,10 @@ public class Player : MobileEntity
 
     private void Update()
     {
+        if (frozen)
+        {
+            return; //skip movement
+        }
         if (PlayerInput.JumpPressed())
         {
             OnJump();
@@ -254,6 +262,10 @@ public class Player : MobileEntity
 
         if (PlayerInput.DashHeld()) { OnDash(); }
 
+        if (frozen)
+        {
+            return; //skip movement - TODO may need to move
+        }
         HandleHorizontalMovement();
         DecrementTimers();
         HandlePositionPredicting();
@@ -432,4 +444,15 @@ public class Player : MobileEntity
         if (seconds > 1) { seconds = 1; }
         return self.averageVelocity * seconds + vect2;
     }
+
+
+
+
+    //freeze player
+    public void SetFrozen(bool setTo)
+    {
+        Debug.Log("SHOUDL SET FROZEN");
+        frozen = setTo;
+    }
 }
+
