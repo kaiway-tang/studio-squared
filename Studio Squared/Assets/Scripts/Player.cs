@@ -29,6 +29,8 @@ public class Player : MobileEntity
     [SerializeField] ObjectPooler perfectDodgePooler;
     [SerializeField] ParticleSystem healFX;
 
+    public static int mana;
+
 
     private bool frozen;
 
@@ -408,6 +410,20 @@ public class Player : MobileEntity
             hurtbox.enabled = false;
         }
         hurtboxDisable++;
+    }
+
+    protected override void OnDamageTaken(int amount)
+    {
+        if ((int)(amount) < 8)
+        {
+            CameraController.SetTrauma(12);
+            HUDManager.SetVignetteOpacity(.32f);
+        }
+        else
+        {
+            CameraController.SetTrauma((int)(amount * 1.5f));
+            HUDManager.SetVignetteOpacity(amount * .04f);
+        }
     }
 
     protected override void OnHeal(int amount)
