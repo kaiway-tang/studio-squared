@@ -30,7 +30,7 @@ public class SwooperEnemy : StateEntity
         seeker = GetComponent<Seeker>();
         moveState = new SE_MoveState(this, stateMachine, moveStateData, this, targetPosition, seeker, aiPath);
         //playerDetectedState = new BE1_PlayerDetectedState(this, stateMachine, playerDetectedData, this);
-        //attackState = new SE_AttackState(this, stateMachine, attackStateData, this);
+        attackState = new SE_AttackState(this, stateMachine, attackStateData, this);
         stateMachine.Initialize(moveState);
         aiPath.canMove = false;
     }

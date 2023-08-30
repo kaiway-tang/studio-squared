@@ -26,16 +26,19 @@ public class SE_MoveState : MoveState
     public bool reachedEndOfPath;
     private Vector3 velocity;
 
-    private float playerOrbitDistance = 2f;
+    private float playerOrbitDistance = 5f;
+    private float playerOrbitDistanceMin = 2f;
     private Vector2 playerPos;
     private float locationDiff;
 
     private float orbitTimer;
-    private float orbitTimerBase = 0.5f;
+    private float orbitTimerBase = 2f;
 
     //path?
     public AIPath aiPath;
 
+
+    private bool moveCloser;
     public SE_MoveState(StateEntity entity, FiniteStateMachine stateMachine, D_MoveState stateData, SwooperEnemy enemy, Transform targetPosition, Seeker seeker, AIPath aiPath) : base(entity, stateMachine, stateData)
     {
         this.enemy = enemy;
@@ -44,12 +47,15 @@ public class SE_MoveState : MoveState
         this.aiPath = aiPath;
 
         velocity = new Vector3();
+
         orbitTimer = orbitTimerBase;
     }
 
     public override void Enter()
     {
         base.Enter();
+        orbitTimer = orbitTimerBase;
+        moveCloser = true;
     }
 
     public override void PhysicsUpdate()
@@ -57,16 +63,19 @@ public class SE_MoveState : MoveState
         base.PhysicsUpdate();
         // Disable the AIs own movement code
 
-        Vector3 nextPosition;
-        Quaternion nextRotation;
-        // Calculate how the AI wants to move
-        aiPath.MovementUpdate(Time.deltaTime, out nextPosition, out nextRotation);
-        // Modify nextPosition and nextRotation in any way you wish
-        // Actually move the AI
-        aiPath.FinalizeMovement(nextPosition, nextRotation);
-        //velocity = nextPosition - enemy.transform.position;
-        //enemy.AddVelocity(velocity, 3); //TODO: fix vel
-        //enemy.ApplyXFriction(0.5f);
+        if(moveCloser){
+            Vector3 nextPosition;
+            Quaternion nextRotation;
+            // Calculate how the AI wants to move
+            aiPath.MovementUpdate(Time.deltaTime, out nextPosition, out nextRotation);
+            // Modify nextPosition and nextRotation in any way you wish
+            // Actually move the AI
+            aiPath.FinalizeMovement(nextPosition, nextRotation);
+            //velocity = nextPosition - enemy.transform.position;
+            //enemy.AddVelocity(velocity, 3); //TODO: fix vel
+            //enemy.ApplyXFriction(0.5f);
+        }
+
     }
 
     public override void LogicUpdate()
@@ -74,16 +83,29 @@ public class SE_MoveState : MoveState
         base.LogicUpdate();
         playerPos = Player.GetPredictedPosition(0);
         locationDiff = Vector2.Distance(enemy.transform.position, playerPos);
-        if(locationDiff <= playerOrbitDistance)
+        //Debug.Log(locationDiff);
+        if (locationDiff <= playerOrbitDistance)
         {
             orbitTimer -= Time.deltaTime;
+
             if (orbitTimer <= 0)
             {
-               // enemy.stateMachine.ChangeState(enemy.attackState);
+                Debug.Log("Attack!");
+                enemy.stateMachine.ChangeState(enemy.attackState);
+            }
+            if (locationDiff < playerOrbitDistanceMin)
+            {
+                //Debug.Log("no Orbit");
+                moveCloser = false;
+            }
+            else
+            {
+                moveCloser = true;
             }
         }
         else
         {
+            moveCloser = true;
             orbitTimer = orbitTimerBase;
         }
 
