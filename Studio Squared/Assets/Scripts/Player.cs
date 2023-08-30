@@ -28,6 +28,7 @@ public class Player : MobileEntity
 
     [SerializeField] ObjectPooler perfectDodgePooler;
     [SerializeField] ParticleSystem healFX;
+    [SerializeField] PlayerAnimator animator;
 
     public static int mana;
 
@@ -83,6 +84,7 @@ public class Player : MobileEntity
         if (dashCooldown > 0) { return; }
 
         DisableHurtbox();
+        animator.QueAnimation(animator.Dash, 16);
 
         rb.velocity = PlayerInput.GetVectorInput() * dashSpeed;
 
@@ -121,11 +123,12 @@ public class Player : MobileEntity
         LockFacing(25);
         dashSlashTrail.emitting = true;
         SetYVelocity(0);
+        animator.QueAnimation(animator.Dash, 16);
 
         RaycastHit2D hitInfo;
         if (IsFacingLeft())
         {
-            if (hitInfo = Physics2D.Linecast(trfm.position, trfm.position + Vector3.right * dashSlashRange, GameManager.terrainLayerMask))
+            if (hitInfo = Physics2D.Linecast(trfm.position, trfm.position - Vector3.right * dashSlashRange, GameManager.terrainLayerMask))
             {
                 trfm.position += Vector3.right * -(hitInfo.distance - 1);
                 Debug.Log("hit: " + hitInfo.collider.gameObject);
@@ -268,9 +271,31 @@ public class Player : MobileEntity
         {
             return; //skip movement - TODO may need to move
         }
+
         HandleHorizontalMovement();
         DecrementTimers();
         HandlePositionPredicting();
+        HandleAnimations();
+    }
+
+    void HandleAnimations()
+    {
+        if (!IsOnGround())
+        {
+            ApplyAerialAnimations();
+        }
+    }
+
+    void ApplyAerialAnimations()
+    {
+        if (rb.velocity.y < 0)
+        {
+            animator.RequestAnimatorState(animator.Fall);
+        }
+        else
+        {
+            animator.RequestAnimatorState(animator.Jump);
+        }
     }
 
     void DecrementTimers()
@@ -343,6 +368,12 @@ public class Player : MobileEntity
 
     void HandleHorizontalMovement()
     {
+        if (frozen)
+        {
+            ApplyXFriction(ActiveFriction());
+            return;
+        }
+
         inputVector = PlayerInput.GetVectorInput();
 
         if (inputVector.x > 0.01f)
@@ -352,6 +383,8 @@ public class Player : MobileEntity
             {
                 ApplyXFriction(ActiveFriction());
             }
+
+            animator.RequestAnimatorState(animator.Run);
             SetFacing(RIGHT);
             return;
         }
@@ -361,8 +394,14 @@ public class Player : MobileEntity
             {
                 ApplyXFriction(ActiveFriction());
             }
+
+            animator.RequestAnimatorState(animator.Run);
             SetFacing(LEFT);
             return;
+        }
+        else
+        {
+            animator.RequestAnimatorState(animator.Idle);
         }
 
         ApplyXFriction(ActiveFriction());
