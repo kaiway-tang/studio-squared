@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class KaiwayTest : MonoBehaviour
 {
-    [SerializeField] HPEntity hpEntity;
-    [SerializeField] Transform scalerTrfm;
-
-    private void FixedUpdate()
+    [SerializeField] Vector3 target;
+    // Start is called before the first frame update
+    void Start()
     {
-        scalerTrfm.localScale = new Vector3((float)hpEntity.HP/hpEntity.maxHP, 1, 1);
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.F))
+        {
+            //Physics2D.Linecast
+        }
     }
 }

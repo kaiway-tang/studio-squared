@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerDialogInteract : MonoBehaviour
 {
 
@@ -41,7 +42,7 @@ public class PlayerDialogInteract : MonoBehaviour
         if (npc)
         {
             textManager.RunNPCDialog(npc);//npc.StartDialog();
-            npc = null; //TODO: maybe do this somewhere else, but this *should* make it so we can only interact once. Maybe check if dialog running?
+           // npc = null; //moved to textmanager
             Debug.Log("Interacting!!!");
         }
         else
