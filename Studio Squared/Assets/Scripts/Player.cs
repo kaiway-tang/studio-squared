@@ -216,9 +216,8 @@ public class Player : MobileEntity
         wallJumpTrail.emitting = true;
         trailTimer = 14;
 
-        if (wallJumpWindow < 1 || (remainingJumps < 1 && !refundableJump))
+        if (wallJumpWindow < 1 || (remainingJumps < 1 && !refundableJump) || true) //NOTE: disabled ( || true)
         {
-            Debug.Log("free jump granted");
             Jump();
         }
         if (wallJumpWindow > 0)

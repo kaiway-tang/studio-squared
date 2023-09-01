@@ -6,7 +6,7 @@ public class HUDManager : MonoBehaviour
 {
     [SerializeField] Transform swordHUDTrfm;
     [SerializeField] GameObject castPrompt;
-    [SerializeField] SpriteRenderer castPromptRenderer;
+    [SerializeField] SpriteRenderer castPromptRenderer, darkBackgroundRenderer;
     [SerializeField] Sprite castPromptAlt;
     bool castPromptActive;
 
@@ -14,7 +14,7 @@ public class HUDManager : MonoBehaviour
 
     public SpriteRenderer vignetteRenderer, vignetteBoostRenderer, blackCoverSpriteRenderer, manaFlashRenderer;
 
-    float blackCoverTargetAlpha;
+    float blackCoverTargetAlpha, darkBackgroundTargetAlpha;
     Color fadeRate = new Color(0, 0, 0, 0.01f);
     Color color;
 
@@ -98,13 +98,21 @@ public class HUDManager : MonoBehaviour
         self.blackCoverSpriteRenderer.color = self.color;
     }
 
-    [SerializeField] bool fadingBlackCover;
+    [SerializeField] bool fadingBlackCover, fadingDarkBackground;
     public static void FadeBlackCoverOpacity(float targetAlpha)
     {
         if (Mathf.Abs(self.blackCoverSpriteRenderer.color.a - targetAlpha) < .01f) { return; }
 
         self.fadingBlackCover = true;
         self.blackCoverTargetAlpha = targetAlpha;
+    }
+
+    public static void FadeDarkBackgroundOpacity(float targetAlpha)
+    {
+        if (Mathf.Abs(self.darkBackgroundRenderer.color.a - targetAlpha) < .01f) { return; }
+
+        self.fadingDarkBackground = true;
+        self.darkBackgroundTargetAlpha = targetAlpha;
     }
 
     void ProcessFading()
@@ -117,6 +125,17 @@ public class HUDManager : MonoBehaviour
             {
                 blackCoverSpriteRenderer.color = new Color(0, 0, 0, blackCoverTargetAlpha);
                 fadingBlackCover = false;
+            }
+        }
+
+        if (fadingDarkBackground)
+        {
+            if (darkBackgroundRenderer.color.a - darkBackgroundTargetAlpha > .011f) { darkBackgroundRenderer.color -= fadeRate * 4; }
+            else if (darkBackgroundRenderer.color.a - darkBackgroundTargetAlpha < -.011f) { darkBackgroundRenderer.color += fadeRate * 4; }
+            else
+            {
+                darkBackgroundRenderer.color = new Color(0, 0, 0, darkBackgroundTargetAlpha);
+                fadingDarkBackground = false;
             }
         }
 
