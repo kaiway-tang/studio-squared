@@ -132,7 +132,7 @@ MonoBehaviour:
   - {x: -10, y: 8}
   source: {fileID: 0}
   knockbackPower: 0
-  traumaAmount: 15
+  traumaAmount: 22
   useSlashFX: 1
 --- !u!50 &223028934
 Rigidbody2D:
@@ -6186,7 +6186,7 @@ MonoBehaviour:
   - {x: -24, y: 8}
   source: {fileID: 0}
   knockbackPower: 0
-  traumaAmount: 10
+  traumaAmount: 16
   useSlashFX: 1
 --- !u!50 &3234346978852922990
 Rigidbody2D:

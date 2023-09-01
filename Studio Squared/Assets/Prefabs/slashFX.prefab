@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffce33fa5b8df3c49a5341fcc6260137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 7
+  life: 8
   trfm: {fileID: 7484154891836353987}
-  initialScale: {x: 1, y: 4.2, z: 1}
-  changeScale: {x: 1.4, y: -0.6, z: 0}
+  initialScale: {x: 1, y: 4.9, z: 1}
+  changeScale: {x: 1.4, y: -0.7, z: 0}
