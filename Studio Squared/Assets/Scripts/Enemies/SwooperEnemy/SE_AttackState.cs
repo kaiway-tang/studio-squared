@@ -7,7 +7,7 @@ public class SE_AttackState : AttackState
     SwooperEnemy enemy;
     Vector2 playerPos;
 
-    private float baseSwoopTimer = 0.75f;
+    private float baseSwoopTimer = 1f;
     private float swoopTimer;
     private float baseRiseTimer = 1f;
     private float riseTimer;
@@ -19,7 +19,6 @@ public class SE_AttackState : AttackState
 
     public override void Enter()
     {
-        Debug.Log("Enter!~");
         playerPos = Player.GetPredictedPosition(0);
         swoopTimer = baseSwoopTimer;
         Debug.Log(swoopTimer);
@@ -35,9 +34,10 @@ public class SE_AttackState : AttackState
 
     public override void LogicUpdate()
     {
-        
+
         if(!rise)
         {
+            Debug.Log(swoopTimer);
             swoopTimer -= Time.deltaTime;
             if(swoopTimer <= 0)
             {
@@ -47,10 +47,11 @@ public class SE_AttackState : AttackState
         }
         else
         {
-            //Debug.Log("Rise");
+            //
             riseTimer -= Time.deltaTime;
             if(riseTimer <= 0)
             {
+                Debug.Log("Rise");
                 enemy.stateMachine.ChangeState(enemy.moveState);
             }
         }
@@ -62,12 +63,12 @@ public class SE_AttackState : AttackState
         if (!rise)
         {
             var dif = playerPos - (Vector2)enemy.transform.position;
-            //playerPos = Player.GetPredictedPosition(0);
-            enemy.AddVelocity(3 * Time.deltaTime * dif, 3);
+            playerPos = Player.GetPredictedPosition(0); //may not need this...
+            enemy.AddVelocity(3 * Time.deltaTime * dif, 10);
         }
         else
         {
-            enemy.AddVelocity(Time.deltaTime * Vector2.up, 2);
+            enemy.AddVelocity(3 * Time.deltaTime * Vector2.up, 3);
         }
 
     }
