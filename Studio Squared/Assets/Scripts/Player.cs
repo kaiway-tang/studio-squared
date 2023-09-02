@@ -17,6 +17,8 @@ public class Player : MobileEntity
     int remainingJumps, facingLocked, movementLocked;
     bool refundableJump;
 
+    [SerializeField] private ParticleSystem dashEffect;
+
     [SerializeField] int wallJumpWindow, slashCooldown, dashCooldown;
     [SerializeField] TrailRenderer wallJumpTrail;
     [SerializeField] CircleCollider2D hurtbox;
@@ -112,6 +114,8 @@ public class Player : MobileEntity
         dashCooldown = 75;
 
         wallJumpTrail.emitting = true;
+        dashEffect.Play();
+        
         trailTimer = 10;
     }
 
@@ -122,6 +126,7 @@ public class Player : MobileEntity
         LockMovement(true);
         LockFacing(25);
         dashSlashTrail.emitting = true;
+        dashEffect.Play();
         SetYVelocity(0);
         animator.QueAnimation(animator.Dash, 16);
 

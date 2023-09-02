@@ -5,29 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63cad616-9c15-4266-8ca1-c4d999b387a0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Studio Squared/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Studio Squared/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Tiles/Grass.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Tiles/Grass.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Tiles/TempCaveTiles.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Tiles/TempCaveTiles.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Tiles/TilePalettes/CaveTiles.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Tiles/TilePalettes/CaveTiles.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AstarPathfindingProject/ExampleScenes/Example15_2D/2D.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AstarPathfindingProject/ExampleScenes/Example15_2D/2D.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialog/TextDemoObjectDrop.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialog/TextDemoObjectDrop.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Elevator.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Elevator.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/TestBoss/pillartemp.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/TestBoss/pillartemp.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SampleEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/SampleEnemy.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Sparkle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Sparkle.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ringFX.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ringFX.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/slashFX.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/slashFX.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Dialog.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Dialog.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Effects/effectsExperiments.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Effects/effectsExperiments.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/BossTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/BossTest.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/EnemyTest1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/EnemyTest1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/PathfindingTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/PathfindingTest.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Forest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Forest.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mineshaft.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mineshaft.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Village.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Village.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/movement dev.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/movement dev.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
