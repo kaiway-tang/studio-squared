@@ -6,9 +6,28 @@
   <component name="ChangeListManager">
     <list default="true" id="63cad616-9c15-4266-8ca1-c4d999b387a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Studio Squared/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Studio Squared/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Tiles/Grass.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Tiles/Grass.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Tiles/TempCaveTiles.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Tiles/TempCaveTiles.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Tiles/TilePalettes/CaveTiles.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Tiles/TilePalettes/CaveTiles.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AstarPathfindingProject/ExampleScenes/Example15_2D/2D.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AstarPathfindingProject/ExampleScenes/Example15_2D/2D.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialog/TextDemoObjectDrop.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialog/TextDemoObjectDrop.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Elevator.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Elevator.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/TestBoss/pillartemp.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/TestBoss/pillartemp.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SampleEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/SampleEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Sparkle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Sparkle.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ringFX.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ringFX.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/slashFX.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/slashFX.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Dialog.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Dialog.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Effects/effectsExperiments.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Effects/effectsExperiments.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/BossTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/BossTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/EnemyTest1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/EnemyTest1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/PathfindingTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/EnemyDev/PathfindingTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Forest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Forest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mineshaft.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mineshaft.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Village.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Village.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/movement dev.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/movement dev.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,9 +44,11 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualeffectgraph@12.1.8/Editor/GraphView/VFXViewWindow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@12.1.8/Runtime/2D/Light2DManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualeffectgraph@12.1.8/Editor/Data/VFXData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Editor/InputField/ContentValidation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/12/3aea1baf/Void.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualeffectgraph@12.1.8/Editor/Core/VFXLibrary.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
