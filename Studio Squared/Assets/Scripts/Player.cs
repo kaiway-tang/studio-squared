@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MobileEntity
 {
-    [SerializeField] GameObject circleObj;
+    [SerializeField] GameObject circleObj, predictDot;
     [SerializeField] SimpleAnimator attackAnimator;
     [SerializeField] Attack basicAttack, dashSlashAttack;
     
@@ -494,11 +494,13 @@ public class Player : MobileEntity
             if (nextIndex > 3) { nextIndex = 0; }
 
             velocityLogTimer = 5;
+
+            predictDot.transform.position = GetPredictedPosition(.5f);
         }
     }
 
     static Vector2 vect2;
-    public static Vector2 GetPredictedPosition(float seconds, bool debugDot = false)
+    public static Vector2 GetPredictedPosition(float seconds, bool debugDot = false, bool useY = false)
     {
         vect2 = self.trfm.position;
         if (seconds > 1) { seconds = 1; }
@@ -506,7 +508,24 @@ public class Player : MobileEntity
         {
             Instantiate(self.circleObj, GetPredictedPosition(seconds), Quaternion.identity);
         }
-        return self.averageVelocity * seconds + vect2;
+        if (useY)
+        {
+            if (self.rb.velocity.y > 0)
+            {
+                vect2.x += self.averageVelocity.x * seconds;
+                vect2.y = -self.rb.gravityScale * seconds * seconds + self.averageVelocity.y * seconds + self.trfm.position.y;
+                return vect2;
+            }
+            else
+            {
+                return self.averageVelocity * seconds + vect2;
+            }
+        }
+        else
+        {
+            vect2.x += self.averageVelocity.x * seconds;
+            return vect2;
+        }
     }
 
 
