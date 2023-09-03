@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MobileEntity
 {
+    [SerializeField] GameObject circleObj;
     [SerializeField] SimpleAnimator attackAnimator;
     [SerializeField] Attack basicAttack, dashSlashAttack;
     
@@ -497,11 +498,14 @@ public class Player : MobileEntity
     }
 
     static Vector2 vect2;
-    public static Vector2 GetPredictedPosition(float seconds)
+    public static Vector2 GetPredictedPosition(float seconds, bool debugDot = false)
     {
         vect2 = self.trfm.position;
         if (seconds > 1) { seconds = 1; }
-        //TODO: visual debug thing, spawn circle at predicted position when called
+        if (debugDot)
+        {
+            Instantiate(self.circleObj, GetPredictedPosition(seconds), Quaternion.identity);
+        }
         return self.averageVelocity * seconds + vect2;
     }
 
