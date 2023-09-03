@@ -496,6 +496,7 @@ public class Player : MobileEntity
     {
         vect2 = self.trfm.position;
         if (seconds > 1) { seconds = 1; }
+        //TODO: visual debug thing, spawn circle at predicted position when called
         return self.averageVelocity * seconds + vect2;
     }
 

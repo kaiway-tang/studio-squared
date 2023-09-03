@@ -134,7 +134,7 @@ public class HUDManager : MonoBehaviour
             else if (darkBackgroundRenderer.color.a - darkBackgroundTargetAlpha < -.011f) { darkBackgroundRenderer.color += fadeRate * 4; }
             else
             {
-                darkBackgroundRenderer.color = new Color(0, 0, 0, darkBackgroundTargetAlpha);
+                darkBackgroundRenderer.color = new Color(darkBackgroundRenderer.color.r, darkBackgroundRenderer.color.g, darkBackgroundRenderer.color.b, darkBackgroundTargetAlpha);
                 fadingDarkBackground = false;
             }
         }

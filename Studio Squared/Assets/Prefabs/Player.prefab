@@ -132,7 +132,7 @@ MonoBehaviour:
   - {x: -10, y: 8}
   source: {fileID: 0}
   knockbackPower: 0
-  traumaAmount: 22
+  traumaAmount: 20
   useSlashFX: 1
 --- !u!50 &223028934
 Rigidbody2D:
@@ -5300,7 +5300,7 @@ SpriteRenderer:
   m_SortingLayer: -1
   m_SortingOrder: 999
   m_Sprite: {fileID: 7482667652216324306, guid: be490d02dd0e8854b86c7d05a842016e, type: 3}
-  m_Color: {r: 0.11372549, g: 0, b: 0.10556497, a: 0}
+  m_Color: {r: 0.084905684, g: 0.038848355, b: 0.0812211, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6186,7 +6186,7 @@ MonoBehaviour:
   - {x: -24, y: 8}
   source: {fileID: 0}
   knockbackPower: 0
-  traumaAmount: 16
+  traumaAmount: 14
   useSlashFX: 1
 --- !u!50 &3234346978852922990
 Rigidbody2D:
