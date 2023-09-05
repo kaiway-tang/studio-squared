@@ -36,6 +36,7 @@ public class Player : MobileEntity
     [SerializeField] GameObject lightningBolt;
 
     public static int mana, gravityDisable;
+    [SerializeField] ScalingBar hpBar, manaBar;
 
 
     private bool frozen;
@@ -53,6 +54,9 @@ public class Player : MobileEntity
     new void Start()
     {
         base.Start();
+
+        hpBar.SetPercentage((float)HP / maxHP);
+        manaBar.SetPercentage((float)mana / 100);
     }
 
     private void Update()
@@ -125,11 +129,26 @@ public class Player : MobileEntity
     [SerializeField] Vector2 castKnockback;
     void OnCast()
     {
-        if (castCooldown < 1)
+        if (castCooldown < 1 && mana >= 40)
         {
             LockMovement(true);
             rb.velocity = Vector2.zero;
             castCooldown = 40;
+            GameManager.LightningPtclsPooler.Instantiate(trfm.position);
+            CameraController.SetTrauma(16);
+            if (IsFacingRight())
+            {
+                TakeKnockback(Vector2.right * -castKnockback.x + Vector2.up * castKnockback.y);
+                Instantiate(lightningBolt, trfm.position + Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * -90);
+            }
+            else
+            {
+                TakeKnockback(castKnockback);
+                Instantiate(lightningBolt, trfm.position - Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * 90);
+            }
+            castCooldown = 50;
+
+            AddMana(-40);
         }
     }
 
@@ -560,11 +579,14 @@ public class Player : MobileEntity
             CameraController.SetTrauma((int)(amount * 1.5f));
             HUDManager.SetVignetteOpacity(amount * .04f);
         }
+
+        hpBar.SetPercentage((float)HP/maxHP);
     }
 
     protected override void OnHeal(int amount)
     {
         healFX.Play();
+        hpBar.SetPercentage((float)HP / maxHP);
     }
 
 
@@ -623,6 +645,19 @@ public class Player : MobileEntity
     {
         return frozen || movementLocked > 0;
     }
+    public static void AddMana(int amount)
+    {
+        mana += amount;
+        if (mana > 100)
+        {
+            mana = 100;
+        }
+
+        self.manaBar.SetPercentage((float)mana / 100);
+    }
+
+
+
 
     //freeze player
     public void SetFrozen(bool setTo)

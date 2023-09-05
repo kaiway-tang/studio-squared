@@ -5,7 +5,7 @@ using UnityEngine;
 public class Attack : Hitbox
 {
     [SerializeField] Vector2[] knockbackDirections; //predetermined knockback directions
-    [SerializeField] bool useSourceKnockback;
+    [SerializeField] bool useSourceKnockback, grantMana;
     [SerializeField] Transform source; //only used when knockback type is 'away from source'
     [SerializeField] float knockbackPower; // ^^
     [SerializeField] int traumaAmount;
@@ -13,6 +13,7 @@ public class Attack : Hitbox
     const int RIGHT = 0, LEFT = 1;
     int knockbackIndex;
 
+    bool manaGranted;
     protected void Start()
     {
         if (!source) { source = transform; }
@@ -20,6 +21,7 @@ public class Attack : Hitbox
 
     public void Activate(int knockbackDirection = 0, int p_duration = 0) //-1 for knockbackDirection will deal knockback 'away from source', non -1 values apply a predetermined knockback direction
     {
+        if (grantMana) { manaGranted = false; }
         knockbackIndex = knockbackDirection;
         base.Activate(p_duration);
     }
@@ -44,6 +46,8 @@ public class Attack : Hitbox
             if (takeDamageResult != HPEntity.IGNORED)
             {
                 CameraController.SetTrauma(traumaAmount);
+
+                if (grantMana && !manaGranted) { Player.AddMana(10); manaGranted = true; }
 
                 if (useSlashFX)
                 {
