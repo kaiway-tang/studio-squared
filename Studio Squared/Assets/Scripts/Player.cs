@@ -35,6 +35,8 @@ public class Player : MobileEntity
 
     [SerializeField] GameObject lightningBolt;
 
+    [SerializeField] ScalingBar hpBar, manaBar;
+
     public static int mana;
 
 
@@ -53,6 +55,9 @@ public class Player : MobileEntity
     new void Start()
     {
         base.Start();
+
+        hpBar.SetPercentage((float)HP / maxHP);
+        manaBar.SetPercentage((float)mana / 100);
     }
 
     private void Update()
@@ -125,7 +130,7 @@ public class Player : MobileEntity
     [SerializeField] Vector2 castKnockback;
     void OnCast()
     {
-        if (castCooldown < 1)
+        if (castCooldown < 1 && mana >= 40)
         {
             GameManager.LightningPtclsPooler.Instantiate(trfm.position);
             CameraController.SetTrauma(16);
@@ -140,6 +145,8 @@ public class Player : MobileEntity
                 Instantiate(lightningBolt, trfm.position - Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * 90);
             }
             castCooldown = 50;
+
+            AddMana(-40);
         }
     }
 
@@ -536,11 +543,14 @@ public class Player : MobileEntity
             CameraController.SetTrauma((int)(amount * 1.5f));
             HUDManager.SetVignetteOpacity(amount * .04f);
         }
+
+        hpBar.SetPercentage((float)HP/maxHP);
     }
 
     protected override void OnHeal(int amount)
     {
         healFX.Play();
+        hpBar.SetPercentage((float)HP / maxHP);
     }
 
 
@@ -593,6 +603,17 @@ public class Player : MobileEntity
             vect2.x += self.averageVelocity.x * seconds;
             return vect2;
         }
+    }
+
+    public static void AddMana(int amount)
+    {
+        mana += amount;
+        if (mana > 100)
+        {
+            mana = 100;
+        }
+
+        self.manaBar.SetPercentage((float)mana / 100);
     }
 
 
