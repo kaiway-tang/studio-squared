@@ -20,7 +20,7 @@ public class Player : MobileEntity
 
     [SerializeField] private ParticleSystem dashEffect;
 
-    [SerializeField] int wallJumpWindow, slashCooldown, dashCooldown;
+    [SerializeField] int wallJumpWindow, slashCooldown, dashCooldown, castCooldown;
     [SerializeField] TrailRenderer wallJumpTrail;
     [SerializeField] CircleCollider2D hurtbox;
     [SerializeField] GameObject sparkle;
@@ -30,8 +30,10 @@ public class Player : MobileEntity
     [SerializeField] private Vector2 inputVector;
 
     [SerializeField] ObjectPooler perfectDodgePooler;
-    [SerializeField] ParticleSystem healFX;
+    [SerializeField] ParticleSystem healFX, jumpFX, frontTurnFX, backTurnFX, runFX, dashRefreshFX;
     [SerializeField] PlayerAnimator animator;
+
+    [SerializeField] GameObject lightningBolt;
 
     public static int mana;
 
@@ -120,6 +122,27 @@ public class Player : MobileEntity
         trailTimer = 10;
     }
 
+    [SerializeField] Vector2 castKnockback;
+    void OnCast()
+    {
+        if (castCooldown < 1)
+        {
+            GameManager.LightningPtclsPooler.Instantiate(trfm.position);
+            CameraController.SetTrauma(16);
+            if (IsFacingRight())
+            {
+                TakeKnockback(Vector2.right * -castKnockback.x + Vector2.up * castKnockback.y);
+                Instantiate(lightningBolt, trfm.position + Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * -90);
+            }
+            else
+            {
+                TakeKnockback(castKnockback);
+                Instantiate(lightningBolt, trfm.position - Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * 90);
+            }
+            castCooldown = 50;
+        }
+    }
+
     void DashSlash()
     {
 
@@ -184,6 +207,7 @@ public class Player : MobileEntity
     {
         if (IsOnGround())
         {
+            jumpFX.Play();
             Jump();
         }
         else if (remainingJumps > 0)
@@ -252,6 +276,10 @@ public class Player : MobileEntity
         {
             remainingJumps = 1;
         }
+        else
+        {
+            SetRunFXActive(false);
+        }
 
         if (PlayerInput.AttackHeld())
         {
@@ -271,6 +299,11 @@ public class Player : MobileEntity
         }
 
         if (PlayerInput.DashHeld()) { OnDash(); }
+
+        if (PlayerInput.CastHeld())
+        {
+            OnCast();
+        }
 
         if (frozen)
         {
@@ -337,6 +370,16 @@ public class Player : MobileEntity
             {
                 EnableHurtbox();
             }
+
+            if (dashCooldown == 0)
+            {
+                dashRefreshFX.Play();
+            }
+        }
+
+        if (castCooldown > 0)
+        {
+            castCooldown--;
         }
 
         if (wallJumpWindow > 0)
@@ -359,6 +402,17 @@ public class Player : MobileEntity
         }
     }
 
+    void SetRunFXActive(bool active)
+    {
+        if (active != runFXPlaying)
+        {
+            if (active) { runFX.Play(); }
+            else { runFX.Stop(); }
+
+            runFXPlaying = active;
+        }
+    }
+
     float ActiveAcceleration() //can modify later to handle speed/slow effects
     {
         if (IsOnGround()) { return groundedAcceleration; }
@@ -371,6 +425,7 @@ public class Player : MobileEntity
         return aerialFriction;
     }
 
+    bool runFXPlaying;
     void HandleHorizontalMovement()
     {
         if (frozen)
@@ -390,7 +445,13 @@ public class Player : MobileEntity
             }
 
             animator.RequestAnimatorState(animator.Run);
-            SetFacing(RIGHT);
+
+            if (SetFacing(RIGHT) && IsOnGround() && rb.velocity.x < maxSpeed * -.5f)
+            {
+                backTurnFX.Play();
+            }
+
+            if (IsOnGround()) { SetRunFXActive(true); }
             return;
         }
         else if (inputVector.x < -.01f)
@@ -401,11 +462,17 @@ public class Player : MobileEntity
             }
 
             animator.RequestAnimatorState(animator.Run);
-            SetFacing(LEFT);
+            if (SetFacing(LEFT) && IsOnGround() && rb.velocity.x > maxSpeed * .5f)
+            {
+                backTurnFX.Play();
+            }
+
+            if (IsOnGround()) { SetRunFXActive(true); }
             return;
         }
         else
         {
+            SetRunFXActive(false);
             animator.RequestAnimatorState(animator.Idle);
         }
 
@@ -421,9 +488,10 @@ public class Player : MobileEntity
         }
     }
 
-    new void SetFacing(bool direction)
+    new bool SetFacing(bool direction)
     {
-        if (facingLocked < 1) { base.SetFacing(direction); }
+        if (facingLocked < 1) { return base.SetFacing(direction); }
+        return false;
     }
 
     void LockFacing(int duration)
@@ -492,7 +560,6 @@ public class Player : MobileEntity
 
             nextIndex++;
             if (nextIndex > 3) { nextIndex = 0; }
-
             velocityLogTimer = 5;
 
             predictDot.transform.position = GetPredictedPosition(.5f);

@@ -32,7 +32,7 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    public void Instantiate(Vector2 position, float zRotation = 0)
+    public Transform Instantiate(Vector2 position, float zRotation = 0)
     {
         instantiationRotation.z = zRotation;
 
@@ -45,11 +45,11 @@ public class ObjectPooler : MonoBehaviour
                 pooledObjects[i].trfm.localEulerAngles = instantiationRotation;
                 objectReady[i] = false;
 
-                return;
+                return pooledObjects[i].trfm;
             }
         }
 
-        Instantiate(prefab, position, Quaternion.Euler(instantiationRotation));
+        return Instantiate(prefab, position, Quaternion.Euler(instantiationRotation)).transform;
         Debug.Log("not enough " + prefab);
     }
 

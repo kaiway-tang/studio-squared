@@ -21,7 +21,7 @@ public class PooledObject : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Destantiate()
+    public virtual void Destantiate()
     {
         if (objectID == 0)
         {

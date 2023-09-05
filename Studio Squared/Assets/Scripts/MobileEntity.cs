@@ -27,7 +27,7 @@ public class MobileEntity : HPEntity
         SetFacing(!facingDirection);
     }
 
-    public void SetFacing(bool direction)
+    public bool SetFacing(bool direction) //returns true if facing direction changed
     {
         if (direction != facingDirection)
         {
@@ -37,7 +37,10 @@ public class MobileEntity : HPEntity
             reflectionTrfm.localScale = vect3;
 
             facingDirection = direction;
+
+            return true;
         }
+        return false;
     }
     protected bool IsFacingRight()
     {
@@ -215,10 +218,15 @@ public class MobileEntity : HPEntity
 
         if (result == ALIVE)
         {
-            rb.velocity = knockback * knockbackFactor;
+            TakeKnockback(knockback);
         }
 
         return result;
+    }
+
+    public void TakeKnockback(Vector2 knockback)
+    {
+        rb.velocity = knockback * knockbackFactor;
     }
 
     public void AddVelocity(Vector2 velocity, float max)

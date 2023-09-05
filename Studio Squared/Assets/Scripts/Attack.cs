@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attack : Hitbox
 {
     [SerializeField] Vector2[] knockbackDirections; //predetermined knockback directions
+    [SerializeField] bool useSourceKnockback;
     [SerializeField] Transform source; //only used when knockback type is 'away from source'
     [SerializeField] float knockbackPower; // ^^
     [SerializeField] int traumaAmount;
@@ -32,12 +33,14 @@ public class Attack : Hitbox
     {
         if (col.gameObject.layer > 10 && col.gameObject.layer < 14)
         {
-            if (knockbackIndex == -1)
+            if (knockbackIndex == -1 || useSourceKnockback)
             {
                 knockbackIndex = 0;
                 knockbackDirections[0] = (col.transform.position - source.position).normalized * knockbackPower;
             }
             takeDamageResult = col.GetComponent<HPEntity>().TakeDamage(damage, knockbackDirections[knockbackIndex], entityType, attackID);
+            EntityHit(col, takeDamageResult);
+
             if (takeDamageResult != HPEntity.IGNORED)
             {
                 CameraController.SetTrauma(traumaAmount);
@@ -55,5 +58,10 @@ public class Attack : Hitbox
         }
 
         takeDamageResult = HPEntity.IGNORED;
+    }
+
+    protected virtual void EntityHit(Collider2D col, int takeDamageResult)
+    {
+
     }
 }
