@@ -35,7 +35,7 @@ public class Player : MobileEntity
 
     [SerializeField] GameObject lightningBolt;
 
-    public static int mana;
+    public static int mana, gravityDisable;
 
 
     private bool frozen;
@@ -127,19 +127,9 @@ public class Player : MobileEntity
     {
         if (castCooldown < 1)
         {
-            GameManager.LightningPtclsPooler.Instantiate(trfm.position);
-            CameraController.SetTrauma(16);
-            if (IsFacingRight())
-            {
-                TakeKnockback(Vector2.right * -castKnockback.x + Vector2.up * castKnockback.y);
-                Instantiate(lightningBolt, trfm.position + Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * -90);
-            }
-            else
-            {
-                TakeKnockback(castKnockback);
-                Instantiate(lightningBolt, trfm.position - Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * 90);
-            }
-            castCooldown = 50;
+            LockMovement(true);
+            rb.velocity = Vector2.zero;
+            castCooldown = 40;
         }
     }
 
@@ -286,10 +276,6 @@ public class Player : MobileEntity
             if (attackCharge < 50)
             {
                 attackCharge++;
-                if (attackCharge == 7)
-                {
-                    LockMovement(true);
-                }
 
                 if (attackCharge > 49)
                 {
@@ -303,11 +289,6 @@ public class Player : MobileEntity
         if (PlayerInput.CastHeld())
         {
             OnCast();
-        }
-
-        if (frozen)
-        {
-            return; //skip movement - TODO may need to move
         }
 
         HandleHorizontalMovement();
@@ -326,13 +307,17 @@ public class Player : MobileEntity
 
     void ApplyAerialAnimations()
     {
-        if (rb.velocity.y < 0)
+        if (Mathf.Abs(rb.velocity.y) < .1f)
         {
-            animator.RequestAnimatorState(animator.Fall);
+            animator.RequestAnimatorState(animator.Idle);
+        }
+        else if (rb.velocity.y > 0)        
+        {
+            animator.RequestAnimatorState(animator.Jump);
         }
         else
         {
-            animator.RequestAnimatorState(animator.Jump);
+            animator.RequestAnimatorState(animator.Fall);
         }
     }
 
@@ -344,10 +329,6 @@ public class Player : MobileEntity
             if (dashSlashRecovery == 23)
             {
                 dashSlashTrail.emitting = false;
-            }
-            if (dashSlashRecovery < 1)
-            {
-                LockMovement(false);            
             }
         }
         if (facingLocked > 0) { facingLocked--; }
@@ -379,6 +360,27 @@ public class Player : MobileEntity
 
         if (castCooldown > 0)
         {
+            if (castCooldown > 25)
+            {
+                rb.velocity = Vector2.zero;
+            }
+            if (castCooldown == 25)
+            {
+                LockMovement(false);
+
+                GameManager.LightningPtclsPooler.Instantiate(trfm.position);
+                CameraController.SetTrauma(16);
+                if (IsFacingRight())
+                {
+                    TakeKnockback(Vector2.right * -castKnockback.x + Vector2.up * castKnockback.y);
+                    Instantiate(lightningBolt, trfm.position + Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * -90);
+                }
+                else
+                {
+                    TakeKnockback(castKnockback);
+                    Instantiate(lightningBolt, trfm.position - Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * 90);
+                }
+            }
             castCooldown--;
         }
 
@@ -399,6 +401,26 @@ public class Player : MobileEntity
             {
                 wallJumpTrail.emitting = false;
             }
+        }
+    }
+
+    #region misc_systems
+
+    void SetGravityActive(bool active)
+    {
+        if (active)
+        {
+            gravityDisable--;
+            if (gravityDisable < 1)
+            {
+                gravityDisable = 0;
+                rb.gravityScale = 8;
+            }
+        }
+        else
+        {
+            gravityDisable++;
+            rb.gravityScale = 0;
         }
     }
 
@@ -425,10 +447,48 @@ public class Player : MobileEntity
         return aerialFriction;
     }
 
+    new bool SetFacing(bool direction)
+    {
+        if (facingLocked < 1) { return base.SetFacing(direction); }
+        return false;
+    }
+
+    void LockFacing(int duration)
+    {
+        if (facingLocked < duration) { facingLocked = duration; }
+    }
+
+    void LockMovement(bool _lock)
+    {
+        if (_lock) { movementLocked++; }
+        else { movementLocked--; }
+    }
+
+    void EnableHurtbox()
+    {
+        hurtboxDisable--;
+        if (hurtboxDisable < 1)
+        {
+            hurtbox.enabled = true;
+            hurtboxDisable = 0;
+        }
+    }
+    void DisableHurtbox()
+    {
+        if (hurtboxDisable < 1)
+        {
+            perfectDodgePooler.Instantiate(trfm.position, 0);
+            hurtbox.enabled = false;
+        }
+        hurtboxDisable++;
+    }
+
+    #endregion
+
     bool runFXPlaying;
     void HandleHorizontalMovement()
     {
-        if (frozen)
+        if (IsDisabled())
         {
             ApplyXFriction(ActiveFriction());
             return;
@@ -486,42 +546,6 @@ public class Player : MobileEntity
         {
             SetYVelocity(jumpPower);
         }
-    }
-
-    new bool SetFacing(bool direction)
-    {
-        if (facingLocked < 1) { return base.SetFacing(direction); }
-        return false;
-    }
-
-    void LockFacing(int duration)
-    {
-        if (facingLocked < duration) { facingLocked = duration; }
-    }
-
-    void LockMovement(bool _lock)
-    {
-        if (_lock) { movementLocked++; }
-        else { movementLocked--; }
-    }
-
-    void EnableHurtbox()
-    {
-        hurtboxDisable--;
-        if (hurtboxDisable < 1)
-        {
-            hurtbox.enabled = true;
-            hurtboxDisable = 0;
-        }
-    }
-    void DisableHurtbox()
-    {
-        if (hurtboxDisable < 1)
-        {
-            perfectDodgePooler.Instantiate(trfm.position, 0);
-            hurtbox.enabled = false;
-        }
-        hurtboxDisable++;
     }
 
     protected override void OnDamageTaken(int amount)
@@ -595,8 +619,10 @@ public class Player : MobileEntity
         }
     }
 
-
-
+    bool IsDisabled()
+    {
+        return frozen || movementLocked > 0;
+    }
 
     //freeze player
     public void SetFrozen(bool setTo)
