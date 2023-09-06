@@ -12059,6 +12059,7 @@ MonoBehaviour:
   dashRefreshFX: {fileID: 6164935115475286019}
   animator: {fileID: 2479673424403718349}
   lightningBolt: {fileID: 4030192614155467445, guid: ba01af07964a08f46af08ae3aa1c74d9, type: 3}
+  castChargeFX: {fileID: 4655693720025252376, guid: eccc525a5fbae004183f625018e44882, type: 3}
   hpBar: {fileID: 2479673424193177600}
   manaBar: {fileID: 8027654791212316047}
   castKnockback: {x: 11, y: 5}

@@ -33,9 +33,10 @@ public class Player : MobileEntity
     [SerializeField] ParticleSystem healFX, jumpFX, frontTurnFX, backTurnFX, runFX, dashRefreshFX;
     [SerializeField] PlayerAnimator animator;
 
-    [SerializeField] GameObject lightningBolt;
+    [SerializeField] GameObject lightningBolt, castChargeFX;
+    [SerializeField] GameObject fullManaIndicator;
 
-    public static int mana, gravityDisable;
+    public static int mana, maxMana = 120, gravityDisable;
     [SerializeField] ScalingBar hpBar, manaBar;
 
 
@@ -56,7 +57,7 @@ public class Player : MobileEntity
         base.Start();
 
         hpBar.SetPercentage((float)HP / maxHP);
-        manaBar.SetPercentage((float)mana / 100);
+        manaBar.SetPercentage((float)mana / maxMana);
     }
 
     private void Update()
@@ -131,23 +132,10 @@ public class Player : MobileEntity
     {
         if (castCooldown < 1 && mana >= 40)
         {
+            Instantiate(castChargeFX, trfm.position, Quaternion.identity);
             LockMovement(true);
             rb.velocity = Vector2.zero;
             castCooldown = 40;
-            GameManager.LightningPtclsPooler.Instantiate(trfm.position);
-            CameraController.SetTrauma(16);
-            if (IsFacingRight())
-            {
-                TakeKnockback(Vector2.right * -castKnockback.x + Vector2.up * castKnockback.y);
-                Instantiate(lightningBolt, trfm.position + Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * -90);
-            }
-            else
-            {
-                TakeKnockback(castKnockback);
-                Instantiate(lightningBolt, trfm.position - Vector3.right * 8, trfm.rotation).transform.Rotate(Vector3.forward * 90);
-            }
-            castCooldown = 50;
-
             AddMana(-40);
         }
     }
@@ -613,11 +601,11 @@ public class Player : MobileEntity
     }
 
     static Vector2 vect2;
-    public static Vector2 GetPredictedPosition(float seconds, bool debugDot = false, bool useY = false)
+    public static Vector2 GetPredictedPosition(float seconds, bool showPosition = false, bool useY = false)
     {
         vect2 = self.trfm.position;
         if (seconds > 1) { seconds = 1; }
-        if (debugDot)
+        if (showPosition)
         {
             Instantiate(self.circleObj, GetPredictedPosition(seconds), Quaternion.identity);
         }
@@ -648,12 +636,13 @@ public class Player : MobileEntity
     public static void AddMana(int amount)
     {
         mana += amount;
-        if (mana > 100)
+        if (mana > maxMana)
         {
-            mana = 100;
+            self.fullManaIndicator.SetActive(true);
+            mana = maxMana;
         }
 
-        self.manaBar.SetPercentage((float)mana / 100);
+        self.manaBar.SetPercentage((float)mana / maxMana);
     }
 
 
