@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63cad616-9c15-4266-8ca1-c4d999b387a0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Studio Squared/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Studio Squared/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mineshaft.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mineshaft.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +90,7 @@
       <workItem from="1691259208057" duration="1199000" />
       <workItem from="1691548353879" duration="1040000" />
       <workItem from="1692145221154" duration="5058000" />
+      <workItem from="1693968257335" duration="1241000" />
     </task>
     <servers />
   </component>
