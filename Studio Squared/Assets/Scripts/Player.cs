@@ -20,7 +20,7 @@ public class Player : MobileEntity
 
     [SerializeField] private ParticleSystem dashEffect;
 
-    [SerializeField] int wallJumpWindow, slashCooldown, dashCooldown, castCooldown;
+    [SerializeField] int wallJumpWindow, slashCooldown, dashCooldown, castCooldown, castWindup;
     [SerializeField] TrailRenderer wallJumpTrail;
     [SerializeField] CircleCollider2D hurtbox;
     [SerializeField] GameObject sparkle;
@@ -37,8 +37,13 @@ public class Player : MobileEntity
     [SerializeField] GameObject fullManaIndicator;
 
     public static int mana, maxMana = 120, gravityDisable;
-    [SerializeField] ScalingBar hpBar, manaBar;
 
+    [SerializeField] bool unlockAllAbilities;
+    static bool hasDoubleJump, hasDash, hasWallJump, hasDashSlash, hasCast;
+
+    [SerializeField] SpriteRenderer hpHUD;
+    [SerializeField] Sprite[] hpHudSprites;
+    [SerializeField] Transform manaFill;
 
     private bool frozen;
 
@@ -56,8 +61,16 @@ public class Player : MobileEntity
     {
         base.Start();
 
-        hpBar.SetPercentage((float)HP / maxHP);
-        manaBar.SetPercentage((float)mana / maxMana);
+        if (unlockAllAbilities)
+        {
+            hasDoubleJump = true;
+            hasDash = true;
+            hasWallJump = true;
+            hasDashSlash = true;
+            hasCast = true;
+        }
+
+        UpdateHPHUD();
     }
 
     private void Update()
@@ -77,13 +90,9 @@ public class Player : MobileEntity
         }
         if (PlayerInput.AttackReleased())
         {
-            if (attackCharge > 6)
+            if (attackCharge > 49 && hasDashSlash)
             {
-                LockMovement(false);
-                if (attackCharge > 49)
-                {
-                    DashSlash();
-                }
+                DashSlash();
             }
             attackCharge = 0;
         }
@@ -91,7 +100,7 @@ public class Player : MobileEntity
 
     void OnDash()
     {
-        if (dashCooldown > 0) { return; }
+        if (dashCooldown > 0 || !hasDash) { return; }
 
         DisableHurtbox();
         animator.QueAnimation(animator.Dash, 16);
@@ -130,7 +139,7 @@ public class Player : MobileEntity
     [SerializeField] Vector2 castKnockback;
     void OnCast()
     {
-        if (castCooldown < 1 && mana >= 40)
+        if (castCooldown < 1 && mana >= 40 && hasCast)
         {
             Instantiate(castChargeFX, trfm.position, Quaternion.identity);
             LockMovement(true);
@@ -142,9 +151,7 @@ public class Player : MobileEntity
 
     void DashSlash()
     {
-
         dashSlashRecovery = 25;
-        LockMovement(true);
         LockFacing(25);
         dashSlashTrail.emitting = true;
         dashEffect.Play();
@@ -207,7 +214,7 @@ public class Player : MobileEntity
             jumpFX.Play();
             Jump();
         }
-        else if (remainingJumps > 0)
+        else if (remainingJumps > 0 && hasDoubleJump)
         {
             Jump();
             refundableJump = true;
@@ -217,6 +224,8 @@ public class Player : MobileEntity
 
     bool HandleWallJumpInput()
     {
+        if (!hasWallJump) { return false; }
+        
         inputVector = PlayerInput.GetVectorInput();
 
         if (inputVector.x > 0.01f)
@@ -568,13 +577,18 @@ public class Player : MobileEntity
             HUDManager.SetVignetteOpacity(amount * .04f);
         }
 
-        hpBar.SetPercentage((float)HP/maxHP);
+        UpdateHPHUD();
+    }
+
+    void UpdateHPHUD()
+    {
+        if (HP < 12 && HP >= 0) { hpHUD.sprite = hpHudSprites[HP]; }
     }
 
     protected override void OnHeal(int amount)
     {
         healFX.Play();
-        hpBar.SetPercentage((float)HP / maxHP);
+        UpdateHPHUD();
     }
 
 
@@ -642,7 +656,14 @@ public class Player : MobileEntity
             mana = maxMana;
         }
 
-        self.manaBar.SetPercentage((float)mana / maxMana);
+        if (mana < 1)
+        {
+            self.manaFill.localPosition = new Vector3(0, -6, 0);
+        }
+        else
+        {
+            self.manaFill.localPosition = new Vector3(0, -5 + (float)mana / maxMana * 5, 0);
+        }
     }
 
 

@@ -53,6 +53,9 @@ TagManager:
   - name: VFX
     uniqueID: 1278562839
     locked: 0
+  - name: LitVFX
+    uniqueID: 2844602393
+    locked: 0
   - name: UI
     uniqueID: 825218577
     locked: 0

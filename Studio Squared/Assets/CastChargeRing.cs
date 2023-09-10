@@ -18,10 +18,10 @@ public class CastChargeRing : MonoBehaviour
     {
         timer++;
 
-        trfm.localScale -= Vector3.one * .1f;
-        spriteRenderer.color += Color.black * .07f;
+        trfm.localScale -= Vector3.one * .15f;
+        spriteRenderer.color += Color.black * .1f;
 
-        if (timer > 15)
+        if (timer > 10)
         {
             Destroy(gameObject);
         }

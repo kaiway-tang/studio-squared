@@ -46,12 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992bbee69bbd7554c9fa6cfaa3e4904c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 2
   entityType: 0
   hitbox: {fileID: 7883087083588932835}
   knockbackDirections:
   - {x: 0, y: 0}
   useSourceKnockback: 0
+  grantMana: 0
   source: {fileID: 7883087084981684467}
   knockbackPower: 24
   traumaAmount: 15

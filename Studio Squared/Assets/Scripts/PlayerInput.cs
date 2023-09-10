@@ -6,6 +6,7 @@ public class PlayerInput : MonoBehaviour
 {
     public static KeyCode JumpKey, JumpKey1, UpKey, UpKey1, DownKey, DownKey1, LeftKey, LeftKey1, RightKey, RightKey1;
     public static KeyCode AttackKey, AttackKey1, DashKey, DashKey1, CastKey, CastKey1;
+    public static KeyCode InteractKey;
 
     static bool firstLoad;
 
@@ -37,6 +38,8 @@ public class PlayerInput : MonoBehaviour
 
         CastKey = KeyCode.O;
         CastKey1 = KeyCode.X;
+
+        InteractKey = KeyCode.E;
 
         firstLoad = true;
     }
