@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SampleEnemy : MobileEntity
+public class BallEnemy : MobileEntity
 {
     [SerializeField] float leapDuration;
-    [SerializeField] EnemyDemoAttack attack;
+    [SerializeField] Attack attack;
+    [SerializeField] SpriteRenderer bladesRenderer;
+    [SerializeField] Sprite[] blades;
+    [SerializeField] Transform bladesTrfm;
     int attackCooldown, attackTimer;
     // Start is called before the first frame update
     new void Start()
@@ -14,17 +17,20 @@ public class SampleEnemy : MobileEntity
         attackCooldown = Random.Range(70, 130);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X)) { Leap(); }
-    }
-
+    [SerializeField] int rotSpd;
     // Update is called once per frame
-    void FixedUpdate()
+    new void FixedUpdate()
     {
+        base.FixedUpdate();
+
         if (attackCooldown > 0)
         {
             attackCooldown--;
+
+            if (attackCooldown == 50)
+            {
+                GameManager.TelegraphPooler.Instantiate(trfm.position + Vector3.up);
+            }
         }
         else
         {
@@ -34,10 +40,22 @@ public class SampleEnemy : MobileEntity
 
         if (attackTimer > 0)
         {
-            if (attackTimer == 1)
+            if (attackTimer < 21)
             {
-                attack.Activate(-1, 4);
+                if (attackTimer == 20)
+                {
+                    attack.Activate(-1, 20);
+                    bladesRenderer.sprite = blades[1];
+                }
+                if (attackTimer == 1)
+                {
+                    bladesRenderer.sprite = blades[0];
+                }
+
+                bladesTrfm.Rotate(Vector3.forward * rotSpd);
+
             }
+
             attackTimer--;
         }
         else
@@ -48,7 +66,7 @@ public class SampleEnemy : MobileEntity
 
     void Leap()
     { 
-        attackTimer = 35;
+        attackTimer = 40;
         SetXVelocity((Player.GetPredictedPosition(leapDuration).x - trfm.position.x)/leapDuration);
         SetYVelocity(leapDuration * rb.gravityScale * 5);
     }

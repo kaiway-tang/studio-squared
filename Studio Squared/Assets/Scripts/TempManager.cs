@@ -10,7 +10,6 @@ public class TempManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -31,6 +30,7 @@ public class TempManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+            GameManager.ResetGameVariables(false);
             SceneManager.LoadScene(scene);
         }
     }

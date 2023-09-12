@@ -2036,8 +2036,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 156eb42da71122e4c95170b75ab483f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 6837922894114178195, guid: a400ba6f2fdb9c04a82ccef1a8bbfed9, type: 3}
-  scene: 
+  enemy: {fileID: 7883087084981684471, guid: c38c45aa169436949ad226ef5b845e08, type: 3}
+  scene: Forest
 --- !u!4 &1541067589
 Transform:
   m_ObjectHideFlags: 0

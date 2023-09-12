@@ -70,6 +70,7 @@ public class Player : MobileEntity
             hasCast = true;
         }
 
+        HP = GameManager.playerHP;
         UpdateHPHUD();
     }
 
@@ -570,16 +571,8 @@ public class Player : MobileEntity
 
     protected override void OnDamageTaken(int amount)
     {
-        if ((int)(amount) < 8)
-        {
-            CameraController.SetTrauma(12);
-            HUDManager.SetVignetteOpacity(.32f);
-        }
-        else
-        {
-            CameraController.SetTrauma((int)(amount * 1.5f));
-            HUDManager.SetVignetteOpacity(amount * .04f);
-        }
+        CameraController.SetTrauma(10 + amount * 5);
+        HUDManager.SetVignetteOpacity(.3f + amount * .2f);
 
         UpdateHPHUD();
     }
@@ -656,7 +649,7 @@ public class Player : MobileEntity
         mana += amount;
         if (mana > maxMana)
         {
-            self.fullManaIndicator.SetActive(true);
+            //self.fullManaIndicator.SetActive(true);
             mana = maxMana;
         }
 

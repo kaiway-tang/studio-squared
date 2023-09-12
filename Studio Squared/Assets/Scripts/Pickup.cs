@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     [SerializeField] int use;
-    const int DJUMP = 0, DASH = 1;
+    public const int DJUMP = 0, DASH = 1;
     [SerializeField] bool gameCut;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Fader interactKeyFader;
@@ -39,6 +39,11 @@ public class Pickup : MonoBehaviour
         if (timer > 0 && timer != 100)
         {
             timer++;
+
+            if (timer == 50)
+            {
+                UnlockUI.ShowText(use);
+            }
 
             if (timer > 199)
             {
@@ -84,7 +89,7 @@ public class Pickup : MonoBehaviour
     {
         if (gameCut)
         {
-            HUDManager.FadeBlackCoverOpacity(.6f);
+            HUDManager.FadeBlackCoverOpacity(.8f);
             timer = 1;
             Player.LockMovement(true);
         }
@@ -115,6 +120,7 @@ public class Pickup : MonoBehaviour
         Color color = spriteRenderer.color;
         color.a = 1;
         spriteRenderer.color = color;
+        UnlockUI.ClearText();
 
         disappearing = true;
         timer = 200;
