@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         terrainLayerMask = LayerMask.GetMask("Terrain");
+        emptyTrfm = transform;
+
         BloodFXPooler = m_BloodFXPooler;
         SlashFXPooler = m_SlashFXPooler;
         LightningFXPooler = m_LightningFXPooler;

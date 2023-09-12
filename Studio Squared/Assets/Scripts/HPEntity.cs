@@ -8,6 +8,8 @@ public class HPEntity : MonoBehaviour
     [SerializeField] protected Transform trfm;
     [SerializeField] EntityType entityType;
 
+    [SerializeField] int deathTraumaAmount = 15;
+
     public const int IGNORED = -1, ALIVE = 0, DEAD = 1;
 
     public enum EntityType
@@ -38,6 +40,7 @@ public class HPEntity : MonoBehaviour
 
         if (HP <= 0)
         {
+            CameraController.SetTrauma(deathTraumaAmount);
             Destroy(trfm.gameObject);
             return DEAD;
         }

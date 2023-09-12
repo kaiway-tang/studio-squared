@@ -7,7 +7,7 @@ public class SimpleAnimator : MonoBehaviour
     [SerializeField] Sprite[] sprites;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] int ticksPerFrame;
-    [SerializeField] bool playOnStart, loop;
+    [SerializeField] bool playOnStart, loop, dontClearSprite;
     int timer, currentSprite;
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,8 @@ public class SimpleAnimator : MonoBehaviour
                             currentSprite = 0;
                             spriteRenderer.sprite = sprites[0];
                         }
-                        else { spriteRenderer.sprite = null; }
+                        else if (!dontClearSprite)
+                        { spriteRenderer.sprite = null; }
                     }
                     else
                     {

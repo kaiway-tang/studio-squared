@@ -40,6 +40,7 @@ public class SlugEnemy : MobileEntity
         if (stunned > 0) return;
 
         if (everyTwo) { EveryTwo(); }
+        everyTwo = !everyTwo;
     }
 
     bool frictionOn;
@@ -55,7 +56,9 @@ public class SlugEnemy : MobileEntity
         {
             if (attackCooldown < 1 && helper.InBoxRangeToPlayer(spitRange))
             {
-                if (Mathf.Abs(GameManager.playerTrfm.position.x - trfm.position.x) < lungeRange && Mathf.Abs(trfm.position.y - GameManager.playerTrfm.position.y - 1) < 2)
+                if (Mathf.Abs(GameManager.playerTrfm.position.x - trfm.position.x) < lungeRange
+                    && Mathf.Abs(trfm.position.y - GameManager.playerTrfm.position.y - 1) < 2
+                    && Random.Range(0,2) == 0)
                 {
                     selectedAttack = LUNGE;
                     timer = 20;
@@ -90,6 +93,7 @@ public class SlugEnemy : MobileEntity
                     attackTrailFX.emitting = true;
                     spriteRenderer.sprite = lunge;
                     AddForwardXVelocity(lungePower, 30);
+                    AddYVelocity(lungePower);
                     frictionOn = false;
                 }
                 if (timer == 9)

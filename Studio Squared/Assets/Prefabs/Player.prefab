@@ -272,7 +272,7 @@ Transform:
   - {fileID: 2479673424114133615}
   - {fileID: 2573993675512994095}
   m_Father: {fileID: 2479673423010468982}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &2479673422657214244
 Camera:
@@ -5579,6 +5579,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5687442869507118877}
+  - {fileID: 5371821349112634361}
   - {fileID: 4236367779023516248}
   - {fileID: 2479673422657214252}
   m_Father: {fileID: 2479673423649735708}
@@ -11757,6 +11759,7 @@ MonoBehaviour:
   HP: 0
   trfm: {fileID: 2479673423649735708}
   entityType: 1
+  deathTraumaAmount: 15
   rb: {fileID: 2479673423649735709}
   terrainTriggers:
   - {fileID: 2479673422703894757}
@@ -16806,11 +16809,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4006826029163385178}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.226113, y: 0.42608517, z: 20}
+  m_LocalPosition: {x: -7.226113, y: 0.42608517, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4236367779023516248}
+  m_Father: {fileID: 2479673423010468982}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7088902193835475883
@@ -26961,11 +26964,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5687442869507118877}
-  - {fileID: 5371821349112634361}
+  m_Children: []
   m_Father: {fileID: 2479673423010468982}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9118122098280536006
 MonoBehaviour:
@@ -26983,7 +26984,7 @@ MonoBehaviour:
   m_SlashFXPooler: {fileID: 4798710878163354924}
   m_LightningFXPooler: {fileID: 4093113032359250126}
   m_LightningPtclsPooler: {fileID: 810892066822975810}
-  m_TelegraphPooler: {fileID: 0}
+  m_TelegraphPooler: {fileID: 2519109803090127946}
 --- !u!114 &3124287761304097740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36845,11 +36846,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9102435418047159582}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.226113, y: 0.42608517, z: 20}
+  m_LocalPosition: {x: -7.226113, y: 0.42608517, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4236367779023516248}
+  m_Father: {fileID: 2479673423010468982}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2472290335097779660

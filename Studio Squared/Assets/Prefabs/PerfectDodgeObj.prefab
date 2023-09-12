@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5920430125588686536}
   - component: {fileID: 2386583894811590371}
   - component: {fileID: 9212242065303955766}
+  - component: {fileID: 1016337591036809578}
   m_Layer: 11
   m_Name: PerfectDodgeObj
   m_TagString: Untagged
@@ -50,7 +51,8 @@ MonoBehaviour:
   HP: 9999
   trfm: {fileID: 4722277135161586677}
   entityType: 2
-  window: 5
+  deathTraumaAmount: 15
+  window: 8
   ringFXObj: {fileID: 7007753718755653029, guid: a8f8b54a20dfae84aacfaf20bcd8ce1d, type: 3}
   pooledObject: {fileID: 2386583894811590371}
 --- !u!114 &2386583894811590371
@@ -83,3 +85,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!50 &1016337591036809578
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4660906822623942124}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
