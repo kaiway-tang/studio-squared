@@ -11,6 +11,7 @@ public class MobileEntity : HPEntity
 
     bool facingDirection;
     public const bool RIGHT = false, LEFT = true;
+    protected int stunned;
 
     static Vector2 vect2; //cache a vector2 variable to avoid calling "new"
     static Vector3 vect3; // ^
@@ -20,6 +21,11 @@ public class MobileEntity : HPEntity
         base.Start();
 
         if (!reflectionTrfm) { reflectionTrfm = trfm; }
+    }
+
+    protected void FixedUpdate()
+    {
+        if (stunned > 0) { stunned--; }
     }
 
     protected void FlipFacing()

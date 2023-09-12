@@ -529,8 +529,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2479673423649735708}
-  m_RootOrder: 11
+  m_Father: {fileID: 2479673423795601825}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 180, y: 90, z: 90}
 --- !u!198 &2479673422821336838
 ParticleSystem:
@@ -5343,7 +5343,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423649735708}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2479673422848419821
 MonoBehaviour:
@@ -5773,7 +5773,7 @@ GameObject:
   - component: {fileID: 2479673423526930757}
   - component: {fileID: 2479673423526930756}
   m_Layer: 0
-  m_Name: Light 2D
+  m_Name: PlayerLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5792,7 +5792,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423795601825}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2479673423526930756
 MonoBehaviour:
@@ -5915,7 +5915,6 @@ Transform:
   - {fileID: 2479673424037323566}
   - {fileID: 2479673422635550802}
   - {fileID: 2479673424426878884}
-  - {fileID: 2479673422821336840}
   - {fileID: 2479673422848419823}
   - {fileID: 182690614695213038}
   - {fileID: 8372574825702046449}
@@ -6088,7 +6087,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423795601825}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2479673423723279752
 MonoBehaviour:
@@ -6269,6 +6268,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2479673422821336840}
   - {fileID: 7461220027889940209}
   - {fileID: 3347795343423228069}
   - {fileID: 2479673423526930757}
@@ -6384,7 +6384,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423795601825}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2479673423998509570
 MonoBehaviour:
@@ -11605,7 +11605,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423795601825}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2479673424403718348
 Animator:
@@ -12000,7 +12000,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423649735708}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: -90, y: -90, z: 45}
 --- !u!198 &2959256472959501990
 ParticleSystem:
@@ -17028,7 +17028,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423795601825}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -8, y: 90, z: 45}
 --- !u!198 &7590418956732053695
 ParticleSystem:
@@ -21898,7 +21898,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423795601825}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -8, y: -90, z: 45}
 --- !u!198 &8297379892010310255
 ParticleSystem:
@@ -26942,6 +26942,7 @@ GameObject:
   - component: {fileID: 4798710878163354924}
   - component: {fileID: 4093113032359250126}
   - component: {fileID: 810892066822975810}
+  - component: {fileID: 2519109803090127946}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: MainCamera
@@ -26982,6 +26983,7 @@ MonoBehaviour:
   m_SlashFXPooler: {fileID: 4798710878163354924}
   m_LightningFXPooler: {fileID: 4093113032359250126}
   m_LightningPtclsPooler: {fileID: 810892066822975810}
+  m_TelegraphPooler: {fileID: 0}
 --- !u!114 &3124287761304097740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27038,6 +27040,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4522245679250087179, guid: 4c889ec9f468bef419c38e2174f5bdbe, type: 3}
   poolSize: 3
+--- !u!114 &2519109803090127946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7934406563787618016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5aa50b6f812f8a458e52953c08aeab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3417292685658178681, guid: 39da523eaeadb6b4683bf13150d3d961, type: 3}
+  poolSize: 3
 --- !u!1 &8523911972844523358
 GameObject:
   m_ObjectHideFlags: 0
@@ -27069,7 +27085,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423649735708}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &6164935115475286019
 ParticleSystem:
@@ -31939,7 +31955,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2479673423649735708}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: -90, y: -90, z: 45}
 --- !u!198 &4146105850580688939
 ParticleSystem:
@@ -36853,10 +36869,10 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 19308da9
+  m_ApplyToSortingLayers: 19308da91752354c
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 1

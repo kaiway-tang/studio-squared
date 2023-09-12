@@ -39,7 +39,7 @@ public class Player : MobileEntity
     public static int mana, maxMana = 120, gravityDisable;
 
     [SerializeField] bool unlockAllAbilities;
-    static bool hasDoubleJump, hasDash, hasWallJump, hasDashSlash, hasCast;
+    public static bool hasDoubleJump, hasDash, hasWallJump, hasDashSlash, hasCast;
 
     [SerializeField] SpriteRenderer hpHUD;
     [SerializeField] Sprite[] hpHudSprites;
@@ -200,6 +200,7 @@ public class Player : MobileEntity
 
     private void OnJump()
     {
+        if (IsDisabled()) { return; }
         if (!HandleWallJumpInput())
         {
             wallJumpWindow = 3;
@@ -216,6 +217,7 @@ public class Player : MobileEntity
         }
         else if (remainingJumps > 0 && hasDoubleJump)
         {
+            animator.QueAnimation(animator.Roll, 17);
             Jump();
             refundableJump = true;
             remainingJumps--;
@@ -249,6 +251,7 @@ public class Player : MobileEntity
 
     void WallJump(bool direction)
     {
+        animator.QueAnimation(animator.Roll, 17);
         wallJumpTrail.emitting = true;
         trailTimer = 14;
 
@@ -474,10 +477,10 @@ public class Player : MobileEntity
         if (facingLocked < duration) { facingLocked = duration; }
     }
 
-    void LockMovement(bool _lock)
+    public static void LockMovement(bool _lock)
     {
-        if (_lock) { movementLocked++; }
-        else { movementLocked--; }
+        if (_lock) { self.movementLocked++; }
+        else { self.movementLocked--; }
     }
 
     void EnableHurtbox()
@@ -506,6 +509,7 @@ public class Player : MobileEntity
     {
         if (IsDisabled())
         {
+            animator.RequestAnimatorState(animator.Idle);
             ApplyXFriction(ActiveFriction());
             return;
         }

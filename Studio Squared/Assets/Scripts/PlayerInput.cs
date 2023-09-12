@@ -60,6 +60,8 @@ public class PlayerInput : MonoBehaviour
         return false;
     }
 
+    #region KeyInput
+
     public static bool JumpPressed()
     {
         return Input.GetKeyDown(JumpKey) || Input.GetKeyDown(JumpKey1);
@@ -156,6 +158,14 @@ public class PlayerInput : MonoBehaviour
     {
         return Input.GetKey(CastKey) || Input.GetKey(CastKey1);
     }
+
+
+    public static bool InteractPressed()
+    {
+        return Input.GetKeyDown(InteractKey);
+    }
+
+    #endregion
 
     static Vector2 vect2;
     public static Vector2 GetVectorInput()
