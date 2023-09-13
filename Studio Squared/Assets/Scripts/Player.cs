@@ -322,7 +322,7 @@ public class Player : MobileEntity
 
         HandleHorizontalMovement();
         DecrementTimers();
-        HandlePositionPredicting();
+        HandlePositionTracking();
         HandleAnimations();
     }
 
@@ -604,8 +604,20 @@ public class Player : MobileEntity
     Vector2[] loggedVelocities = new Vector2[4];
     Vector2 averageVelocity;
     int nextIndex;
-    void HandlePositionPredicting()
+    public static bool inHorizontalMovement;
+    float lastX;
+    void HandlePositionTracking()
     {
+        if (Mathf.Abs(trfm.position.x - lastX) > .01f)
+        {
+            inHorizontalMovement = true;
+            lastX = trfm.position.x;
+        }
+        else
+        {
+            inHorizontalMovement = false;
+        }
+
         if (velocityLogTimer > 0) { velocityLogTimer--; }
         else
         {

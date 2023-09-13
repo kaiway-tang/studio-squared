@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] Transform trfm;
     [SerializeField] Transform cameraTrfm;
-    [SerializeField] float trackingRate, rotationRate, moveIntensity, rotationIntensity;
+    [SerializeField] float trackingRate, returnRate, rotationRate, moveIntensity, rotationIntensity;
     [SerializeField] Vector2 deadzoneDimensions;
     int mode;
     const int TRACKING_PLAYER = 0;
@@ -31,14 +31,40 @@ public class CameraController : MonoBehaviour
     {
         if (mode == TRACKING_PLAYER)
         {
-             TrackTarget(GameManager.playerTrfm.position + Vector3.up);
+            HandleDefaultTracking();
+            //TrackTarget(GameManager.playerTrfm.position + Vector3.up);
         }
 
         ProcessTrauma();
     }
 
+    Vector2 lastPOI;
+    void HandleDefaultTracking()
+    {
+        if (Player.inHorizontalMovement)
+        {
+            lastPOI = Player.GetPredictedPosition(.4f);
+            TrackWithDeadzone((Vector3)lastPOI + Vector3.up * 2, trackingRate);
+        }
+        else
+        {
+            vect3.x = lastPOI.x; vect3.y = GameManager.playerTrfm.position.y + 2;
+            TrackWithDeadzone(vect3, trackingRate);
+        }
+    }
+
     float xDiff, yDiff;
-    void TrackTarget(Vector2 targetPos)
+
+    void TrackTarget(Vector2 targetPos, float rate)
+    {
+        vect3.x = (targetPos.x - trfm.position.x) * rate;
+        vect3.y = (targetPos.y - trfm.position.y) * rate;
+        vect3.z = 0;
+
+        trfm.position += vect3;
+    }
+
+    void TrackWithDeadzone(Vector2 targetPos, float rate)
     {
         xDiff = targetPos.x - trfm.position.x;
         yDiff = targetPos.y - trfm.position.y;
@@ -48,7 +74,7 @@ public class CameraController : MonoBehaviour
             if (xDiff > 0) xDiff -= deadzoneDimensions.x;
             else xDiff += deadzoneDimensions.x;
 
-            vect3.x = xDiff * trackingRate;
+            vect3.x = xDiff * rate;
         }
         else
         {
@@ -60,7 +86,7 @@ public class CameraController : MonoBehaviour
             if (yDiff > 0) yDiff -= deadzoneDimensions.y;
             else yDiff += deadzoneDimensions.y;
 
-            vect3.y = yDiff * trackingRate;
+            vect3.y = yDiff * rate;
         }
         else
         {

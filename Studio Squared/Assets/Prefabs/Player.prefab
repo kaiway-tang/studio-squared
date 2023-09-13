@@ -456,7 +456,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trfm: {fileID: 2479673423010468982}
   cameraTrfm: {fileID: 2479673422657214252}
-  trackingRate: 0.12
+  trackingRate: 0.1
+  returnRate: 0.01
   rotationRate: 0.1
   moveIntensity: 0.001
   rotationIntensity: 0.001

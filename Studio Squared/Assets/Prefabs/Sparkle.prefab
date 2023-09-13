@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trfm: {fileID: 3060706505752483038}
-  scale: {x: 0.3, y: 0.15, z: 0}
+  scale: {x: 0.4, y: 0.2, z: 0}
 --- !u!1 &5957941231937034130
 GameObject:
   m_ObjectHideFlags: 0
