@@ -21,7 +21,7 @@ public class SE_AttackState : AttackState
     {
         playerPos = Player.GetPredictedPosition(0);
         swoopTimer = baseSwoopTimer;
-        Debug.Log(swoopTimer);
+        //Debug.Log(swoopTimer);
         rise = false;
         base.Enter();
 
@@ -37,7 +37,7 @@ public class SE_AttackState : AttackState
 
         if(!rise)
         {
-            Debug.Log(swoopTimer);
+            //Debug.Log(swoopTimer);
             swoopTimer -= Time.deltaTime;
             if(swoopTimer <= 0)
             {
@@ -51,7 +51,7 @@ public class SE_AttackState : AttackState
             riseTimer -= Time.deltaTime;
             if(riseTimer <= 0)
             {
-                Debug.Log("Rise");
+                //Debug.Log("Rise");
                 enemy.stateMachine.ChangeState(enemy.moveState);
             }
         }
