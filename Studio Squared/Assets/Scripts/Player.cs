@@ -48,10 +48,17 @@ public class Player : MobileEntity
     private bool frozen;
 
 
+    static bool initStartComplete;
     private void Awake()
     {
         GameManager.playerTrfm = trfm;
         self = GetComponent<Player>();
+
+        if (!initStartComplete)
+        {
+            GameManager.playerHP = Player.self.maxHP;
+            initStartComplete = true;
+        }
 
         //playerInput = GetComponent<PlayerInput>();
         //moveaAction = playerInput.actions["Move"];
@@ -280,8 +287,10 @@ public class Player : MobileEntity
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    new void FixedUpdate()
     {
+        base.FixedUpdate();
+
         if (IsOnGround())
         {
             remainingJumps = 1;
