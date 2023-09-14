@@ -122,13 +122,17 @@ public class StateEntity : MobileEntity
 
     public virtual Transform GetPlayerInAttackRange()
     {
-        RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right * transform.localScale.x, baseData.attackDistance);
-        if (res)
+        if (playerCheck)
         {
-            if (res.transform.tag == "Player")
+            RaycastHit2D res = Physics2D.Raycast(playerCheck.position, transform.right * transform.localScale.x, baseData.attackDistance);
+            if (res)
             {
-                return res.transform;
+                if (res.transform.tag == "Player")
+                {
+                    return res.transform;
+                }
             }
+            return null;
         }
         return null;
     }
