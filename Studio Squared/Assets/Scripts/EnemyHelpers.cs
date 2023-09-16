@@ -6,11 +6,28 @@ public class EnemyHelpers : MonoBehaviour
 {
     [SerializeField] Transform trfm;
     [SerializeField] MobileEntity mobileEntity;
+    public SpriteRenderer[] spriteRenderer;
+    public static Material defaultMaterial, flashMaterial;
 
     private void Start()
     {
         if (!trfm) { trfm = transform; }
         if (!mobileEntity) { mobileEntity = GetComponent<MobileEntity>(); }
+    }
+
+    private void FixedUpdate()
+    {
+        if (hurtTimer > 0)
+        {
+            hurtTimer--;
+            if (hurtTimer == 0)
+            {
+                for (int i = 0; i < spriteRenderer.Length; i++)
+                {
+                    spriteRenderer[i].material = defaultMaterial;
+                }
+            }
+        }
     }
 
     public bool ObstructedSightLine(Vector2 start, Vector2 end)
@@ -43,5 +60,29 @@ public class EnemyHelpers : MonoBehaviour
     {
         if (GameManager.playerTrfm.position.x - trfm.position.x > 0) { mobileEntity.SetFacing(MobileEntity.RIGHT); }
         else { mobileEntity.SetFacing(MobileEntity.LEFT); }
+    }
+
+    public bool IsActive(float trackingRange, bool refreshCombat = true)
+    {
+        if (InBoxRangeToPlayer(trackingRange) && PlayerInSight(trfm.position))
+        {
+            if (refreshCombat) { CameraController.RefreshCombat(); }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    int hurtTimer;
+
+    public void FlashWhite()
+    {
+        for (int i = 0; i < spriteRenderer.Length; i++)
+        {
+            spriteRenderer[i].material = flashMaterial;
+        }
+        hurtTimer = 11;
     }
 }

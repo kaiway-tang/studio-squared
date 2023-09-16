@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float trackingRate, returnRate, rotationRate, moveIntensity, rotationIntensity;
     [SerializeField] Vector2 deadzoneDimensions;
     int mode;
-    const int TRACKING_PLAYER = 0;
+    const int MOVEMENT = 0, COMBAT = 1;
 
     static CameraController self;
 
@@ -29,10 +29,20 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (mode == TRACKING_PLAYER)
+        if (mode == MOVEMENT)
         {
             HandleDefaultTracking();
             //TrackTarget(GameManager.playerTrfm.position + Vector3.up);
+        }
+        else if (mode == COMBAT)
+        {
+            combatTimer--;
+            if (combatTimer < 1)
+            {
+                ExitCombat();
+            }
+
+            TrackWithDeadzone(GameManager.playerTrfm.position, trackingRate);
         }
 
         ProcessTrauma();
@@ -43,7 +53,7 @@ public class CameraController : MonoBehaviour
     {
         if (Player.inHorizontalMovement)
         {
-            lastPOI = Player.GetPredictedPosition(.4f);
+            lastPOI = Player.GetPredictedPosition(.3f);
             TrackWithDeadzone((Vector3)lastPOI + Vector3.up * 2, trackingRate);
         }
         else
@@ -160,5 +170,33 @@ public class CameraController : MonoBehaviour
             //decrement trauma as a timer
             trauma--;
         }
+    }
+
+    int combatTimer;
+    public static void EnterCombat()
+    {
+        self.mode = COMBAT;
+
+        self.vect3.x = 2; self.vect3.y = 3;
+        self.deadzoneDimensions = self.vect3;
+
+        self.combatTimer = 50;
+    }
+
+    public static void RefreshCombat()
+    {
+        if (self.mode == COMBAT && self.combatTimer < 50)
+        {
+            self.combatTimer = 50;
+        }
+    }
+
+    public static void ExitCombat()
+    {
+        self.mode = MOVEMENT;
+        self.lastPOI = Player.GetPredictedPosition(.3f);
+
+        self.vect3.x = 1.5f; self.vect3.y = 1;
+        self.deadzoneDimensions = self.vect3;
     }
 }

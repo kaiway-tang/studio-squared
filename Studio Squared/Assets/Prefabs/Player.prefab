@@ -461,7 +461,7 @@ MonoBehaviour:
   rotationRate: 0.1
   moveIntensity: 0.001
   rotationIntensity: 0.001
-  deadzoneDimensions: {x: 1.5, y: 1}
+  deadzoneDimensions: {x: 2, y: 1}
   trauma: 0
 --- !u!114 &2479673422657214250
 MonoBehaviour:
@@ -27107,6 +27107,8 @@ MonoBehaviour:
   m_LightningFXPooler: {fileID: 4093113032359250126}
   m_LightningPtclsPooler: {fileID: 810892066822975810}
   m_TelegraphPooler: {fileID: 2519109803090127946}
+  flashMaterial: {fileID: 2100000, guid: 608bc7209df073e4385b3e09af95c2da, type: 2}
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!114 &3124287761304097740
 MonoBehaviour:
   m_ObjectHideFlags: 0

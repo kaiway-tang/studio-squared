@@ -235,6 +235,11 @@ public class MobileEntity : HPEntity
         rb.velocity = knockback * knockbackFactor;
     }
 
+    public void Stun(int duration)
+    {
+        if (stunned < duration) { stunned = duration; }
+    }
+
     public void AddVelocity(Vector2 velocity, float max)
     {
         AddXVelocity(velocity.x, velocity.normalized.x * max);

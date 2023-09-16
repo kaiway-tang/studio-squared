@@ -36,6 +36,8 @@ public class HPEntity : MonoBehaviour
         OnDamageTaken(amount);
         if (entityType == EntityType.PlayerPerfectDodge) { return IGNORED; }
 
+        if (entitySource == EntityType.Player && HP > 0) { CameraController.EnterCombat(); }
+
         GameManager.BloodFXPooler.Instantiate(trfm.position);
 
         if (HP <= 0)

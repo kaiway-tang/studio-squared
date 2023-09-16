@@ -25,6 +25,7 @@ public class SlugEnemy : MobileEntity
 
     Quaternion spitBallAim;
     bool everyTwo;
+    bool isActive;
 
     new void Start()
     {
@@ -52,7 +53,7 @@ public class SlugEnemy : MobileEntity
             ApplyXFriction(friction);
         }
 
-        if (helper.InBoxRangeToPlayer(trackingRange) && helper.PlayerInSight(trfm.position) && timer < 1)
+        if (helper.IsActive(trackingRange) && timer < 1)
         {
             if (attackCooldown < 1 && helper.InBoxRangeToPlayer(spitRange))
             {
@@ -145,5 +146,12 @@ public class SlugEnemy : MobileEntity
     void PrepareAttack()
     {
         GameManager.TelegraphPooler.Instantiate(spriteTrfm.position + spriteTrfm.right);
+    }
+
+    public override int TakeDamage(int amount, Vector2 knockback, EntityType entitySource = EntityType.Neutral, int attackID = 0)
+    {
+        int result = base.TakeDamage(amount, knockback, entitySource, attackID);
+        helper.FlashWhite();
+        return result;
     }
 }

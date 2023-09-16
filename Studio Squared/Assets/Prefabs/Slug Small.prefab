@@ -5333,3 +5333,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trfm: {fileID: 1997126054600600750}
   mobileEntity: {fileID: 1108252602646909466}
+  spriteRenderer: {fileID: 5110550715995251006}

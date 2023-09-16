@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class BallEnemy : MobileEntity
 {
+    [SerializeField] int trackingRange;
     [SerializeField] float leapDuration;
     [SerializeField] Attack attack;
     [SerializeField] SpriteRenderer bladesRenderer;
     [SerializeField] Sprite[] blades;
     [SerializeField] Transform bladesTrfm;
     int attackCooldown, attackTimer;
+
+    [SerializeField] EnemyHelpers helper;
+
+    bool isActive;
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -25,11 +31,14 @@ public class BallEnemy : MobileEntity
 
         if (attackCooldown > 0)
         {
-            attackCooldown--;
-
-            if (attackCooldown == 50)
+            if (isActive)
             {
-                GameManager.TelegraphPooler.Instantiate(trfm.position + Vector3.up);
+                attackCooldown--;
+
+                if (attackCooldown == 50)
+                {
+                    GameManager.TelegraphPooler.Instantiate(trfm.position + Vector3.up);
+                }
             }
         }
         else
@@ -62,12 +71,28 @@ public class BallEnemy : MobileEntity
         {
             ApplyXFriction(.3f);
         }
+
+        every2 = !every2;
+        if (every2) { EveryTwo(); }
+    }
+
+    bool every2;
+    void EveryTwo()
+    {
+        isActive = helper.IsActive(trackingRange);
     }
 
     void Leap()
-    { 
+    {
         attackTimer = 40;
         SetXVelocity((Player.GetPredictedPosition(leapDuration).x - trfm.position.x)/leapDuration);
         SetYVelocity(leapDuration * rb.gravityScale * 5);
+    }
+
+    public override int TakeDamage(int amount, Vector2 knockback, EntityType entitySource = EntityType.Neutral, int attackID = 0)
+    {
+        int result = base.TakeDamage(amount, knockback, entitySource, attackID);
+        helper.FlashWhite();
+        return result;
     }
 }

@@ -606,17 +606,11 @@ public class Player : MobileEntity
     int nextIndex;
     public static bool inHorizontalMovement;
     float lastX;
+
     void HandlePositionTracking()
     {
-        if (Mathf.Abs(trfm.position.x - lastX) > .01f)
-        {
-            inHorizontalMovement = true;
-            lastX = trfm.position.x;
-        }
-        else
-        {
-            inHorizontalMovement = false;
-        }
+        inHorizontalMovement = Mathf.Abs(trfm.position.x - lastX) > .1f;
+        lastX = trfm.position.x;
 
         if (velocityLogTimer > 0) { velocityLogTimer--; }
         else

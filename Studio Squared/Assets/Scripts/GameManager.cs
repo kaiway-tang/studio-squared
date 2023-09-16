@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public static int terrainLayerMask;
     public const int PlayerCollisionLayer = 11;
 
+    [SerializeField] Material flashMaterial, defaultMaterial;
+
     public static int playerHP;
 
     private void Awake()
@@ -34,6 +36,9 @@ public class GameManager : MonoBehaviour
         LightningFXPooler = m_LightningFXPooler;
         LightningPtclsPooler = m_LightningPtclsPooler;
         TelegraphPooler = m_TelegraphPooler;
+
+        EnemyHelpers.flashMaterial = flashMaterial;
+        EnemyHelpers.defaultMaterial = defaultMaterial;
     }
 
     public static void SaveSceneVariables()
