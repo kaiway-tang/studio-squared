@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public static ObjectPooler LightningPtclsPooler;
     public static ObjectPooler TelegraphPooler;
     public static int terrainLayerMask;
-    public const int PlayerCollisionLayer = 11;
+    public const int PlayerCollisionLayer = 11, PlayerTriggerLayer = 1;
 
     [SerializeField] Material flashMaterial, defaultMaterial;
 

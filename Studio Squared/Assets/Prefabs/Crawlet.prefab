@@ -55,6 +55,8 @@ MonoBehaviour:
   trfm: {fileID: 714623597090793008}
   entityType: 0
   deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 714623597090793021}
   terrainTriggers:
   - {fileID: 714623597158387458}
@@ -345,7 +347,7 @@ MonoBehaviour:
   useSourceKnockback: 1
   grantMana: 0
   source: {fileID: 714623597712022013}
-  knockbackPower: 15
+  knockbackPower: 22
   traumaAmount: 10
   useSlashFX: 0
 --- !u!61 &714623597712022012

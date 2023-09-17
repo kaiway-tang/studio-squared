@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7238160074540123684}
   - component: {fileID: -2994745134414492286}
   m_Layer: 9
-  m_Name: Slug Spitball
+  m_Name: Slug Spitball Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -288,7 +288,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4830,7 +4830,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.7}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.3
 --- !u!114 &7238160074540123684
 MonoBehaviour:
   m_ObjectHideFlags: 0

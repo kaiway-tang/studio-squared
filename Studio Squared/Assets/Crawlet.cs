@@ -73,15 +73,11 @@ public class Crawlet : MobileEntity
         }
     }
 
-    public override int TakeDamage(int amount, Vector2 knockback, EntityType entitySource = EntityType.Neutral, int attackID = 0)
+    protected override void OnDamageTaken(int amount, int result)
     {
-        Debug.Log(trfm.localEulerAngles.z);
-        int result = base.TakeDamage(amount, knockback, entitySource, attackID);
         if (Mathf.Abs(trfm.localEulerAngles.z) > 170) { SetFacing(GameManager.playerTrfm.position.x < trfm.position.x); }
         else { SetFacing(GameManager.playerTrfm.position.x > trfm.position.x); }
         helper.FlashWhite();
         Stun(5);
-        
-        return result;
     }
 }

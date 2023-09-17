@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Forest.unity
     guid: 20c9244a648801c48b23cda7e2a608ff
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Mineshaft.unity
     guid: 6b7b8138b7f2df84196ecf5132842b4e
   m_configObjects: {}

@@ -10,7 +10,13 @@ public class HPEntity : MonoBehaviour
 
     [SerializeField] int deathTraumaAmount = 15;
 
+    [SerializeField] GameObject damagedFXObj;
+    [SerializeField] ObjectPooler damagedFXPooler;
+
     public const int IGNORED = -1, ALIVE = 0, DEAD = 1;
+    protected int ignoreAttackID;
+
+    int invulnerable;
 
     public enum EntityType
     {
@@ -20,6 +26,12 @@ public class HPEntity : MonoBehaviour
     protected void Start()
     {
         if (HP == 0) { HP = maxHP; }
+        if (!damagedFXObj && !damagedFXPooler) { damagedFXPooler = GameManager.BloodFXPooler; }
+    }
+
+    protected void FixedUpdate()
+    {
+        if (invulnerable > 0) { invulnerable--; }
     }
 
     public virtual int TakeDamage(int amount, Vector2 knockback, EntityType entitySource = EntityType.Neutral, int attackID = 0)
@@ -29,16 +41,24 @@ public class HPEntity : MonoBehaviour
 
     public int TakeDamage(int amount, EntityType entitySource = EntityType.Neutral, int attackID = 0)
     {
-        if (entitySource == entityType || !ValidAttackID(attackID)) { return IGNORED; }
+        if (entitySource == entityType || !ValidAttackID(attackID) || invulnerable > 0) { return IGNORED; }
 
         HP -= amount;
 
-        OnDamageTaken(amount);
+        OnDamageTaken(amount, HP <= 0 ? DEAD : ALIVE);
         if (entityType == EntityType.PlayerPerfectDodge) { return IGNORED; }
 
         if (entitySource == EntityType.Player && HP > 0) { CameraController.EnterCombat(); }
 
-        GameManager.BloodFXPooler.Instantiate(trfm.position);
+
+        if (damagedFXObj)
+        {
+            Instantiate(damagedFXObj, trfm.position, Quaternion.identity);
+        }
+        else
+        {
+            damagedFXPooler.Instantiate(trfm.position, 0);
+        }
 
         if (HP <= 0)
         {
@@ -49,20 +69,28 @@ public class HPEntity : MonoBehaviour
         return ALIVE;
     }
 
-    protected virtual void OnDamageTaken(int amount) { }
+    protected virtual void OnDamageTaken(int amount, int result) { }
     protected virtual void OnHeal(int amount) { }
 
-    int[] trackedAttackIDs = new int[3];
-    int latestAttackIDIndex;
+    protected int[] trackedAttackIDs = new int[3];
+    protected int latestAttackIDIndex;
     bool ValidAttackID(int attackID) //returns False if attackID is found, True otherwise; also handles attackID tracking
     {
         bool result = !(trackedAttackIDs[0] == attackID || trackedAttackIDs[1] == attackID || trackedAttackIDs[2] == attackID);
-
-        trackedAttackIDs[latestAttackIDIndex] = attackID;
-        latestAttackIDIndex++;
-        if (latestAttackIDIndex > 2) { latestAttackIDIndex  = 0; }
-
+        SetInvalidAttackID(attackID);
         return result || attackID == 0;
+    }
+
+    public void SetInvalidAttackID(int ID)
+    {
+        trackedAttackIDs[latestAttackIDIndex] = ID;
+        latestAttackIDIndex++;
+        if (latestAttackIDIndex > 2) { latestAttackIDIndex = 0; }
+    }
+
+    public void SetInvulnerable(int duration)
+    {
+        if (duration > invulnerable) { invulnerable = duration; }
     }
 
     public void Heal(int amount, bool overheal = false)

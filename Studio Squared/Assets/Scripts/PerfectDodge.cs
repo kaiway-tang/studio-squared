@@ -29,7 +29,7 @@ public class PerfectDodge : HPEntity
         }
     }
 
-    protected override void OnDamageTaken(int amount)
+    protected override void OnDamageTaken(int amount, int result)
     {
         Player.self.Heal((int)(amount * .5f));
 

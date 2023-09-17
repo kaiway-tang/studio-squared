@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1257149735303915130}
   - component: {fileID: 3487279629871334532}
   - component: {fileID: 5892555101202682896}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: CollapsingTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
+  ptclSys: {fileID: 0}
+  fogFader: {fileID: 0}
 --- !u!61 &5892555101202682896
 BoxCollider2D:
   m_ObjectHideFlags: 0

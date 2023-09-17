@@ -23,8 +23,9 @@ public class MobileEntity : HPEntity
         if (!reflectionTrfm) { reflectionTrfm = trfm; }
     }
 
-    protected void FixedUpdate()
+    protected new void FixedUpdate()
     {
+        base.FixedUpdate();
         if (stunned > 0) { stunned--; }
     }
 
@@ -207,7 +208,7 @@ public class MobileEntity : HPEntity
             rb.velocity = vect2;
         }
     }
-    protected bool IsOnGround()
+    public bool IsOnGround()
     {
         return terrainTriggers[0].isTouching > 0;
     }

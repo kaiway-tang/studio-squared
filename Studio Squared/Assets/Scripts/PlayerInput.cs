@@ -172,28 +172,37 @@ public class PlayerInput : MonoBehaviour
     {
         if (UpHeld())
         {
-            if (LeftHeld())
+            if (!DownHeld())
             {
-                vect2.x = -.707f;
-                vect2.y = .707f;
-            }
-            else if (RightHeld())
-            {
-                vect2.x = .707f;
-                vect2.y = .707f;
-            }
-            else
-            {
-                vect2.x = 0;
-                vect2.y = 1;
+                if (LeftHeld())
+                {
+                    if (!RightHeld())
+                    {
+                        vect2.x = -.707f;
+                        vect2.y = .707f;
+                    }
+                }
+                else if (RightHeld())
+                {
+                    vect2.x = .707f;
+                    vect2.y = .707f;
+                }
+                else
+                {
+                    vect2.x = 0;
+                    vect2.y = 1;
+                }
             }
         }
         else if (DownHeld())
         {
             if (LeftHeld())
             {
-                vect2.x = -.707f;
-                vect2.y = -.707f;
+                if (!RightHeld())
+                {
+                    vect2.x = -.707f;
+                    vect2.y = -.707f;
+                }
             }
             else if (RightHeld())
             {
@@ -210,8 +219,11 @@ public class PlayerInput : MonoBehaviour
         {
             if (LeftHeld())
             {
-                vect2.x = -1;
-                vect2.y = 0;
+                if (!RightHeld())
+                {
+                    vect2.x = -1;
+                    vect2.y = 0;
+                }
             }
             else if (RightHeld())
             {

@@ -91,7 +91,7 @@ public class Pickup : MonoBehaviour
         {
             HUDManager.FadeBlackCoverOpacity(.8f);
             timer = 1;
-            Player.LockMovement(true);
+            Player.self.SetFrozen(true);
         }
         else
         {
@@ -125,6 +125,6 @@ public class Pickup : MonoBehaviour
         disappearing = true;
         timer = 200;
 
-        if (gameCut) { Player.LockMovement(false); }
+        if (gameCut) { Player.self.SetFrozen(false); }
     }
 }

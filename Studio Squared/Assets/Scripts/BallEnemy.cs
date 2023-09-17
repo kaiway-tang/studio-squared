@@ -89,10 +89,8 @@ public class BallEnemy : MobileEntity
         SetYVelocity(leapDuration * rb.gravityScale * 5);
     }
 
-    public override int TakeDamage(int amount, Vector2 knockback, EntityType entitySource = EntityType.Neutral, int attackID = 0)
+    protected override void OnDamageTaken(int amount, int result)
     {
-        int result = base.TakeDamage(amount, knockback, entitySource, attackID);
         helper.FlashWhite();
-        return result;
     }
 }

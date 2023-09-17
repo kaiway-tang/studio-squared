@@ -8,8 +8,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform cameraTrfm;
     [SerializeField] float trackingRate, returnRate, rotationRate, moveIntensity, rotationIntensity;
     [SerializeField] Vector2 deadzoneDimensions;
-    int mode;
-    const int MOVEMENT = 0, COMBAT = 1;
+    public static int mode;
+    public const int MOVEMENT = 0, COMBAT = 1, FALLING = 2, LOOK_DOWN = 3;
 
     static CameraController self;
 
@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
+        mode = MOVEMENT;
         GameManager.cameraTrfm = trfm;
         self = GetComponent<CameraController>();
     }
@@ -43,6 +44,14 @@ public class CameraController : MonoBehaviour
             }
 
             TrackWithDeadzone(GameManager.playerTrfm.position, trackingRate);
+        }
+        else if (mode == FALLING)
+        {
+            TrackTarget(GameManager.playerTrfm.position + Vector3.up * -7, trackingRate);
+        }
+        else if (mode == LOOK_DOWN)
+        {
+            TrackTarget(GameManager.playerTrfm.position + Vector3.up * -2, trackingRate);
         }
 
         ProcessTrauma();
@@ -175,7 +184,7 @@ public class CameraController : MonoBehaviour
     int combatTimer;
     public static void EnterCombat()
     {
-        self.mode = COMBAT;
+        mode = COMBAT;
 
         self.vect3.x = 2; self.vect3.y = 3;
         self.deadzoneDimensions = self.vect3;
@@ -185,7 +194,7 @@ public class CameraController : MonoBehaviour
 
     public static void RefreshCombat()
     {
-        if (self.mode == COMBAT && self.combatTimer < 50)
+        if (mode == COMBAT && self.combatTimer < 50)
         {
             self.combatTimer = 50;
         }
@@ -193,7 +202,7 @@ public class CameraController : MonoBehaviour
 
     public static void ExitCombat()
     {
-        self.mode = MOVEMENT;
+        mode = MOVEMENT;
         self.lastPOI = Player.GetPredictedPosition(.3f);
 
         self.vect3.x = 1.5f; self.vect3.y = 1;

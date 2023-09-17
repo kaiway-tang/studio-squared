@@ -30,11 +30,11 @@ public class LightningBoltProjectile : Attack
         {
             if (takeDamageResult == HPEntity.ALIVE)
             {
-                GameManager.LightningFXPooler.Instantiate(col.transform.position + Vector3.up * 6).parent = col.transform;
+                //GameManager.LightningFXPooler.Instantiate(col.transform.position + Vector3.up * 6).parent = col.transform;
             }
             else if (takeDamageResult == HPEntity.DEAD)
             {
-                GameManager.LightningFXPooler.Instantiate(col.transform.position + Vector3.up * 6);
+                //GameManager.LightningFXPooler.Instantiate(col.transform.position + Vector3.up * 6);
             }
             GameManager.LightningPtclsPooler.Instantiate(col.transform.position);
         }

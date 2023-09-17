@@ -5259,6 +5259,8 @@ MonoBehaviour:
   trfm: {fileID: 1997126054600600750}
   entityType: 0
   deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 9146583661052492687}
   terrainTriggers: []
   reflectionTrfm: {fileID: 6624913254702726470}
@@ -5282,6 +5284,7 @@ MonoBehaviour:
   attack: {fileID: 2210536306112165928}
   friction: 1
   helper: {fileID: 5561976741371951820}
+  splitSlug: {fileID: 0}
 --- !u!50 &9146583661052492687
 Rigidbody2D:
   serializedVersion: 4
@@ -5333,4 +5336,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trfm: {fileID: 1997126054600600750}
   mobileEntity: {fileID: 1108252602646909466}
-  spriteRenderer: {fileID: 5110550715995251006}
+  spriteRenderer:
+  - {fileID: 5110550715995251006}

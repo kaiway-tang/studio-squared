@@ -10,18 +10,17 @@ public class CollapsingTileTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer == GameManager.PlayerCollisionLayer)
+        if (col.gameObject.layer == GameManager.PlayerTriggerLayer)
         {
             CameraController.AddTrauma(18);
             ptclSys.Play();
-            Player.LockMovement(true);
+            Player.LockMovement(20);
             Invoke("Collapse", .4f);
         }
     }
 
     void Collapse()
     {
-        Player.LockMovement(false);
         CameraController.AddTrauma(18);
         tile.Collapse();
         fogFader.FadeOut(.05f);

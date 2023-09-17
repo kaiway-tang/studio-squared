@@ -20,6 +20,8 @@ public class SlugEnemy : MobileEntity
     [SerializeField] float friction;
     [SerializeField] EnemyHelpers helper;
 
+    [SerializeField] GameObject splitSlug;
+
     int selectedAttack, timer, attackCooldown;
     const int NONE = 0, LUNGE = 1, SPIT = 2;
 
@@ -143,15 +145,34 @@ public class SlugEnemy : MobileEntity
         if (attackCooldown > 0) { attackCooldown--; }
     }
 
+    public void InitiateSpawnObject(Vector2 spawnVelocity, int invalidAttackID)
+    {
+        SetInvalidAttackID(invalidAttackID);
+        SetInvulnerable(10);
+        rb.velocity = spawnVelocity;
+    }
+
+
+
+
+
+
+
     void PrepareAttack()
     {
         GameManager.TelegraphPooler.Instantiate(spriteTrfm.position + spriteTrfm.right);
     }
 
-    public override int TakeDamage(int amount, Vector2 knockback, EntityType entitySource = EntityType.Neutral, int attackID = 0)
+    protected override void OnDamageTaken(int amount, int result)
     {
-        int result = base.TakeDamage(amount, knockback, entitySource, attackID);
-        helper.FlashWhite();
-        return result;
+        if (result == HPEntity.DEAD && splitSlug)
+        {
+            Instantiate(splitSlug, trfm.position, trfm.rotation).GetComponent<SlugEnemy>().InitiateSpawnObject((Vector3.up + Vector3.right) * 17, trackedAttackIDs[latestAttackIDIndex]);
+            Instantiate(splitSlug, trfm.position, trfm.rotation).GetComponent<SlugEnemy>().InitiateSpawnObject((Vector3.up + Vector3.left) * 17, trackedAttackIDs[latestAttackIDIndex]);
+        }
+        else
+        {
+            helper.FlashWhite();
+        }
     }
 }

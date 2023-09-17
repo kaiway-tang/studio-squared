@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 public class Player : MobileEntity
 {
     [SerializeField] GameObject circleObj, predictDot;
-    [SerializeField] SimpleAnimator attackAnimator;
-    [SerializeField] Attack basicAttack, dashSlashAttack;
+    [SerializeField] SimpleAnimator[] attackAnimator;
+    [SerializeField] PlayerAttack basicAttack1, basicAttack2, dashSlashAttack;
     
     [SerializeField] float
         groundedAcceleration, aerialAcceleration, maxSpeed,
@@ -16,11 +16,11 @@ public class Player : MobileEntity
         flatYDashVelocity, YVelocityFactor;
 
     int remainingJumps, facingLocked, movementLocked;
-    bool refundableJump;
+    bool refundableJump, attackQued;
 
     [SerializeField] private ParticleSystem dashEffect;
 
-    [SerializeField] int wallJumpWindow, slashCooldown, dashCooldown, castCooldown, castWindup;
+    [SerializeField] int wallJumpWindow, slashCooldown, slashComboWindow, dashCooldown, castCooldown, castWindup;
     [SerializeField] TrailRenderer wallJumpTrail;
     [SerializeField] CircleCollider2D hurtbox;
     [SerializeField] GameObject sparkle;
@@ -36,12 +36,12 @@ public class Player : MobileEntity
     [SerializeField] GameObject lightningBolt, castChargeFX;
     [SerializeField] GameObject fullManaIndicator;
 
-    public static int mana, maxMana = 120, gravityDisable;
+    public static int mana, maxMana = 120, gravityDisable, fallingTimer;
 
     [SerializeField] bool unlockAllAbilities;
-    public static bool hasDoubleJump, hasDash, hasWallJump, hasDashSlash, hasCast;
+    public static bool hasDoubleJump, hasDash, hasWallJump, hasDashSlash, hasCast, hasDoubleSlash;
 
-    [SerializeField] SpriteRenderer hpHUD;
+    [SerializeField] SpriteRenderer hpHUD, spriteRenderer;
     [SerializeField] Sprite[] hpHudSprites;
     [SerializeField] Transform manaFill;
 
@@ -51,6 +51,8 @@ public class Player : MobileEntity
     static bool initStartComplete;
     private void Awake()
     {
+        hasDoubleSlash = true;
+
         GameManager.playerTrfm = trfm;
         self = GetComponent<Player>();
 
@@ -98,11 +100,17 @@ public class Player : MobileEntity
         }
         if (PlayerInput.AttackReleased())
         {
-            if (attackCharge > 49 && hasDashSlash)
+            if (attackCharge > 49)
             {
                 DashSlash();
             }
             attackCharge = 0;
+        }
+
+        if (lookDownTimer > 39 && PlayerInput.DownReleased())
+        {
+            lookDownTimer = 0;
+            CameraController.mode = CameraController.MOVEMENT;
         }
     }
 
@@ -112,6 +120,7 @@ public class Player : MobileEntity
 
         DisableHurtbox();
         animator.QueAnimation(animator.Dash, 16);
+        spriteRenderer.color = Color.white * .4f + Color.black * .6f;
 
         rb.velocity = PlayerInput.GetVectorInput() * dashSpeed;
 
@@ -150,7 +159,7 @@ public class Player : MobileEntity
         if (castCooldown < 1 && mana >= 40 && hasCast)
         {
             Instantiate(castChargeFX, trfm.position, Quaternion.identity);
-            LockMovement(true);
+            LockMovement(15);
             rb.velocity = Vector2.zero;
             castCooldown = 40;
             AddMana(-40);
@@ -194,16 +203,58 @@ public class Player : MobileEntity
         }
     }
 
+
     private void OnAttack ()  
     {
-        if (slashCooldown > 0) { return; }
-        attackAnimator.Play();
+        if (slashCooldown > 0) 
+        {
+            if (slashComboWindow > 0)
+            {
+                if (slashCooldown < 16)
+                {
+                    attackAnimator[1].Play();
+                    animator.QueAnimation(animator.Attack2, 17);
 
-        if (IsFacingLeft()) { basicAttack.Activate(1, 12); }
-        else { basicAttack.Activate(0, 12); }
+                    HandleAttackMovement();
 
-        LockFacing(18);
+                    slashComboWindow = 0;
+                    slashCooldown = 25;
+                    attackQued = false;
+                }
+                else
+                {
+                    attackQued = true;
+                }
+            }
+            return;
+        }
+
+        attackAnimator[0].Play();
+        animator.QueAnimation(animator.Attack1, 17);
+
+        HandleAttackMovement();
+
         slashCooldown = 25;
+        slashComboWindow = 20;
+    }
+
+    void HandleAttackMovement()
+    {
+        LockFacing(18);
+        if (IsOnGround())
+        {
+            LockMovement(9);
+            if (IsFacingLeft())
+            {
+                if (PlayerInput.LeftHeld()) { AddXVelocity(-22, -22); }
+                else if (!PlayerInput.RightHeld()) { AddXVelocity(-12, -12); }
+            }
+            else
+            {
+                if (PlayerInput.RightHeld()) { AddXVelocity(22, 22); }
+                else if (!PlayerInput.LeftHeld()) { AddXVelocity(12, 12); }
+            }
+        }
     }
 
     private void OnJump()
@@ -294,13 +345,35 @@ public class Player : MobileEntity
         if (IsOnGround())
         {
             remainingJumps = 1;
+
+            if (fallingTimer > 0)
+            {
+                if (fallingTimer > 14) { CameraController.mode = CameraController.MOVEMENT; }
+
+                if (fallingTimer > 49)
+                {
+                    CameraController.SetTrauma(15);
+                    Stun(25);
+                }
+                fallingTimer = 0;
+            }
         }
         else
         {
             SetRunFXActive(false);
+
+            if (rb.velocity.y < -30)
+            {
+                if (fallingTimer < 50 && !Physics2D.Linecast(trfm.position, trfm.position + Vector3.down * 8, GameManager.terrainLayerMask))
+                {
+                    fallingTimer++;
+                    if (fallingTimer == 15) { CameraController.mode = CameraController.FALLING; }
+                }
+                SetYVelocity(-30);
+            }
         }
 
-        if (PlayerInput.AttackHeld())
+        if (hasDashSlash && PlayerInput.AttackHeld())
         {
             if (attackCharge < 50)
             {
@@ -324,6 +397,7 @@ public class Player : MobileEntity
         DecrementTimers();
         HandlePositionTracking();
         HandleAnimations();
+        HandleCameraPanning();
     }
 
     void HandleAnimations()
@@ -352,6 +426,8 @@ public class Player : MobileEntity
 
     void DecrementTimers()
     {
+        if (slashComboWindow > 0) { slashComboWindow--; }
+        if (movementLocked > 0) { movementLocked--; }
         if (dashSlashRecovery > 0)
         {
             dashSlashRecovery--;
@@ -361,7 +437,41 @@ public class Player : MobileEntity
             }
         }
         if (facingLocked > 0) { facingLocked--; }
-        if (slashCooldown > 0) { slashCooldown--; }
+        if (slashCooldown > 0)
+        {
+            slashCooldown--;
+
+            if (slashCooldown == 20)
+            {
+                if (slashComboWindow > 0)
+                {
+                    if (IsFacingLeft())
+                    {
+                        basicAttack1.Activate(1, 11);
+                    }
+                    else
+                    {
+                        basicAttack1.Activate(0, 11);
+                    }
+                }
+                else
+                {
+                    if (IsFacingLeft())
+                    {
+                        basicAttack2.Activate(1, 11);
+                    }
+                    else
+                    {
+                        basicAttack2.Activate(0, 11);
+                    }
+                }
+            }
+
+            if (attackQued && slashCooldown < 17)
+            {
+                OnAttack();
+            }
+        }
         if (dashCooldown > 0)
         {
             dashCooldown--;
@@ -378,6 +488,7 @@ public class Player : MobileEntity
             }
             else if (dashCooldown == 55)
             {
+                spriteRenderer.color = Color.white;
                 EnableHurtbox();
             }
 
@@ -395,8 +506,6 @@ public class Player : MobileEntity
             }
             if (castCooldown == 25)
             {
-                LockMovement(false);
-
                 GameManager.LightningPtclsPooler.Instantiate(trfm.position);
                 CameraController.SetTrauma(16);
                 if (IsFacingRight())
@@ -434,6 +543,19 @@ public class Player : MobileEntity
     }
 
     #region misc_systems
+
+    int lookDownTimer;
+    void HandleCameraPanning()
+    {
+        if (PlayerInput.DownHeld())
+        {
+            lookDownTimer++;
+            if (lookDownTimer > 40)
+            {
+                CameraController.mode = CameraController.LOOK_DOWN;
+            }
+        }
+    }
 
     void SetGravityActive(bool active)
     {
@@ -487,10 +609,9 @@ public class Player : MobileEntity
         if (facingLocked < duration) { facingLocked = duration; }
     }
 
-    public static void LockMovement(bool _lock)
+    public static void LockMovement(int duration)
     {
-        if (_lock) { self.movementLocked++; }
-        else { self.movementLocked--; }
+        if (self.movementLocked < duration) { self.movementLocked = duration; }
     }
 
     void EnableHurtbox()
@@ -512,12 +633,10 @@ public class Player : MobileEntity
         hurtboxDisable++;
     }
 
-    #endregion
-
     bool runFXPlaying;
     void HandleHorizontalMovement()
     {
-        if (IsDisabled())
+        if (IsDisabled() || movementLocked > 0)
         {
             animator.RequestAnimatorState(animator.Idle);
             ApplyXFriction(ActiveFriction());
@@ -568,7 +687,7 @@ public class Player : MobileEntity
 
         ApplyXFriction(ActiveFriction());
     }
-    
+
 
     void Jump()
     {
@@ -578,7 +697,9 @@ public class Player : MobileEntity
         }
     }
 
-    protected override void OnDamageTaken(int amount)
+    #endregion
+
+    protected override void OnDamageTaken(int amount, int result)
     {
         CameraController.SetTrauma(10 + amount * 5);
         HUDManager.SetVignetteOpacity(.3f + amount * .2f);
@@ -657,10 +778,11 @@ public class Player : MobileEntity
 
     bool IsDisabled()
     {
-        return frozen || movementLocked > 0;
+        return frozen || stunned > 0;
     }
     public static void AddMana(int amount)
     {
+        if (!hasCast) { return; }
         mana += amount;
         if (mana > maxMana)
         {
