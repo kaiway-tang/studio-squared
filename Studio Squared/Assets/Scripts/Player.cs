@@ -348,7 +348,11 @@ public class Player : MobileEntity
 
             if (fallingTimer > 0)
             {
-                if (fallingTimer > 14) { CameraController.mode = CameraController.MOVEMENT; }
+                if (fallingTimer > 14)
+                {
+                    CameraController.ResetPOI();
+                    CameraController.mode = CameraController.MOVEMENT;
+                }
 
                 if (fallingTimer > 49)
                 {

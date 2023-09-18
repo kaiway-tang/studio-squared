@@ -18,7 +18,7 @@ public class PlayerAttack : Attack
         {
             if (!Player.self.IsOnGround())
             {
-                Player.self.TakeKnockback(Vector2.up * 3);
+                Player.self.TakeKnockback(Vector2.up * 6);
                 Player.self.AddForwardXVelocity(12,12);
             }
             Player.AddMana(10);

@@ -203,9 +203,14 @@ public class CameraController : MonoBehaviour
     public static void ExitCombat()
     {
         mode = MOVEMENT;
-        self.lastPOI = Player.GetPredictedPosition(.3f);
+        ResetPOI();
 
         self.vect3.x = 1.5f; self.vect3.y = 1;
         self.deadzoneDimensions = self.vect3;
+    }
+
+    public static void ResetPOI()
+    {
+        self.lastPOI = Player.GetPredictedPosition(.3f);
     }
 }

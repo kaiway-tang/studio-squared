@@ -11,7 +11,7 @@ public class ElevatorTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer == 11)
+        if (col.gameObject.layer == GameManager.PlayerTriggerLayer)
         {
             if (use == Elevator.Use.Parenter)
             {
@@ -24,7 +24,7 @@ public class ElevatorTrigger : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.layer == 11 && use == Elevator.Use.Parenter)
+        if (col.gameObject.layer == GameManager.PlayerTriggerLayer && use == Elevator.Use.Parenter)
         {
             GameManager.playerTrfm.parent = null;
         }

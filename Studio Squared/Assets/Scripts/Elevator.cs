@@ -6,7 +6,9 @@ public class Elevator : MonoBehaviour
 {
     [SerializeField] float top, bottom, speed, destination;
     [SerializeField] bool inMovement;
+    [SerializeField] bool epic;
 
+    [SerializeField] int rideTrauma, startTrauma;
     public enum Use
     {
         Bottom = 0,
@@ -26,6 +28,7 @@ public class Elevator : MonoBehaviour
     {
         if (inMovement)
         {
+            if (epic) { CameraController.SetTrauma(rideTrauma); }
             trfm.position += Vector3.up * Movement();
         }
     }
@@ -45,6 +48,7 @@ public class Elevator : MonoBehaviour
         return 0;
     }
 
+    bool epicInvokeInProcess;
     public void Trigger(Use use)
     {
         if (use == Use.Bottom)
@@ -55,18 +59,39 @@ public class Elevator : MonoBehaviour
         {
             destination = top;
         }
-        else if (use == Use.Move)
+        else if (use == Use.Move && !inMovement)
         {
-            if (Mathf.Abs(trfm.position.y - top) < speed)
+            if (epic)
             {
-                destination = bottom;
+                CameraController.SetTrauma(startTrauma);
+                if (!epicInvokeInProcess)
+                {
+                    epicInvokeInProcess = true;
+                    Invoke("Move", .6f);
+                }
             }
-            else if (Mathf.Abs(trfm.position.y - bottom) < speed)
+            else
             {
-                destination = top;
+                Move();
             }
         }
 
+        if (!epic) { inMovement = true; }
+    }
+
+    void Move()
+    {
+        CameraController.SetTrauma(startTrauma);
+        if (Mathf.Abs(trfm.position.y - top) < Mathf.Abs(trfm.position.y - bottom))
+        {
+            destination = bottom;
+        }
+        else
+        {
+            destination = top;
+        }
+
+        epicInvokeInProcess = false;
         inMovement = true;
     }
 }
