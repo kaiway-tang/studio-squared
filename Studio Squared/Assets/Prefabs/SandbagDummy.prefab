@@ -4883,7 +4883,7 @@ GameObject:
   - component: {fileID: 3487819238460170500}
   - component: {fileID: 3487819238460170499}
   - component: {fileID: 3487819238460170498}
-  - component: {fileID: 3487819238460170501}
+  - component: {fileID: 9010753242867328616}
   m_Layer: 13
   m_Name: SandbagDummy
   m_TagString: Untagged
@@ -4977,6 +4977,8 @@ MonoBehaviour:
   trfm: {fileID: 3487819238460170497}
   entityType: 3
   deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 3487819238460170498}
   terrainTriggers: []
   reflectionTrfm: {fileID: 3487819238460170497}
@@ -5025,8 +5027,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &3487819238460170501
-BoxCollider2D:
+--- !u!70 &9010753242867328616
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5035,19 +5037,9 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2.002}
-    newSize: {x: 10, y: 10.01}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1.7, y: 1.9}
-  m_EdgeRadius: 0
+  m_Direction: 0

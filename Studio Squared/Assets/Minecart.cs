@@ -8,6 +8,7 @@ public class Minecart : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float speed;
     [SerializeField] int timer;
+    [SerializeField] ParentingTrigger parenter;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +22,16 @@ public class Minecart : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        timer--;
+
         if (functional)
         {
-            timer--;
+            if (timer == 28)
+            {
+                CameraController.SetMode(CameraController.FALLING);
+            }
 
-            if (timer > 11)
+            if (timer > 0)
             {
                 rb.velocity = Vector2.right * speed + Vector2.up * rb.velocity.y;
                 Player.self.SetXVelocity(speed);
@@ -33,18 +39,29 @@ public class Minecart : MonoBehaviour
 
             if (timer < 1)
             {
+                Destroy(parenter);
+                Player.self.SetFacing(MobileEntity.RIGHT);
+                CameraController.AddTrauma(25);
                 functional = false;
-                Player.self.SetFrozen(false);
-                GameManager.playerTrfm.parent = null;
+                rb.velocity += Vector2.down * 15;
                 Invoke("Trash", 2);
             }
         }
+
+        if (timer < 1 && timer > -200)
+        {
+            GameManager.playerTrfm.position = new Vector3(12.1f, GameManager.playerTrfm.position.y, 0);
+            Player.self.SetXVelocity(0);
+            GameManager.playerTrfm.parent = null;
+        }
+
+        if (timer == -260) { Player.self.SetFrozen(false); }
     }
 
     void Trash()
     {
         Destroy(GetComponent<Rigidbody2D>());
-        transform.position = new Vector3(7, -13.3f, 0);
+        transform.position = new Vector3(16.5f, -13.2f, 0);
         transform.eulerAngles = new Vector3(0,0,120);
     }
 }

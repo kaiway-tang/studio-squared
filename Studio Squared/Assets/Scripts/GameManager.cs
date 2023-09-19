@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     public static GameManager self;
     public static int playerHP;
 
+    public static Vector2 spawnPosition;
+    static bool firstStartComplete;
+
     private void Awake()
     {
         terrainLayerMask = LayerMask.GetMask("Terrain");
@@ -42,6 +45,19 @@ public class GameManager : MonoBehaviour
 
         EnemyHelpers.flashMaterial = flashMaterial;
         EnemyHelpers.defaultMaterial = defaultMaterial;
+    }
+
+    private void Start()
+    {
+        if (!firstStartComplete)
+        {
+            firstStartComplete = true;
+        }
+        else
+        {
+            playerTrfm.position = spawnPosition;
+        }
+
     }
 
     public static void SaveSceneVariables()
@@ -70,6 +86,7 @@ public class GameManager : MonoBehaviour
         HUDManager.FadeBlackCoverOpacity(1);
         SaveSceneVariables();
         self.targetScene = scene;
+        Player.nextScene = "";
         self.Invoke("SetScene", 2);
     }
 

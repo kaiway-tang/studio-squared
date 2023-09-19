@@ -5154,10 +5154,9 @@ MonoBehaviour:
   entityType: 0
   hitbox: {fileID: 296737958}
   knockbackDirections:
-  - {x: 32, y: 11}
-  - {x: -32, y: 11}
+  - {x: 22, y: 11}
+  - {x: -22, y: 11}
   useSourceKnockback: 0
-  grantMana: 0
   source: {fileID: 6176441835281820062}
   knockbackPower: 0
   traumaAmount: 0

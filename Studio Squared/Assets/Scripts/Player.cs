@@ -110,7 +110,7 @@ public class Player : MobileEntity
         if (lookDownTimer > 39 && PlayerInput.DownReleased())
         {
             lookDownTimer = 0;
-            CameraController.mode = CameraController.MOVEMENT;
+            CameraController.SetMode(CameraController.MOVEMENT);
         }
     }
 
@@ -240,18 +240,18 @@ public class Player : MobileEntity
 
     void HandleAttackMovement()
     {
-        LockFacing(18);
+        LockFacing(14);
         if (IsOnGround())
         {
             LockMovement(9);
             if (IsFacingLeft())
             {
-                if (PlayerInput.LeftHeld()) { AddXVelocity(-22, -22); }
+                if (PlayerInput.LeftHeld()) { AddXVelocity(-24, -24); }
                 else if (!PlayerInput.RightHeld()) { AddXVelocity(-12, -12); }
             }
             else
             {
-                if (PlayerInput.RightHeld()) { AddXVelocity(22, 22); }
+                if (PlayerInput.RightHeld()) { AddXVelocity(24, 24); }
                 else if (!PlayerInput.LeftHeld()) { AddXVelocity(12, 12); }
             }
         }
@@ -351,7 +351,7 @@ public class Player : MobileEntity
                 if (fallingTimer > 14)
                 {
                     CameraController.ResetPOI();
-                    CameraController.mode = CameraController.MOVEMENT;
+                    CameraController.SetMode(CameraController.MOVEMENT);
                 }
 
                 if (fallingTimer > 49)
@@ -371,7 +371,7 @@ public class Player : MobileEntity
                 if (fallingTimer < 50 && !Physics2D.Linecast(trfm.position, trfm.position + Vector3.down * 8, GameManager.terrainLayerMask))
                 {
                     fallingTimer++;
-                    if (fallingTimer == 15) { CameraController.mode = CameraController.FALLING; }
+                    if (fallingTimer == 15) { CameraController.SetMode(CameraController.FALLING); }
                 }
                 SetYVelocity(-30);
             }
@@ -451,22 +451,22 @@ public class Player : MobileEntity
                 {
                     if (IsFacingLeft())
                     {
-                        basicAttack1.Activate(1, 11);
+                        basicAttack1.Activate(1, 8);
                     }
                     else
                     {
-                        basicAttack1.Activate(0, 11);
+                        basicAttack1.Activate(0, 8);
                     }
                 }
                 else
                 {
                     if (IsFacingLeft())
                     {
-                        basicAttack2.Activate(1, 11);
+                        basicAttack2.Activate(1, 8);
                     }
                     else
                     {
-                        basicAttack2.Activate(0, 11);
+                        basicAttack2.Activate(0, 8);
                     }
                 }
             }
@@ -551,12 +551,12 @@ public class Player : MobileEntity
     int lookDownTimer;
     void HandleCameraPanning()
     {
-        if (PlayerInput.DownHeld())
+        if (PlayerInput.DownHeld() && fallingTimer < 1)
         {
             lookDownTimer++;
             if (lookDownTimer > 40)
             {
-                CameraController.mode = CameraController.LOOK_DOWN;
+                CameraController.SetMode(CameraController.LOOK_DOWN);
             }
         }
     }
@@ -705,8 +705,8 @@ public class Player : MobileEntity
 
     protected override void OnDamageTaken(int amount, int result)
     {
-        CameraController.SetTrauma(10 + amount * 5);
-        HUDManager.SetVignetteOpacity(.3f + amount * .2f);
+        CameraController.SetTrauma(12 + amount * 4); //10 + 5x
+        HUDManager.SetVignetteOpacity(.4f + amount * .1f); //.3f + .2fx
 
         UpdateHPHUD();
     }
@@ -804,6 +804,15 @@ public class Player : MobileEntity
         }
     }
 
+    public static string nextScene;
+    private void OnBecameInvisible()
+    {
+        if (nextScene.Length > 0)
+        {
+            GameManager.LoadScene(nextScene);
+            Stun(999);
+        }
+    }
 
 
 

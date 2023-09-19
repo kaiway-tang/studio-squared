@@ -46,6 +46,7 @@ public class MinecartSceneManager : MonoBehaviour
     // Update is called once per frame
     void LoadNextScene()
     {
+        GameManager.spawnPosition = new Vector2(81.5f, 124);
         GameManager.LoadScene(nextScene);
     }
 }
