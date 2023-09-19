@@ -6,10 +6,11 @@ public class HPGem : MonoBehaviour
 {
     [SerializeField] Transform trfm;
     [SerializeField] float bobRate, bobHeight, rotateRate;
+    [SerializeField] ParticleSystem collectFX, passiveFX;
     // Start is called before the first frame update
     void Start()
     {
-        bob = trfm.position;
+        bob = trfm.localPosition;
     }
 
     Vector3 bob;
@@ -24,6 +25,8 @@ public class HPGem : MonoBehaviour
 
     void Disappear()
     {
+        passiveFX.Stop();
+        collectFX.Play();
         Destroy(gameObject);
     }
 

@@ -12,7 +12,8 @@ public class PlayerAnimator : AnimationController
         Dash = new ReferenceState(4, 50),
         Roll = new ReferenceState(5, 20),
         Attack1 = new ReferenceState(6, 100),
-        Attack2 = new ReferenceState(7, 105);
+        Attack2 = new ReferenceState(7, 105),
+        Slide = new ReferenceState(8, 50);
 
     // Start is called before the first frame update
     new void Start()

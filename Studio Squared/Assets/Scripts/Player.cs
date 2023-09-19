@@ -7,7 +7,7 @@ public class Player : MobileEntity
 {
     [SerializeField] GameObject circleObj, predictDot;
     [SerializeField] SimpleAnimator[] attackAnimator;
-    [SerializeField] PlayerAttack basicAttack1, basicAttack2, dashSlashAttack;
+    [SerializeField] PlayerAttack basicAttack1, basicAttack2, dashSlashAttack, slideAttack;
     
     [SerializeField] float
         groundedAcceleration, aerialAcceleration, maxSpeed,
@@ -44,6 +44,8 @@ public class Player : MobileEntity
     [SerializeField] SpriteRenderer hpHUD, spriteRenderer;
     [SerializeField] Sprite[] hpHudSprites;
     [SerializeField] Transform manaFill;
+    [SerializeField] Fader hpBarDmgFX;
+    [SerializeField] FloatingScythe scytheScript;
 
     private bool frozen;
 
@@ -119,7 +121,10 @@ public class Player : MobileEntity
         if (dashCooldown > 0 || !hasDash) { return; }
 
         DisableHurtbox();
-        animator.QueAnimation(animator.Dash, 16);
+
+        if (IsOnGround()) { slideAttack.Activate(0, 16); }
+
+        animator.QueAnimation(animator.Slide, 16);
         spriteRenderer.color = Color.white * .4f + Color.black * .6f;
 
         rb.velocity = PlayerInput.GetVectorInput() * dashSpeed;
@@ -228,6 +233,8 @@ public class Player : MobileEntity
             }
             return;
         }
+
+        scytheScript.Dematerialize();
 
         attackAnimator[0].Play();
         animator.QueAnimation(animator.Attack1, 17);
@@ -471,6 +478,11 @@ public class Player : MobileEntity
                 }
             }
 
+            if (slashCooldown == 0)
+            {
+                scytheScript.Materialize();
+            }
+
             if (attackQued && slashCooldown < 17)
             {
                 OnAttack();
@@ -559,6 +571,7 @@ public class Player : MobileEntity
                 CameraController.SetMode(CameraController.LOOK_DOWN);
             }
         }
+        else if (lookDownTimer > 0) { lookDownTimer--; }
     }
 
     void SetGravityActive(bool active)
@@ -708,12 +721,20 @@ public class Player : MobileEntity
         CameraController.SetTrauma(12 + amount * 4); //10 + 5x
         HUDManager.SetVignetteOpacity(.4f + amount * .1f); //.3f + .2fx
 
+        hpBarDmgFX.FadeIn(.08f, .7f + amount * .05f, true);
         UpdateHPHUD();
     }
 
     void UpdateHPHUD()
     {
-        if (HP < 12 && HP >= 0) { hpHUD.sprite = hpHudSprites[HP]; }
+        if (HP >= 12)
+        {
+            hpHUD.sprite = hpHudSprites[12];
+        }
+        else if (HP > 0)
+        {
+            hpHUD.sprite = hpHudSprites[HP];
+        }
     }
 
     protected override void OnHeal(int amount)
@@ -804,7 +825,7 @@ public class Player : MobileEntity
         }
     }
 
-    public static string nextScene;
+    public static string nextScene = "";
     private void OnBecameInvisible()
     {
         if (nextScene.Length > 0)

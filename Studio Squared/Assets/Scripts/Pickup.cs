@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     [SerializeField] int use;
+    [SerializeField] Sprite[] unlockSprites;
     public const int DJUMP = 0, DASH = 1;
     [SerializeField] bool gameCut;
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -42,7 +43,14 @@ public class Pickup : MonoBehaviour
 
             if (timer == 50)
             {
-                UnlockUI.ShowText(use);
+                if (TutorialManager.usingArrows && unlockSprites.Length > 1)
+                {
+                    UnlockUI.ShowText(unlockSprites[1]);
+                }
+                else
+                {
+                    UnlockUI.ShowText(unlockSprites[0]);
+                }
             }
 
             if (timer > 199)
