@@ -69,7 +69,6 @@ GameObject:
   - component: {fileID: 3308431882017325641}
   - component: {fileID: 3308431882017325640}
   - component: {fileID: 3308431882017325655}
-  - component: {fileID: 3308431882017325654}
   - component: {fileID: 3308431882017325643}
   - component: {fileID: 3308431882017325642}
   - component: {fileID: 3308431882017325645}
@@ -177,22 +176,6 @@ MonoBehaviour:
   playOnStart: 0
   loop: 1
   dontClearSprite: 0
---- !u!114 &3308431882017325654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3308431882017325653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10ad578aa7a6e4c42b74e6f24a5a9c87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  functional: 0
-  rb: {fileID: 0}
-  speed: 0
-  timer: 0
 --- !u!61 &3308431882017325643
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -539,3 +522,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentTrfm: {fileID: 3308431882017325641}
+  playerIsChild: 0

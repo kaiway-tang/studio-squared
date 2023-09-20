@@ -145,13 +145,6 @@ public class SlugEnemy : MobileEntity
         if (attackCooldown > 0) { attackCooldown--; }
     }
 
-    public void InitiateSpawnObject(Vector2 spawnVelocity, int invalidAttackID)
-    {
-        SetInvalidAttackID(invalidAttackID);
-        SetInvulnerable(10);
-        rb.velocity = spawnVelocity;
-    }
-
 
 
 
@@ -167,8 +160,8 @@ public class SlugEnemy : MobileEntity
     {
         if (result == HPEntity.DEAD && splitSlug)
         {
-            Instantiate(splitSlug, trfm.position, trfm.rotation).GetComponent<SlugEnemy>().InitiateSpawnObject((Vector3.up + Vector3.right) * 17, trackedAttackIDs[latestAttackIDIndex]);
-            Instantiate(splitSlug, trfm.position, trfm.rotation).GetComponent<SlugEnemy>().InitiateSpawnObject((Vector3.up + Vector3.left) * 17, trackedAttackIDs[latestAttackIDIndex]);
+            helper.InstantiateSpawnObject(splitSlug, (Vector2.up + Vector2.right) * 17);
+            helper.InstantiateSpawnObject(splitSlug, (Vector2.up + Vector2.right) * -17);
         }
         else
         {

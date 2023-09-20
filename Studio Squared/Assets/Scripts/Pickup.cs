@@ -6,7 +6,7 @@ public class Pickup : MonoBehaviour
 {
     [SerializeField] int use;
     [SerializeField] Sprite[] unlockSprites;
-    public const int DJUMP = 0, DASH = 1;
+    public const int DJUMP = 0, DASH = 1, WALL_JUMP = 2;
     [SerializeField] bool gameCut;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Fader interactKeyFader;
@@ -118,6 +118,10 @@ public class Pickup : MonoBehaviour
         else if (use == DASH)
         {
             Player.hasDash = true;
+        }
+        else if (use == WALL_JUMP)
+        {
+            Player.hasWallJump = true;
         }
 
         Disappear();

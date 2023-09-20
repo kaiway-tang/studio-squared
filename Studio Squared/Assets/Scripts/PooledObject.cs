@@ -5,9 +5,10 @@ using UnityEngine;
 public class PooledObject : MonoBehaviour
 {
     ObjectPooler objectPooler;
-    [SerializeField] int life;
+    [SerializeField] protected int life;
     public Transform trfm;
-    int timer, objectID;
+    protected int timer;
+    int objectID;
 
     protected void OnEnable()
     {

@@ -41,7 +41,12 @@ public class HPEntity : MonoBehaviour
 
     public int TakeDamage(int amount, EntityType entitySource = EntityType.Neutral, int attackID = 0)
     {
-        if (entitySource == entityType || !ValidAttackID(attackID) || invulnerable > 0) { return IGNORED; }
+        if ((entitySource == entityType && entityType != EntityType.Neutral) || !ValidAttackID(attackID) || invulnerable > 0) { return IGNORED; }
+
+        if (entitySource == EntityType.Neutral && entityType == EntityType.Enemy)
+        {
+            amount *= 10;
+        }
 
         HP -= amount;
 

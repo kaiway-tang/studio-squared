@@ -6,7 +6,7 @@ public class PerfectDodge : HPEntity
 {
     [SerializeField] int window;
     [SerializeField] GameObject ringFXObj;
-    int timer;
+    [SerializeField] int timer;
     bool ringSpawned;
 
     [SerializeField] PooledObject pooledObject;
@@ -17,8 +17,9 @@ public class PerfectDodge : HPEntity
         ringSpawned = false;
     }
 
-    private void FixedUpdate()
+    new void FixedUpdate()
     {
+        base.FixedUpdate();
         if (timer > 0)
         {
             timer--;
@@ -35,7 +36,7 @@ public class PerfectDodge : HPEntity
 
         if (!ringSpawned)
         {
-            Instantiate(ringFXObj, trfm.position, trfm.rotation);
+            Player.self.perfectDodgeRingPooler.Instantiate(trfm.position, 0);
             ringSpawned = true;
         }
     }

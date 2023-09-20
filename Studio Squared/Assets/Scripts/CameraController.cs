@@ -61,9 +61,11 @@ public class CameraController : MonoBehaviour
         {
             vect3.x = (panPositions[currentPanIndex].x - trfm.position.x) * trackingRate;
             vect3.y = (panPositions[currentPanIndex].y - trfm.position.y) * trackingRate;
+            trfm.position += vect3;
         }
 
         ProcessTrauma();
+        ProcessPanning();
     }
 
     Vector2 lastPOI;
@@ -221,8 +223,9 @@ public class CameraController : MonoBehaviour
     }
 
     int lastMode;
-    public static void SetMode(int pMode)
+    public static void SetMode(int pMode, bool overrideAll = false)
     {
+        if (mode == PANNING && !overrideAll) { return; }
         if (pMode != mode)
         {
             self.lastMode = mode;
@@ -277,7 +280,6 @@ public class CameraController : MonoBehaviour
                 panPriorities[i] = priority;
 
                 if (panDurations[currentPanIndex] < 1 || priority > panPriorities[currentPanIndex]) { currentPanIndex = i; }
-
                 SetMode(PANNING);
 
                 return;
@@ -309,7 +311,7 @@ public class CameraController : MonoBehaviour
                 }
                 if (currentPanIndex == -1)
                 {
-                    SetMode(MOVEMENT);
+                    SetMode(MOVEMENT, true);
                     currentPanIndex = 0;
                 }
             }

@@ -11,7 +11,7 @@ public class MobileEntity : HPEntity
 
     bool facingDirection;
     public const bool RIGHT = false, LEFT = true;
-    protected int stunned;
+    public int stunned;
 
     static Vector2 vect2; //cache a vector2 variable to avoid calling "new"
     static Vector3 vect3; // ^

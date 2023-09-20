@@ -101,8 +101,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.1}
-  m_Size: {x: 1.14, y: 0.5}
+  m_Offset: {x: 0, y: 0.05}
+  m_Size: {x: 1.2, y: 0.4}
   m_Direction: 1
 --- !u!1 &2423978827577976444
 GameObject:
@@ -5264,6 +5264,7 @@ MonoBehaviour:
   terrainTriggers: []
   reflectionTrfm: {fileID: 6624913254702726470}
   knockbackFactor: 1
+  stunned: 0
   trackingRange: 20
   spitRange: 14
   lungeRange: 9
@@ -5318,8 +5319,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.22, y: 0.37}
+  m_Offset: {x: 0, y: 0.02}
+  m_Size: {x: 1.2, y: 0.3}
   m_Direction: 1
 --- !u!114 &5561976741371951820
 MonoBehaviour:
@@ -5335,5 +5336,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trfm: {fileID: 1997126054600600750}
   mobileEntity: {fileID: 1108252602646909466}
+  triggeredGates: []
   spriteRenderer:
   - {fileID: 5110550715995251006}

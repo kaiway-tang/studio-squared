@@ -52,8 +52,11 @@ MonoBehaviour:
   trfm: {fileID: 4722277135161586677}
   entityType: 2
   deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   window: 8
-  ringFXObj: {fileID: 7007753718755653029, guid: a8f8b54a20dfae84aacfaf20bcd8ce1d, type: 3}
+  ringFXObj: {fileID: 7488387088185818529, guid: 0f20d57f99ffe294e85da0845757bec0, type: 3}
+  timer: 0
   pooledObject: {fileID: 2386583894811590371}
 --- !u!114 &2386583894811590371
 MonoBehaviour:
@@ -69,6 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 999
   trfm: {fileID: 4722277135161586677}
+  objectID: 0
 --- !u!58 &9212242065303955766
 CircleCollider2D:
   m_ObjectHideFlags: 0

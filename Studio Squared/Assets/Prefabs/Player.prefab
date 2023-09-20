@@ -12424,6 +12424,8 @@ GameObject:
   - component: {fileID: 2479673424405449523}
   - component: {fileID: 2479673424405449524}
   - component: {fileID: 1420864456854764728}
+  - component: {fileID: 1532761514172438183}
+  - component: {fileID: 1216865762685587829}
   m_Layer: 11
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -12551,6 +12553,8 @@ MonoBehaviour:
   manaFill: {fileID: 8427812171010510276}
   hpBarDmgFX: {fileID: 6483794742976004702}
   scytheScript: {fileID: 149810346}
+  dJumpRingPooler: {fileID: 1532761514172438183}
+  perfectDodgeRingPooler: {fileID: 1216865762685587829}
   castKnockback: {x: 11, y: 5}
 --- !u!212 &1420864456854764728
 SpriteRenderer:
@@ -12604,6 +12608,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1532761514172438183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2479673424405449525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5aa50b6f812f8a458e52953c08aeab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2165902032624927883, guid: 69f91b3c55b3b6241bebd48bb9c39e73, type: 3}
+  poolSize: 1
+--- !u!114 &1216865762685587829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2479673424405449525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5aa50b6f812f8a458e52953c08aeab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7488387088185818529, guid: 0f20d57f99ffe294e85da0845757bec0, type: 3}
+  poolSize: 1
 --- !u!1 &2479673424426878885
 GameObject:
   m_ObjectHideFlags: 0

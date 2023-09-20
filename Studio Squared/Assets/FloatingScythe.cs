@@ -36,15 +36,13 @@ public class FloatingScythe : MonoBehaviour
     {
         if (Vector2.Distance(targetPos.position, trfm.position) < close)
         {
-            trfm.up += (Vector3.up - trfm.up) * .1f;
+            trfm.up += (Vector3.up - trfm.up) * .15f;
         }
         else
         {
             trfm.up += ((targetPos.position - trfm.position) - trfm.up) * .1f;
         }
         trfm.position += (targetPos.position - trfm.position) * .1f;
-
-        return;
 
         if (facingLeft)
         {
@@ -67,7 +65,7 @@ public class FloatingScythe : MonoBehaviour
     void FlipFacing()
     {
         vect3 = trfm.localScale;
-        vect3.y *= -1;
+        vect3.x *= -1;
         trfm.localScale = vect3;
     }
 

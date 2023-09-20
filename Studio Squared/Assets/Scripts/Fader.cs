@@ -28,9 +28,19 @@ public class Fader : MonoBehaviour
         mode = FADE_OUT;
     }
 
+    public void SetAlpha(float value)
+    {
+        Toolbox.AddAlpha(spriteRenderer, value - spriteRenderer.color.a);
+    }
+
     public int GetStatus()
     {
         return mode;
+    }
+
+    private void OnDisable()
+    {
+        mode = STATIC;
     }
 
     private void FixedUpdate()
