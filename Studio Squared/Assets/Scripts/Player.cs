@@ -46,6 +46,7 @@ public class Player : MobileEntity
     [SerializeField] Transform manaFill;
 
     private bool frozen;
+    private int playerTotalCoins;
 
 
     static bool initStartComplete;
@@ -61,6 +62,8 @@ public class Player : MobileEntity
             GameManager.playerHP = Player.self.maxHP;
             initStartComplete = true;
         }
+
+        playerTotalCoins = 0;
 
         //playerInput = GetComponent<PlayerInput>();
         //moveaAction = playerInput.actions["Move"];
@@ -812,6 +815,12 @@ public class Player : MobileEntity
     {
         Debug.Log("SHOUDL SET FROZEN");
         frozen = setTo;
+    }
+
+    public int updateCoins(int amt)
+    {
+        playerTotalCoins += amt;
+        return playerTotalCoins;
     }
 }
 

@@ -1064,6 +1064,9 @@ MonoBehaviour:
   HP: 900
   trfm: {fileID: 609699545}
   entityType: 0
+  deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 609699541}
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
@@ -1794,6 +1797,9 @@ MonoBehaviour:
   HP: 900
   trfm: {fileID: 853423095}
   entityType: 0
+  deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 853423091}
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
@@ -2171,6 +2177,9 @@ MonoBehaviour:
   HP: 900
   trfm: {fileID: 990657339}
   entityType: 0
+  deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 990657335}
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
@@ -2402,6 +2411,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2479673423649735680, guid: a52eab2a54167de4da8ed1030d9564bb, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2479673423649735708, guid: a52eab2a54167de4da8ed1030d9564bb, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -2445,6 +2458,10 @@ PrefabInstance:
     - target: {fileID: 2479673423649735708, guid: a52eab2a54167de4da8ed1030d9564bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479673424405449525, guid: a52eab2a54167de4da8ed1030d9564bb, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a52eab2a54167de4da8ed1030d9564bb, type: 3}
@@ -3011,6 +3028,9 @@ MonoBehaviour:
   HP: 900
   trfm: {fileID: 1754368639}
   entityType: 0
+  deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 1754368635}
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
@@ -3166,6 +3186,9 @@ MonoBehaviour:
   HP: 900
   trfm: {fileID: 1759285423}
   entityType: 0
+  deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 1759285419}
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
@@ -3368,6 +3391,9 @@ MonoBehaviour:
   HP: 900
   trfm: {fileID: 1888003876}
   entityType: 0
+  deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 1888003872}
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
@@ -3635,6 +3661,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1927950197 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4049045761831000660, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+  m_PrefabInstance: {fileID: 2124282073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1959618983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3693,6 +3730,79 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1001 &2018426039
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355993073287827717, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350124867827410466, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350124867827410466, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: playerCoins
+      value: 
+      objectReference: {fileID: 1927950197}
+    - target: {fileID: 6221097928727325154, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_Name
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 6221097928727325154, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6762801187472147352, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
 --- !u!1 &2036526634
 GameObject:
   m_ObjectHideFlags: 0
@@ -3804,6 +3914,103 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &2124282073
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576049, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049045760442576061, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
+      propertyPath: m_Name
+      value: Canvas
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
 --- !u!1001 &493067554246360976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4017,6 +4224,9 @@ MonoBehaviour:
   HP: 0
   trfm: {fileID: 5920809932929135875}
   entityType: 1
+  deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}
   rb: {fileID: 5920809932929135873}
   terrainTriggers:
   - {fileID: 5920809933224022176}
@@ -4026,8 +4236,10 @@ MonoBehaviour:
   knockbackFactor: 0
   circleObj: {fileID: 0}
   predictDot: {fileID: 0}
-  attackAnimator: {fileID: 5920809934434331600}
-  basicAttack: {fileID: 5920809934434331601}
+  attackAnimator:
+  - {fileID: 0}
+  basicAttack1: {fileID: 0}
+  basicAttack2: {fileID: 0}
   dashSlashAttack: {fileID: 0}
   groundedAcceleration: 2
   aerialAcceleration: 1.5
@@ -4043,8 +4255,10 @@ MonoBehaviour:
   dashEffect: {fileID: 0}
   wallJumpWindow: 0
   slashCooldown: 0
+  slashComboWindow: 0
   dashCooldown: 0
   castCooldown: 0
+  castWindup: 0
   wallJumpTrail: {fileID: 5920809932976674264}
   hurtbox: {fileID: 0}
   sparkle: {fileID: 0}
@@ -4061,8 +4275,11 @@ MonoBehaviour:
   lightningBolt: {fileID: 0}
   castChargeFX: {fileID: 0}
   fullManaIndicator: {fileID: 0}
-  hpBar: {fileID: 0}
-  manaBar: {fileID: 0}
+  unlockAllAbilities: 0
+  hpHUD: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  hpHudSprites: []
+  manaFill: {fileID: 0}
   castKnockback: {x: 0, y: 0}
 --- !u!50 &5920809932929135873
 Rigidbody2D:
@@ -4757,7 +4974,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1278562839
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4794,6 +5011,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ddc895637bc286b4e95654b05ae22738, type: 3}
   spriteRenderer: {fileID: 5920809934434331599}
   ticksPerFrame: 2
+  playOnStart: 0
+  loop: 0
+  dontClearSprite: 0
 --- !u!114 &5920809934434331601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4813,7 +5033,6 @@ MonoBehaviour:
   - {x: 24, y: 8}
   - {x: -24, y: 8}
   useSourceKnockback: 0
-  grantMana: 0
   source: {fileID: 0}
   knockbackPower: 0
   traumaAmount: 10
@@ -4967,6 +5186,7 @@ MonoBehaviour:
   trfm: {fileID: 4966450397153825560}
   cameraTrfm: {fileID: 5920809934472659354}
   trackingRate: 0.12
+  returnRate: 0
   rotationRate: 0.1
   moveIntensity: 0.001
   rotationIntensity: 0.001
@@ -4985,9 +5205,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BloodFXPooler: {fileID: 5171246821529149691}
+  m_SparkFXPooler: {fileID: 0}
   m_SlashFXPooler: {fileID: 0}
   m_LightningFXPooler: {fileID: 0}
   m_LightningPtclsPooler: {fileID: 0}
+  m_TelegraphPooler: {fileID: 0}
+  flashMaterial: {fileID: 0}
+  defaultMaterial: {fileID: 0}
 --- !u!58 &8730426420873219034
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5106,3 +5330,6 @@ MonoBehaviour:
   HP: 100
   trfm: {fileID: 5920809932929135875}
   entityType: 1
+  deathTraumaAmount: 15
+  damagedFXObj: {fileID: 0}
+  damagedFXPooler: {fileID: 0}

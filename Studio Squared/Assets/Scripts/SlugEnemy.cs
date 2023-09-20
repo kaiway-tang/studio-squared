@@ -169,9 +169,11 @@ public class SlugEnemy : MobileEntity
         {
             Instantiate(splitSlug, trfm.position, trfm.rotation).GetComponent<SlugEnemy>().InitiateSpawnObject((Vector3.up + Vector3.right) * 17, trackedAttackIDs[latestAttackIDIndex]);
             Instantiate(splitSlug, trfm.position, trfm.rotation).GetComponent<SlugEnemy>().InitiateSpawnObject((Vector3.up + Vector3.left) * 17, trackedAttackIDs[latestAttackIDIndex]);
+            
         }
         else
         {
+            
             helper.FlashWhite();
         }
     }
