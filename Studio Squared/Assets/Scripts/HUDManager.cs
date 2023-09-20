@@ -8,6 +8,7 @@ public class HUDManager : MonoBehaviour
     [SerializeField] GameObject castPrompt;
     [SerializeField] SpriteRenderer castPromptRenderer, darkBackgroundRenderer;
     [SerializeField] Sprite castPromptAlt;
+    [SerializeField] Fader whiteFlash;
     bool castPromptActive;
 
     public float screenXSize, screenYSize, lastScreenXSize, lastScreenYSize;
@@ -105,6 +106,12 @@ public class HUDManager : MonoBehaviour
 
         self.fadingBlackCover = true;
         self.blackCoverTargetAlpha = targetAlpha;
+    }
+
+    public static void WhiteFlash(float opacity)
+    {
+        self.whiteFlash.SetAlpha(opacity);
+        self.whiteFlash.FadeOut(.01f);
     }
 
     public static void FadeDarkBackgroundOpacity(float targetAlpha)

@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform cameraTrfm;
     [SerializeField] float trackingRate, returnRate, rotationRate, moveIntensity, rotationIntensity;
     [SerializeField] Vector2 deadzoneDimensions;
+    [SerializeField] float maxPanSpeed;
     static int mode;
     public const int STOPPED = -1, XLOCKED = -2, MOVEMENT = 0, COMBAT = 1, FALLING = 2, LOOK_DOWN = 3, PANNING = 4;
 
@@ -61,6 +62,11 @@ public class CameraController : MonoBehaviour
         {
             vect3.x = (panPositions[currentPanIndex].x - trfm.position.x) * trackingRate;
             vect3.y = (panPositions[currentPanIndex].y - trfm.position.y) * trackingRate;
+            vect3.z = 0;
+            if (vect3.magnitude > maxPanSpeed)
+            {
+                vect3 = vect3.normalized * maxPanSpeed;
+            }
             trfm.position += vect3;
         }
 
