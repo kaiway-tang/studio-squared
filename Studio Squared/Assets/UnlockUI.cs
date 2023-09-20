@@ -6,7 +6,6 @@ public class UnlockUI : MonoBehaviour
 {
     [SerializeField] Fader fader;
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Sprite[] sprites;
     static UnlockUI self;
     // Start is called before the first frame update
     void Start()
@@ -20,9 +19,9 @@ public class UnlockUI : MonoBehaviour
         
     }
 
-    public static void ShowText(int ID) //ID based on Pickup const's
+    public static void ShowText(Sprite sprite) //ID based on Pickup const's
     {
-        self.spriteRenderer.sprite = self.sprites[ID];
+        self.spriteRenderer.sprite = sprite;
         self.fader.FadeIn(.01f);
     }
 

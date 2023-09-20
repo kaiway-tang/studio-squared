@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
-    [SerializeField] float top, bottom, speed, destination;
+    [SerializeField] float top, bottom, maxSpeed, accl, destination;
     [SerializeField] bool inMovement;
     [SerializeField] bool epic;
 
@@ -33,19 +33,30 @@ public class Elevator : MonoBehaviour
         }
     }
 
+    [SerializeField] float effectiveSpeed;
     float Movement()
     {
-        if (destination > trfm.position.y + speed)
+        if (destination > trfm.position.y + maxSpeed)
         {
-            return speed;
+            if (effectiveSpeed < maxSpeed)
+            {
+                effectiveSpeed += accl;
+            }
+            return effectiveSpeed;
         }
-        else if (destination < trfm.position.y - speed)
+        else if (destination < trfm.position.y - maxSpeed)
         {
-            return -speed;
+            if (effectiveSpeed > -maxSpeed)
+            {
+                effectiveSpeed -= accl;
+            }
+            return effectiveSpeed;
         }
 
+        CameraController.SetTrauma(startTrauma);
+        effectiveSpeed = 0;
         inMovement = false;
-        return 0;
+        return GetCloserDestination() - trfm.position.y;
     }
 
     bool epicInvokeInProcess;
@@ -53,11 +64,19 @@ public class Elevator : MonoBehaviour
     {
         if (use == Use.Bottom)
         {
-            destination = bottom;
+            if (Mathf.Abs(trfm.position.y - bottom) > maxSpeed)
+            {
+                destination = bottom;
+                inMovement = true;
+            }
         }
         else if (use == Use.Top)
         {
-            destination = top;
+            if (Mathf.Abs(trfm.position.y - top) > maxSpeed)
+            {
+                destination = top;
+                inMovement = true;
+            }
         }
         else if (use == Use.Move && !inMovement)
         {
@@ -74,24 +93,41 @@ public class Elevator : MonoBehaviour
             {
                 Move();
             }
+            inMovement = true;
         }
-
-        if (!epic) { inMovement = true; }
     }
 
     void Move()
     {
         CameraController.SetTrauma(startTrauma);
-        if (Mathf.Abs(trfm.position.y - top) < Mathf.Abs(trfm.position.y - bottom))
-        {
-            destination = bottom;
-        }
-        else
-        {
-            destination = top;
-        }
+
+        destination = GetFurtherDestination();
 
         epicInvokeInProcess = false;
         inMovement = true;
+    }
+
+    float GetFurtherDestination()
+    {
+        if (Mathf.Abs(trfm.position.y - top) < Mathf.Abs(trfm.position.y - bottom))
+        {
+            return bottom;
+        }
+        else
+        {
+            return top;
+        }
+    }
+
+    float GetCloserDestination()
+    {
+        if (Mathf.Abs(trfm.position.y - top) < Mathf.Abs(trfm.position.y - bottom))
+        {
+            return top;
+        }
+        else
+        {
+            return bottom;
+        }
     }
 }

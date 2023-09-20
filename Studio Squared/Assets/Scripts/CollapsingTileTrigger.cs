@@ -14,7 +14,7 @@ public class CollapsingTileTrigger : MonoBehaviour
         {
             CameraController.AddTrauma(18);
             ptclSys.Play();
-            Player.LockMovement(20);
+            Player.self.Stun(25);
             Invoke("Collapse", .4f);
         }
     }

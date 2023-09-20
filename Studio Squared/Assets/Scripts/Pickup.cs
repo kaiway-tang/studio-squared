@@ -5,7 +5,8 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     [SerializeField] int use;
-    public const int DJUMP = 0, DASH = 1;
+    [SerializeField] Sprite[] unlockSprites;
+    public const int DJUMP = 0, DASH = 1, WALL_JUMP = 2;
     [SerializeField] bool gameCut;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Fader interactKeyFader;
@@ -42,7 +43,14 @@ public class Pickup : MonoBehaviour
 
             if (timer == 50)
             {
-                UnlockUI.ShowText(use);
+                if (TutorialManager.usingArrows && unlockSprites.Length > 1)
+                {
+                    UnlockUI.ShowText(unlockSprites[1]);
+                }
+                else
+                {
+                    UnlockUI.ShowText(unlockSprites[0]);
+                }
             }
 
             if (timer > 199)
@@ -110,6 +118,10 @@ public class Pickup : MonoBehaviour
         else if (use == DASH)
         {
             Player.hasDash = true;
+        }
+        else if (use == WALL_JUMP)
+        {
+            Player.hasWallJump = true;
         }
 
         Disappear();

@@ -2,29 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RingFX : MonoBehaviour
+public class RingFX : PooledObject
 {
-    [SerializeField] Color fadeRate;
-    [SerializeField] Vector2 scaleRate;
-    [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Transform trfm;
-    [SerializeField] int life;
+    [SerializeField] Vector3 startScale = new Vector3(.4f, .4f, 1);
+    [SerializeField] float scaleRate;
+    [SerializeField] Fader fader;
+    [SerializeField] bool fade;
     // Start is called before the first frame update
-    void Start()
+    new void OnEnable()
     {
-        
+        base.OnEnable();
+        trfm.localScale = startScale;
+        fader.SetAlpha(1);
+        if (fade) { fader.FadeOut(1f / life); }
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    new void FixedUpdate()
     {
-        spriteRenderer.color -= fadeRate;
-        trfm.localScale *= scaleRate;
-        life--;
+        base.FixedUpdate();
 
-        if (life < 1)
-        {
-            Destroy(gameObject);
-        }
+        trfm.localScale *= scaleRate;
     }
 }

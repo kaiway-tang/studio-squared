@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8873832183964772338}
   - component: {fileID: 1833351414759071998}
   - component: {fileID: 4303775995204418629}
-  - component: {fileID: 3715110819316532576}
+  - component: {fileID: 8208259225292189419}
   m_Layer: 0
   m_Name: woodShatter
   m_TagString: Untagged
@@ -4838,8 +4838,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 236245575
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -4871,7 +4871,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3715110819316532576
+--- !u!114 &8208259225292189419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4880,7 +4880,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3780654266243000828}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 049f402907b42bc46ad0683e41baf315, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f028bcfa4c363f43a02c01f4fb05e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 26
+  life: 3

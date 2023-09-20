@@ -7,7 +7,7 @@ public class Player : MobileEntity
 {
     [SerializeField] GameObject circleObj, predictDot;
     [SerializeField] SimpleAnimator[] attackAnimator;
-    [SerializeField] PlayerAttack basicAttack1, basicAttack2, dashSlashAttack;
+    [SerializeField] PlayerAttack basicAttack1, basicAttack2, dashSlashAttack, slideAttack;
     
     [SerializeField] float
         groundedAcceleration, aerialAcceleration, maxSpeed,
@@ -31,12 +31,12 @@ public class Player : MobileEntity
 
     [SerializeField] ObjectPooler perfectDodgePooler;
     [SerializeField] ParticleSystem healFX, jumpFX, frontTurnFX, backTurnFX, runFX, dashRefreshFX;
-    [SerializeField] PlayerAnimator animator;
+    public PlayerAnimator animator;
 
     [SerializeField] GameObject lightningBolt, castChargeFX;
     [SerializeField] GameObject fullManaIndicator;
 
-    public static int mana, maxMana = 120, gravityDisable, fallingTimer;
+    public static int mana, maxMana = 120, gravityDisable, fallingTimer, scytheTimer;
 
     [SerializeField] bool unlockAllAbilities;
     public static bool hasDoubleJump, hasDash, hasWallJump, hasDashSlash, hasCast, hasDoubleSlash;
@@ -44,6 +44,9 @@ public class Player : MobileEntity
     [SerializeField] SpriteRenderer hpHUD, spriteRenderer;
     [SerializeField] Sprite[] hpHudSprites;
     [SerializeField] Transform manaFill;
+    [SerializeField] Fader hpBarDmgFX;
+    [SerializeField] FloatingScythe scytheScript;
+    public ObjectPooler dJumpRingPooler, perfectDodgeRingPooler;
 
     private bool frozen;
     private int playerTotalCoins;
@@ -113,7 +116,7 @@ public class Player : MobileEntity
         if (lookDownTimer > 39 && PlayerInput.DownReleased())
         {
             lookDownTimer = 0;
-            CameraController.mode = CameraController.MOVEMENT;
+            CameraController.SetMode(CameraController.MOVEMENT);
         }
     }
 
@@ -122,7 +125,10 @@ public class Player : MobileEntity
         if (dashCooldown > 0 || !hasDash) { return; }
 
         DisableHurtbox();
-        animator.QueAnimation(animator.Dash, 16);
+
+        if (IsOnGround()) { slideAttack.Activate(0, 16); }
+
+        animator.QueAnimation(animator.Slide, 16);
         spriteRenderer.color = Color.white * .4f + Color.black * .6f;
 
         rb.velocity = PlayerInput.GetVectorInput() * dashSpeed;
@@ -232,6 +238,9 @@ public class Player : MobileEntity
             return;
         }
 
+        scytheScript.Dematerialize();
+        scytheTimer = 50;
+
         attackAnimator[0].Play();
         animator.QueAnimation(animator.Attack1, 17);
 
@@ -243,18 +252,18 @@ public class Player : MobileEntity
 
     void HandleAttackMovement()
     {
-        LockFacing(18);
+        LockFacing(14);
         if (IsOnGround())
         {
             LockMovement(9);
             if (IsFacingLeft())
             {
-                if (PlayerInput.LeftHeld()) { AddXVelocity(-22, -22); }
+                if (PlayerInput.LeftHeld()) { AddXVelocity(-24, -24); }
                 else if (!PlayerInput.RightHeld()) { AddXVelocity(-12, -12); }
             }
             else
             {
-                if (PlayerInput.RightHeld()) { AddXVelocity(22, 22); }
+                if (PlayerInput.RightHeld()) { AddXVelocity(24, 24); }
                 else if (!PlayerInput.LeftHeld()) { AddXVelocity(12, 12); }
             }
         }
@@ -279,6 +288,7 @@ public class Player : MobileEntity
         }
         else if (remainingJumps > 0 && hasDoubleJump)
         {
+            dJumpRingPooler.Instantiate(trfm.position, 0);
             animator.QueAnimation(animator.Roll, 17);
             Jump();
             refundableJump = true;
@@ -354,7 +364,7 @@ public class Player : MobileEntity
                 if (fallingTimer > 14)
                 {
                     CameraController.ResetPOI();
-                    CameraController.mode = CameraController.MOVEMENT;
+                    CameraController.SetMode(CameraController.MOVEMENT);
                 }
 
                 if (fallingTimer > 49)
@@ -374,7 +384,7 @@ public class Player : MobileEntity
                 if (fallingTimer < 50 && !Physics2D.Linecast(trfm.position, trfm.position + Vector3.down * 8, GameManager.terrainLayerMask))
                 {
                     fallingTimer++;
-                    if (fallingTimer == 15) { CameraController.mode = CameraController.FALLING; }
+                    if (fallingTimer == 15) { CameraController.SetMode(CameraController.FALLING); }
                 }
                 SetYVelocity(-30);
             }
@@ -454,22 +464,22 @@ public class Player : MobileEntity
                 {
                     if (IsFacingLeft())
                     {
-                        basicAttack1.Activate(1, 11);
+                        basicAttack1.Activate(1, 8);
                     }
                     else
                     {
-                        basicAttack1.Activate(0, 11);
+                        basicAttack1.Activate(0, 8);
                     }
                 }
                 else
                 {
                     if (IsFacingLeft())
                     {
-                        basicAttack2.Activate(1, 11);
+                        basicAttack2.Activate(1, 8);
                     }
                     else
                     {
-                        basicAttack2.Activate(0, 11);
+                        basicAttack2.Activate(0, 8);
                     }
                 }
             }
@@ -477,6 +487,14 @@ public class Player : MobileEntity
             if (attackQued && slashCooldown < 17)
             {
                 OnAttack();
+            }
+        }
+        if (scytheTimer > 0)
+        {
+            scytheTimer--;
+            if (scytheTimer == 0)
+            {
+                scytheScript.Materialize();
             }
         }
         if (dashCooldown > 0)
@@ -554,17 +572,18 @@ public class Player : MobileEntity
     int lookDownTimer;
     void HandleCameraPanning()
     {
-        if (PlayerInput.DownHeld())
+        if (PlayerInput.DownHeld() && fallingTimer < 1)
         {
             lookDownTimer++;
             if (lookDownTimer > 40)
             {
-                CameraController.mode = CameraController.LOOK_DOWN;
+                CameraController.SetMode(CameraController.LOOK_DOWN);
             }
         }
+        else if (lookDownTimer > 0) { lookDownTimer--; }
     }
 
-    void SetGravityActive(bool active)
+    public void SetGravityActive(bool active)
     {
         if (active)
         {
@@ -708,15 +727,23 @@ public class Player : MobileEntity
 
     protected override void OnDamageTaken(int amount, int result)
     {
-        CameraController.SetTrauma(10 + amount * 5);
-        HUDManager.SetVignetteOpacity(.3f + amount * .2f);
+        CameraController.SetTrauma(12 + amount * 4); //10 + 5x
+        HUDManager.SetVignetteOpacity(.4f + amount * .1f); //.3f + .2fx
 
+        hpBarDmgFX.FadeIn(.08f, .7f + amount * .05f, true);
         UpdateHPHUD();
     }
 
     void UpdateHPHUD()
     {
-        if (HP < 12 && HP >= 0) { hpHUD.sprite = hpHudSprites[HP]; }
+        if (HP >= 12)
+        {
+            hpHUD.sprite = hpHudSprites[12];
+        }
+        else if (HP > 0)
+        {
+            hpHUD.sprite = hpHudSprites[HP];
+        }
     }
 
     protected override void OnHeal(int amount)
@@ -807,13 +834,21 @@ public class Player : MobileEntity
         }
     }
 
+    public static string nextScene = "";
+    private void OnBecameInvisible()
+    {
+        if (nextScene.Length > 0)
+        {
+            GameManager.LoadScene(nextScene);
+            Stun(999);
+        }
+    }
 
 
 
     //freeze player
     public void SetFrozen(bool setTo)
     {
-        Debug.Log("SHOUDL SET FROZEN");
         frozen = setTo;
     }
 

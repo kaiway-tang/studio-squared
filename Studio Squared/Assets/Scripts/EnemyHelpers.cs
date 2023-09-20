@@ -6,6 +6,7 @@ public class EnemyHelpers : MonoBehaviour
 {
     [SerializeField] Transform trfm;
     [SerializeField] MobileEntity mobileEntity;
+    public Gate[] triggeredGates;
     public SpriteRenderer[] spriteRenderer;
     public static Material defaultMaterial, flashMaterial;
 
@@ -84,5 +85,26 @@ public class EnemyHelpers : MonoBehaviour
             spriteRenderer[i].material = flashMaterial;
         }
         hurtTimer = 11;
+    }
+
+    public void InstantiateSpawnObject(GameObject obj, Vector2 spawnVelocity)
+    {
+        Instantiate(obj, trfm.position, trfm.rotation).GetComponent<EnemyHelpers>().InitiateSpawnObject(spawnVelocity, triggeredGates);
+    }
+
+    public void InitiateSpawnObject(Vector2 spawnVelocity, Gate[] p_triggeredGates = null)
+    {
+        //mobileEntity.SetInvalidAttackID(invalidAttackID);
+        mobileEntity.SetInvulnerable(10);
+        mobileEntity.rb.velocity = spawnVelocity;
+        triggeredGates = p_triggeredGates;
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = 0; i < triggeredGates.Length; i++)
+        {
+            triggeredGates[i].IncrementDeathCount();
+        }
     }
 }

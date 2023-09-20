@@ -8,7 +8,6 @@ public class TerrainTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject);
         isTouching++;
     }
     private void OnTriggerExit2D(Collider2D collision)
