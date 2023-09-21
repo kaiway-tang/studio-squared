@@ -807,7 +807,56 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &443083200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 443083202}
+  - component: {fileID: 443083201}
+  m_Layer: 0
+  m_Name: coinSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &443083201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443083200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aba12122acd413a91fd80a133182076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ones: {fileID: 3350124867827410466, guid: 158d4dbcf76be4931a7e17d5d69b592f, type: 3}
+  fives: {fileID: 3350124867827410466, guid: b5577e92490f54072bcd0270cb64f173, type: 3}
+  tens: {fileID: 3350124867827410466, guid: d76f30c68a41943bc81082227ac25771, type: 3}
+  fifties: {fileID: 3350124867827410466, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+  amountSpawn: 15
+--- !u!4 &443083202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443083200}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.5, y: -2.53, z: 1.05964}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &445232713
 GameObject:
@@ -1071,6 +1120,7 @@ MonoBehaviour:
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
   knockbackFactor: 1
+  stunned: 0
 --- !u!61 &609699543
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1400,7 +1450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4795485855635095058, guid: b43ab8212d79867448b66c26c03e4a8c, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4795485855635095058, guid: b43ab8212d79867448b66c26c03e4a8c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1804,6 +1854,7 @@ MonoBehaviour:
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
   knockbackFactor: 1
+  stunned: 0
 --- !u!61 &853423093
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2184,6 +2235,7 @@ MonoBehaviour:
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
   knockbackFactor: 1
+  stunned: 0
 --- !u!61 &990657337
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2421,7 +2473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2479673423649735708, guid: a52eab2a54167de4da8ed1030d9564bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.04
+      value: -2.61
       objectReference: {fileID: 0}
     - target: {fileID: 2479673423649735708, guid: a52eab2a54167de4da8ed1030d9564bb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3035,6 +3087,7 @@ MonoBehaviour:
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
   knockbackFactor: 1
+  stunned: 0
 --- !u!61 &1754368637
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3127,7 +3180,7 @@ Transform:
   m_Children:
   - {fileID: 1889344720}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1759285418
 GameObject:
@@ -3193,6 +3246,7 @@ MonoBehaviour:
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
   knockbackFactor: 1
+  stunned: 0
 --- !u!61 &1759285421
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3398,6 +3452,7 @@ MonoBehaviour:
   terrainTriggers: []
   reflectionTrfm: {fileID: 0}
   knockbackFactor: 1
+  stunned: 0
 --- !u!61 &1888003874
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3661,17 +3716,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1927950197 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4049045761831000660, guid: d3ee9c5fe97834aa58349d67974db4eb, type: 3}
-  m_PrefabInstance: {fileID: 2124282073}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1959618983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3788,13 +3832,25 @@ PrefabInstance:
     - target: {fileID: 3350124867827410466, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
       propertyPath: playerCoins
       value: 
-      objectReference: {fileID: 1927950197}
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466728810862465853, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466728810862465853, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6221097928727325154, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
       propertyPath: m_Name
       value: Coin
       objectReference: {fileID: 0}
     - target: {fileID: 6221097928727325154, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6221097928727325154, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6762801187472147352, guid: 5e4c8b5fd6fdc41788a3fa669604b655, type: 3}
@@ -4028,7 +4084,7 @@ PrefabInstance:
       objectReference: {fileID: 1083061732}
     - target: {fileID: 493067555960211890, guid: 146154d06fb94ee44836023cf41d34cf, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 493067555960211890, guid: 146154d06fb94ee44836023cf41d34cf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4164,7 +4220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5332816850895782766, guid: d8b5633b726f0f54cb0163e7a9a284e0, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5332816850895782766, guid: d8b5633b726f0f54cb0163e7a9a284e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4234,6 +4290,7 @@ MonoBehaviour:
   - {fileID: 5920809932942147003}
   reflectionTrfm: {fileID: 5920809934272486479}
   knockbackFactor: 0
+  stunned: 0
   circleObj: {fileID: 0}
   predictDot: {fileID: 0}
   attackAnimator:
@@ -4241,6 +4298,7 @@ MonoBehaviour:
   basicAttack1: {fileID: 0}
   basicAttack2: {fileID: 0}
   dashSlashAttack: {fileID: 0}
+  slideAttack: {fileID: 0}
   groundedAcceleration: 2
   aerialAcceleration: 1.5
   maxSpeed: 12
@@ -4280,6 +4338,10 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   hpHudSprites: []
   manaFill: {fileID: 0}
+  hpBarDmgFX: {fileID: 0}
+  scytheScript: {fileID: 0}
+  dJumpRingPooler: {fileID: 0}
+  perfectDodgeRingPooler: {fileID: 0}
   castKnockback: {x: 0, y: 0}
 --- !u!50 &5920809932929135873
 Rigidbody2D:
@@ -4323,7 +4385,7 @@ Transform:
   - {fileID: 5920809932976674263}
   - {fileID: 4966450397153825560}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5920809932929136127
 GameObject:
@@ -5191,7 +5253,16 @@ MonoBehaviour:
   moveIntensity: 0.001
   rotationIntensity: 0.001
   deadzoneDimensions: {x: 1.5, y: 1}
+  maxPanSpeed: 0
   trauma: 0
+  panPositions:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  panDurations: 000000000000000000000000
+  panPriorities: 000000000000000000000000
+  currentPanIndex: 0
+  nextAvailablePanIndex: 0
 --- !u!114 &5920809934472659356
 MonoBehaviour:
   m_ObjectHideFlags: 0
