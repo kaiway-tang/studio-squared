@@ -14,10 +14,10 @@ public class CurrencySystem : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            SpawnCoins(amountSpawn);
-        }
+        // if (Input.GetKeyDown(KeyCode.X))
+        // {
+        //     SpawnCoins(amountSpawn);
+        // }
     }
 
     public void SpawnCoins(int amount)
