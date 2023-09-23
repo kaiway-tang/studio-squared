@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="63cad616-9c15-4266-8ca1-c4d999b387a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Studio Squared/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Studio Squared/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Materials/New Material.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Materials/New Material.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Materials/laserMaterial.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Materials/laserMaterial.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Materials/laserShader.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Materials/laserShader.shadergraph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/movement dev.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/movement dev.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/laser.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/laser.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/VFX/Laser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/VFX/Laser.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +97,8 @@
       <workItem from="1693968257335" duration="1241000" />
       <workItem from="1695083153810" duration="7809000" />
       <workItem from="1695250520158" duration="6777000" />
-      <workItem from="1695334053417" duration="7823000" />
+      <workItem from="1695334053417" duration="8519000" />
+      <workItem from="1695447925135" duration="2306000" />
     </task>
     <servers />
   </component>

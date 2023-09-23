@@ -11,7 +11,8 @@ public class Laser : MonoBehaviour
 
     [SerializeField] Transform firePoint;
 
-    [SerializeField] private float fireDelay;
+    [SerializeField] private float fireDelay = 4;
+    [SerializeField] private float chargeTime = 2;
     private bool laserEnabled;
     [SerializeField] private LayerMask layerstohit;
     [SerializeField] GameObject startFX;
@@ -22,40 +23,68 @@ public class Laser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        laser.enabled = false;
         remainingTime = fireDelay;
+        DisableLaser();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        EnableLaser();
-        // if (remainingTime <= 0f)
-        // {
-        //     laserEnabled = !laserEnabled;
-        //     remainingTime = fireDelay;
-        //     
-        // }
-        // if (remainingTime > 0f)
-        // {
-        //     remainingTime -= Time.deltaTime;
-        // }
-        //
-        // if (laserEnabled)
-        // {
-        //     EnableLaser();
-        // }
-        // else
-        // {
-        //     DisableLaser();
-        // }
+        // EnableLaser();
+        startFX.transform.position = transform.position;
+
+        if (remainingTime <= 0f)
+        {
+            laserEnabled = !laserEnabled;
+            remainingTime = fireDelay;
+            
+        }
+        if (remainingTime > 0f)
+        {
+            remainingTime -= Time.deltaTime;
+        }
+        // Debug.Log("remain:" + remainingTime);
+        if (remainingTime < chargeTime && !laserEnabled)
+        {
+            if (!particles[0].isPlaying)
+            {
+                particles[0].Play();
+                Debug.Log("warn");
+            }
+            
+        }
+        else
+        {
+            if (particles[0].isPlaying)
+            {
+                particles[0].Stop();
+                // Debug.Log("warn");
+            }
+        }
+        if (laserEnabled)
+        {
+            EnableLaser();
+        }
+        else
+        {
+            DisableLaser();
+        }
     }
     private void  EnableLaser()
     {
+        Debug.Log("laser");
         laser.enabled = true;
-        for (int i = 0; i < particles.Count;i++)
+        for (int i = 1; i < particles.Count;i++)
         {
-            particles[i].Play();
+            // if (i == 1)
+            // {
+            //     continue;
+            // }
+            if (!particles[i].isPlaying)
+            {
+                particles[i].Play();
+            }
+            
         }
         
         startFX.transform.position = transform.position;
@@ -83,7 +112,15 @@ public class Laser : MonoBehaviour
 
     private void DisableLaser()
     {
+        for (int i = 1; i < particles.Count;i++)
+        {
+            if (particles[i].isPlaying)
+            {
+                particles[i].Stop();
+            }
+        }
         laser.enabled = false;
+        
     }
 
     // private void fillList()
