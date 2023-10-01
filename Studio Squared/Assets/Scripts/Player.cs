@@ -50,6 +50,7 @@ public class Player : MobileEntity
     public ObjectPooler dJumpRingPooler, perfectDodgeRingPooler;
 
     private bool frozen;
+    private int playerTotalCoins;
 
 
     static bool initStartComplete;
@@ -65,6 +66,8 @@ public class Player : MobileEntity
             GameManager.playerHP = Player.self.maxHP;
             initStartComplete = true;
         }
+
+        playerTotalCoins = 0;
 
         //playerInput = GetComponent<PlayerInput>();
         //moveaAction = playerInput.actions["Move"];
@@ -930,6 +933,12 @@ public class Player : MobileEntity
     public void SetFrozen(bool setTo)
     {
         frozen = setTo;
+    }
+
+    public int updateCoins(int amt)
+    {
+        playerTotalCoins += amt;
+        return playerTotalCoins;
     }
 }
 
