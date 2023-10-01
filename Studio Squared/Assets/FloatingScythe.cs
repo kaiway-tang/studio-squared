@@ -8,17 +8,29 @@ public class FloatingScythe : MonoBehaviour
     [SerializeField] SimpleAnimator dematerialize, materialize;
     [SerializeField] GameObject light2D;
     [SerializeField] float close, far;
+    [SerializeField] TrailRenderer trail;
     Transform trfm;
-    int lightTimer;
+    int lightTimer, materializeTimer;
+    public static bool trailEnabled = false;
     // Start is called before the first frame update
     void Start()
     {
         trfm = transform;
+        materialized = isActiveAndEnabled;
+        trail.emitting = GetComponent<SpriteRenderer>().sprite != null;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (materializeTimer > 0)
+        {
+            materializeTimer--;
+            if (materializeTimer < 1)
+            {
+                Materialize();
+            }
+        }
         if (lightTimer > 0)
         {
             lightTimer--;
@@ -36,10 +48,12 @@ public class FloatingScythe : MonoBehaviour
     {
         if (Vector2.Distance(targetPos.position, trfm.position) < close)
         {
+            if (trail.emitting) { trail.emitting = false; }
             trfm.up += (Vector3.up - trfm.up) * .15f;
         }
         else
         {
+            if (!trail.emitting && materialized && trailEnabled) { trail.emitting = true; }
             trfm.up += ((targetPos.position - trfm.position) - trfm.up) * .1f;
         }
         trfm.position += (targetPos.position - trfm.position) * .1f;
@@ -69,18 +83,25 @@ public class FloatingScythe : MonoBehaviour
         trfm.localScale = vect3;
     }
 
-    public void Dematerialize()
+    bool materialized;
+    public void Dematerialize(int duration = 0)
     {
+        if (!materialized) return;
+        trail.emitting = false;
         lightTimer = 4;
         light2D.SetActive(true);
         dematerialize.Play();
+        materialized = false;
+        materializeTimer = duration;
     }
 
     public void Materialize()
     {
+        if (materialized) return;
         lightTimer = 4;
         light2D.SetActive(true);
         trfm.position = targetPos.position;
         materialize.Play();
+        materialized = true;
     }
 }

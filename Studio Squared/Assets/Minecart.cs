@@ -9,13 +9,24 @@ public class Minecart : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] int timer;
     [SerializeField] ParentingTrigger parenter;
+    [SerializeField] SimpleAnimator animator, wheels;
+    static bool played;
     // Start is called before the first frame update
     void Start()
-    {
-        if (functional)
+    {      
+        if (played)
         {
-            Player.self.SetFrozen(true);
-            Player.self.SetFacing(MobileEntity.LEFT);
+            timer = -999;
+            functional = false;
+            Trash();
+        }
+        else
+        {
+            if (functional)
+            {
+                Player.self.SetFrozen(true);
+                Player.self.SetFacing(MobileEntity.LEFT);
+            }
         }
     }
 
@@ -35,6 +46,7 @@ public class Minecart : MonoBehaviour
             {
                 rb.velocity = Vector2.right * speed + Vector2.up * rb.velocity.y;
                 Player.self.SetXVelocity(speed);
+                GameManager.playerTrfm.position = new Vector3(transform.position.x, GameManager.playerTrfm.position.y, GameManager.playerTrfm.position.z);
             }
 
             if (timer < 1)
@@ -55,12 +67,14 @@ public class Minecart : MonoBehaviour
             GameManager.playerTrfm.parent = null;
         }
 
-        if (timer == -260) { Player.self.SetFrozen(false); }
+        if (timer == -260) { Player.self.SetFrozen(false); played = true;}
     }
 
     void Trash()
     {
         Destroy(GetComponent<Rigidbody2D>());
+        animator.Stop(true);
+        wheels.Stop(true);
         transform.position = new Vector3(16.5f, -13.2f, 0);
         transform.eulerAngles = new Vector3(0,0,120);
     }

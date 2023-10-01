@@ -171,9 +171,9 @@ MonoBehaviour:
   - {fileID: 870845435, guid: 8c17309a25c1bb14a9604bf09ed58d8c, type: 3}
   - {fileID: 721599790, guid: 8c17309a25c1bb14a9604bf09ed58d8c, type: 3}
   - {fileID: -1878959041, guid: 8c17309a25c1bb14a9604bf09ed58d8c, type: 3}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 3308431882017325640}
   ticksPerFrame: 5
-  playOnStart: 0
+  playOnStart: 1
   loop: 1
   dontClearSprite: 0
 --- !u!61 &3308431882017325643

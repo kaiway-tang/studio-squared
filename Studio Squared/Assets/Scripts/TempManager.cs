@@ -10,6 +10,7 @@ public class TempManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.spawnPosition = GameManager.playerTrfm.position;
     }
 
     // Update is called once per frame

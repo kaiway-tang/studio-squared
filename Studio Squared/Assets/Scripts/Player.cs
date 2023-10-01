@@ -15,12 +15,12 @@ public class Player : MobileEntity
         jumpPower, wallJumpSpeed, dashSpeed, dashFriction,
         flatYDashVelocity, YVelocityFactor;
 
-    int remainingJumps, facingLocked, movementLocked;
-    bool refundableJump, attackQued;
+    int remainingJumps, facingLocked, movementLocked, attackQue;
+    bool refundableJump, releaseAttacked;
 
     [SerializeField] private ParticleSystem dashEffect;
 
-    [SerializeField] int wallJumpWindow, slashCooldown, slashComboWindow, dashCooldown, castCooldown, castWindup;
+    [SerializeField] int wallJumpWindow, slashCooldown, slashComboWindow, releaseAttackWindow, dashCooldown, castCooldown, castWindup;
     [SerializeField] TrailRenderer wallJumpTrail;
     [SerializeField] CircleCollider2D hurtbox;
     [SerializeField] GameObject sparkle;
@@ -46,6 +46,7 @@ public class Player : MobileEntity
     [SerializeField] Transform manaFill;
     [SerializeField] Fader hpBarDmgFX;
     [SerializeField] FloatingScythe scytheScript;
+    [SerializeField] SpinningScythe spinningScythe;
     public ObjectPooler dJumpRingPooler, perfectDodgeRingPooler;
 
     private bool frozen;
@@ -86,6 +87,7 @@ public class Player : MobileEntity
         UpdateHPHUD();
     }
 
+    static bool cheatsOn = true;
     private void Update()
     {
         if (frozen)
@@ -110,6 +112,11 @@ public class Player : MobileEntity
             attackCharge = 0;
         }
 
+        if (cheatsOn && Input.GetKeyDown(KeyCode.Minus))
+        {
+            TakeDamage(2, EntityType.Neutral);
+        }
+
         if (lookDownTimer > 39 && PlayerInput.DownReleased())
         {
             lookDownTimer = 0;
@@ -117,13 +124,14 @@ public class Player : MobileEntity
         }
     }
 
+    int baseDashCooldown = 60;
     void OnDash()
     {
         if (dashCooldown > 0 || !hasDash) { return; }
 
         DisableHurtbox();
 
-        if (IsOnGround()) { slideAttack.Activate(0, 16); }
+        if (IsOnGround() || true) { slideAttack.Activate(0, 16); }
 
         animator.QueAnimation(animator.Slide, 16);
         spriteRenderer.color = Color.white * .4f + Color.black * .6f;
@@ -151,7 +159,7 @@ public class Player : MobileEntity
             SetYVelocity(rb.velocity.y * YVelocityFactor);
         }
 
-        dashCooldown = 75;
+        dashCooldown = baseDashCooldown;
 
         wallJumpTrail.emitting = true;
         dashEffect.Play();
@@ -210,58 +218,87 @@ public class Player : MobileEntity
     }
 
 
+    int comboCooldown = 15;
     private void OnAttack ()  
     {
-        if (slashCooldown > 0) 
+        FloatingScythe.trailEnabled = true;
+
+        if (releaseAttackWindow > 0)
+        {
+            if (slashCooldown < 15)
+            {
+                AlignFacing(true);
+
+                spinningScythe.Init(trfm.position, IsFacingLeft());
+                animator.QueAnimation(animator.Cast, 25);
+
+                HandleAttackMovement();
+
+                LockMovement(15);
+                LockFacing(15);
+
+                releaseAttacked = true;
+                releaseAttackWindow = 0;
+                slashCooldown = 35;
+                attackQue = 0;
+            }
+            else
+            {
+                if (attackQue < 1) { attackQue++; }
+            }
+        }
+        else if (slashCooldown > 0) 
         {
             if (slashComboWindow > 0)
             {
-                if (slashCooldown < 16)
+                if (slashCooldown < comboCooldown)
                 {
+                    scytheScript.Dematerialize(30);
                     attackAnimator[1].Play();
                     animator.QueAnimation(animator.Attack2, 17);
 
                     HandleAttackMovement();
 
                     slashComboWindow = 0;
+                    releaseAttackWindow = 25;
                     slashCooldown = 25;
-                    attackQued = false;
+                    attackQue--;
                 }
                 else
                 {
-                    attackQued = true;
+                    if (attackQue < 2) { attackQue++; }
                 }
             }
-            return;
         }
+        else
+        {
+            scytheScript.Dematerialize(65);
 
-        scytheScript.Dematerialize();
-        scytheTimer = 50;
+            attackAnimator[0].Play();
+            animator.QueAnimation(animator.Attack1, 17);
 
-        attackAnimator[0].Play();
-        animator.QueAnimation(animator.Attack1, 17);
+            HandleAttackMovement();
 
-        HandleAttackMovement();
-
-        slashCooldown = 25;
-        slashComboWindow = 20;
+            slashCooldown = 25;
+            slashComboWindow = 20;
+        }
     }
 
     void HandleAttackMovement()
     {
-        LockFacing(14);
+        LockFacing(12);
         if (IsOnGround())
         {
             LockMovement(9);
             if (IsFacingLeft())
             {
-                if (PlayerInput.LeftHeld()) { AddXVelocity(-24, -24); }
-                else if (!PlayerInput.RightHeld()) { AddXVelocity(-12, -12); }
+                if (PlayerInput.LeftHeld()) { AddXVelocity(-25, -25); }
+                else if (!PlayerInput.RightHeld()) { AddXVelocity(-10, -10); }
             }
             else
             {
-                if (PlayerInput.RightHeld()) { AddXVelocity(24, 24); }
-                else if (!PlayerInput.LeftHeld()) { AddXVelocity(12, 12); }
+                if (PlayerInput.RightHeld()) { AddXVelocity(25, 25); }
+                else if (!PlayerInput.LeftHeld()) { AddXVelocity(10, 10); }
             }
         }
     }
@@ -440,6 +477,7 @@ public class Player : MobileEntity
 
     void DecrementTimers()
     {
+        if (releaseAttackWindow > 0) { releaseAttackWindow--; }
         if (slashComboWindow > 0) { slashComboWindow--; }
         if (movementLocked > 0) { movementLocked--; }
         if (dashSlashRecovery > 0)
@@ -457,47 +495,46 @@ public class Player : MobileEntity
 
             if (slashCooldown == 20)
             {
-                if (slashComboWindow > 0)
+                if (!releaseAttacked)
                 {
-                    if (IsFacingLeft())
+                    if (slashComboWindow > 0)
                     {
-                        basicAttack1.Activate(1, 8);
+                        if (IsFacingLeft())
+                        {
+                            basicAttack1.Activate(1, 7);
+                        }
+                        else
+                        {
+                            basicAttack1.Activate(0, 7);
+                        }
                     }
                     else
                     {
-                        basicAttack1.Activate(0, 8);
+                        if (IsFacingLeft())
+                        {
+                            basicAttack2.Activate(1, 7);
+                        }
+                        else
+                        {
+                            basicAttack2.Activate(0, 7);
+                        }
                     }
                 }
                 else
                 {
-                    if (IsFacingLeft())
-                    {
-                        basicAttack2.Activate(1, 8);
-                    }
-                    else
-                    {
-                        basicAttack2.Activate(0, 8);
-                    }
+                    releaseAttacked = false;
                 }
             }
 
-            if (attackQued && slashCooldown < 17)
+            if (attackQue > 0 && slashCooldown < comboCooldown)
             {
                 OnAttack();
-            }
-        }
-        if (scytheTimer > 0)
-        {
-            scytheTimer--;
-            if (scytheTimer == 0)
-            {
-                scytheScript.Materialize();
             }
         }
         if (dashCooldown > 0)
         {
             dashCooldown--;
-            if (dashCooldown < 72 && dashCooldown > 62 && Mathf.Abs(rb.velocity.magnitude) > wallJumpSpeed)
+            if (dashCooldown < baseDashCooldown - 3 && dashCooldown > baseDashCooldown - 13 && Mathf.Abs(rb.velocity.magnitude) > wallJumpSpeed)
             {
                 if (IsOnGround())
                 {
@@ -508,7 +545,7 @@ public class Player : MobileEntity
                     ApplyDirectionalFriction(dashFriction);
                 }
             }
-            else if (dashCooldown == 55)
+            else if (dashCooldown == baseDashCooldown - 20)
             {
                 spriteRenderer.color = Color.white;
                 EnableHurtbox();
@@ -627,6 +664,20 @@ public class Player : MobileEntity
         return false;
     }
 
+    void AlignFacing(bool p_override = false)
+    {
+        if (p_override)
+        {
+            if (PlayerInput.RightHeld()) { base.SetFacing(RIGHT); }
+            if (PlayerInput.LeftHeld()) { base.SetFacing(LEFT); }
+        }
+        else
+        {
+            if (PlayerInput.RightHeld()) { SetFacing(RIGHT); }
+            if (PlayerInput.LeftHeld()) { SetFacing(LEFT); }
+        }
+    }
+
     void LockFacing(int duration)
     {
         if (facingLocked < duration) { facingLocked = duration; }
@@ -729,6 +780,34 @@ public class Player : MobileEntity
 
         hpBarDmgFX.FadeIn(.08f, .7f + amount * .05f, true);
         UpdateHPHUD();
+
+        if (result == DEAD)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Stun(200);
+        SetGravityActive(false);
+        SetInvulnerable(100);
+        rb.velocity = Vector2.zero;
+
+        spriteRenderer.sortingLayerName = "UI";
+        spriteRenderer.sortingOrder = 650;
+        animator.QueAnimation(animator.Death, 200);
+
+        CameraController.SetTrauma(20);
+        HUDManager.SetBlackCoverOpacity(1);
+        //gameObject.SetActive(false);
+        Invoke("Respawn", .3f);
+    }
+
+    void Respawn()
+    {
+        HP = maxHP;
+        GameManager.LoadScene();
     }
 
     void UpdateHPHUD()
@@ -740,6 +819,10 @@ public class Player : MobileEntity
         else if (HP > 0)
         {
             hpHUD.sprite = hpHudSprites[HP];
+        }
+        else
+        {
+            hpHUD.sprite = hpHudSprites[0];
         }
     }
 

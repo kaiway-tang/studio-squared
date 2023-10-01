@@ -8,6 +8,7 @@ public class SimpleAnimator : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] int ticksPerFrame;
     [SerializeField] bool playOnStart, loop, dontClearSprite;
+    bool playing;
     int timer, currentSprite;
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class SimpleAnimator : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentSprite < sprites.Length)
+        if (currentSprite < sprites.Length && playing)
         {
             if (timer > 0)
             {
@@ -51,5 +52,13 @@ public class SimpleAnimator : MonoBehaviour
         currentSprite = 0;
         spriteRenderer.sprite = sprites[0];
         timer = ticksPerFrame;
+
+        playing = true;
+    }
+
+    public void Stop(bool setToSprite0 = false)
+    {
+        if (setToSprite0) { spriteRenderer.sprite = sprites[0]; }
+        playing = false;
     }
 }

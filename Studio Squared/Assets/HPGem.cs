@@ -7,6 +7,7 @@ public class HPGem : MonoBehaviour
     [SerializeField] Transform trfm;
     [SerializeField] float bobRate, bobHeight, rotateRate;
     [SerializeField] ParticleSystem collectFX, passiveFX;
+    [SerializeField] bool setSpawn;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,11 @@ public class HPGem : MonoBehaviour
 
     void Disappear()
     {
-        passiveFX.Stop();
+        if (setSpawn)
+        {
+            GameManager.SetPlayerSpawn("", trfm.position);
+        }
+        passiveFX.emissionRate = .4f;
         collectFX.Play();
         Destroy(gameObject);
     }

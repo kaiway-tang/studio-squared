@@ -18,10 +18,10 @@ public class Attack : Hitbox
         if (!source) { source = transform; }
     }
 
-    public void Activate(int knockbackDirection = 0, int p_duration = 0) //-1 for knockbackDirection will deal knockback 'away from source', non -1 values apply a predetermined knockback direction
+    public void Activate(int knockbackDirection = 0, int p_duration = 0, bool staticHitbox = false) //-1 for knockbackDirection will deal knockback 'away from source', non -1 values apply a predetermined knockback direction
     {
         knockbackIndex = knockbackDirection;
-        base.Activate(p_duration);
+        base.Activate(p_duration, staticHitbox);
     }
 
     protected new void FixedUpdate()

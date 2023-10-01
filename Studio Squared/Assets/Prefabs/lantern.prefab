@@ -121,8 +121,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2893932570547741886}
   - component: {fileID: 1430744889105645584}
-  - component: {fileID: 631182210}
-  m_Layer: 0
+  - component: {fileID: 917035899108822639}
+  - component: {fileID: 4150865648676261111}
+  m_Layer: 13
   m_Name: lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +198,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &631182210
+--- !u!61 &917035899108822639
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6051405678288657012}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.000000059604645, y: -0.76210093}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.50000006, y: 0.91422045}
+    oldSize: {x: 1.1015625, y: 1.8398438}
+    newSize: {x: 2.82, y: 4.71}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.1015625, y: 1.8398438}
+  m_EdgeRadius: 0
+--- !u!114 &4150865648676261111
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,5 +236,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eacbc750103f9594baee7fd46d28d788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 100
+  HP: 100
+  trfm: {fileID: 0}
+  entityType: 0
+  deathTraumaAmount: 15
+  damagedFXObj: {fileID: 4692459840101890700, guid: 440ae2545876b824a8187cad1f141e82, type: 3}
+  damagedFXPooler: {fileID: 0}
   speed: 0.015
   swingWidth: 7
+  widthDampening: 0.99
+  speedDampening: 0.999
+  widthFactor: 9
+  speedFactor: 5
+  period: 0

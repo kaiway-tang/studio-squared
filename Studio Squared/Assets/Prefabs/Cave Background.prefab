@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 4795485854295164505}
   - component: {fileID: 4795485854295164836}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: AmbientParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,7 +333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4795485854295164504}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 99}
   m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -423,8 +423,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 7
-      minScalar: 3
+      scalar: 8
+      minScalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -530,7 +530,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.5990566, g: 0.7738138, b: 1, a: 0.07058824}
+      maxColor: {r: 0.5990566, g: 0.7738138, b: 1, a: 0.7882353}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -592,7 +592,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
+      scalar: 0.2
       minScalar: 0.05
       maxCurve:
         serializedVersion: 2
@@ -1301,20 +1301,20 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0.13746744
           value: 0.9380831
-          inSlope: 0.059885547
-          outSlope: 0.059885547
+          inSlope: -0.4816699
+          outSlope: -0.4816699
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.16079956
+          outWeight: 0.14370918
         - serializedVersion: 3
           time: 1
-          value: 0
-          inSlope: -3.5776117
-          outSlope: -3.5776117
+          value: 0.013511658
+          inSlope: -1.5659913
+          outSlope: -1.5659913
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.1094812
+          inWeight: 0.15007165
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -5494,7 +5494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4795485854939087971
 Transform:
   m_ObjectHideFlags: 0

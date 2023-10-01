@@ -8,12 +8,14 @@ public class GameManager : MonoBehaviour
     public static Transform playerTrfm, cameraTrfm, emptyTrfm;
 
     [SerializeField] ObjectPooler m_BloodFXPooler;
+    [SerializeField] ObjectPooler m_BloodFXLargePooler;
     [SerializeField] ObjectPooler m_SparkFXPooler;
     [SerializeField] ObjectPooler m_SlashFXPooler;
     [SerializeField] ObjectPooler m_LightningFXPooler;
     [SerializeField] ObjectPooler m_LightningPtclsPooler;
     [SerializeField] ObjectPooler m_TelegraphPooler;
     public static ObjectPooler BloodFXPooler;
+    public static ObjectPooler BloodFXLargePooler;
     public static ObjectPooler SparkFXPooler;
     public static ObjectPooler SlashFXPooler;
     public static ObjectPooler LightningFXPooler;
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
     public static GameManager self;
     public static int playerHP;
 
+    public static string targetScene;
     public static Vector2 spawnPosition;
     static bool firstStartComplete;
 
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour
         self = GetComponent<GameManager>();
 
         BloodFXPooler = m_BloodFXPooler;
+        BloodFXLargePooler = m_BloodFXLargePooler;
         SparkFXPooler = m_SparkFXPooler;
         SlashFXPooler = m_SlashFXPooler;
         LightningFXPooler = m_LightningFXPooler;
@@ -51,6 +55,7 @@ public class GameManager : MonoBehaviour
     {
         if (!firstStartComplete)
         {
+            SetPlayerSpawn("Mineshaft", new Vector2(12.1f, -12.072f));
             firstStartComplete = true;
         }
         else
@@ -80,14 +85,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    string targetScene;
+    public static void LoadScene()
+    {
+        LoadScene(targetScene);
+    }
+
     public static void LoadScene(string scene)
     {
         HUDManager.FadeBlackCoverOpacity(1);
         SaveSceneVariables();
-        self.targetScene = scene;
+
+        if (scene.Length > 0) { targetScene = scene; }
+        else { targetScene = SceneManager.GetActiveScene().name; }
+
         Player.nextScene = "";
         self.Invoke("SetScene", 2);
+    }
+
+    public static void LoadScene(string scene, Vector2 position)
+    {
+        spawnPosition = position;
+        LoadScene(scene);
+    }
+
+    public static void SetPlayerSpawn(string scene, Vector2 position)
+    {
+        if (scene.Length > 0) { targetScene = scene; }
+        else { targetScene = SceneManager.GetActiveScene().name; }
+        spawnPosition = position;
     }
 
     void SetScene()

@@ -26,7 +26,6 @@ public class HPEntity : MonoBehaviour
     protected void Start()
     {
         if (HP == 0) { HP = maxHP; }
-        if (!damagedFXObj && !damagedFXPooler) { damagedFXPooler = GameManager.BloodFXPooler; }
     }
 
     protected void FixedUpdate()
@@ -50,28 +49,47 @@ public class HPEntity : MonoBehaviour
 
         HP -= amount;
 
-        OnDamageTaken(amount, HP <= 0 ? DEAD : ALIVE);
         if (entityType == EntityType.PlayerPerfectDodge) { return IGNORED; }
 
         if (entitySource == EntityType.Player && HP > 0) { CameraController.EnterCombat(); }
 
-
-        if (damagedFXObj)
-        {
-            Instantiate(damagedFXObj, trfm.position, Quaternion.identity);
-        }
-        else
-        {
-            damagedFXPooler.Instantiate(trfm.position, 0);
-        }
-
+        int returnValue = ALIVE;
         if (HP <= 0)
         {
             CameraController.SetTrauma(deathTraumaAmount);
-            Destroy(trfm.gameObject);
-            return DEAD;
+            if (entityType != EntityType.Player) { Destroy(trfm.gameObject); }
+            returnValue = DEAD;
+
+            if (damagedFXObj)
+            {
+                Instantiate(damagedFXObj, trfm.position, Quaternion.identity);
+            }
+            else if (damagedFXPooler)
+            {
+                damagedFXPooler.Instantiate(trfm.position, 0);
+            }
+            else
+            {
+                GameManager.BloodFXLargePooler.Instantiate(trfm.position, 0);
+            }
         }
-        return ALIVE;
+        else
+        {
+            if (damagedFXObj)
+            {
+                Instantiate(damagedFXObj, trfm.position, Quaternion.identity);
+            }
+            else if (damagedFXPooler)
+            {
+                damagedFXPooler.Instantiate(trfm.position, 0);
+            }
+            else
+            {
+                GameManager.BloodFXPooler.Instantiate(trfm.position, 0);
+            }
+        }
+        OnDamageTaken(amount, returnValue);
+        return returnValue;
     }
 
     protected virtual void OnDamageTaken(int amount, int result) { }

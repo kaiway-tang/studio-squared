@@ -24,6 +24,7 @@ public class Pickup : MonoBehaviour
         {
             if (timer == 100)
             {
+                GameManager.SetPlayerSpawn("", trfm.position);
                 GrantPickup();
                 HUDManager.FadeBlackCoverOpacity(0);
             }

@@ -28,6 +28,12 @@ public class CameraController : MonoBehaviour
         trfm.parent = null;
     }
 
+    float timer;
+    private void Update()
+    {
+
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -270,7 +276,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] int[] panDurations = new int[3], panPriorities = new int[3];
     [SerializeField] int currentPanIndex, nextAvailablePanIndex;
 
-    public static void QueCameraPan(Vector2 position, int duration, int priority)
+    public static void QueCameraPan(Vector2 position, int duration, int priority) //duration in ticks -> 50 ticks in a second
     {
         self.m_QueCameraPan(position, duration, priority);
     }

@@ -15,13 +15,20 @@ public class PerfectDodge : HPEntity
     {
         timer = window;
         ringSpawned = false;
+        lastHP = HP;
     }
 
+    int lastHP;
     new void FixedUpdate()
     {
         base.FixedUpdate();
         if (timer > 0)
         {
+            if (lastHP != HP)
+            {
+                Success(lastHP-HP);
+                timer = 1;
+            }
             timer--;
             if (timer < 1)
             {
@@ -31,6 +38,11 @@ public class PerfectDodge : HPEntity
     }
 
     protected override void OnDamageTaken(int amount, int result)
+    {
+        //Success(amount);
+    }
+
+    void Success(int amount)
     {
         Player.self.Heal((int)(amount * .5f));
 

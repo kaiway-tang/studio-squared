@@ -30,6 +30,7 @@ public class Hitbox : MonoBehaviour
 
     public void Deactivate()
     {
+        duration = 0;
         hitbox.enabled = false;
     }
 

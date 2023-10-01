@@ -8,6 +8,7 @@ public class AmbientParticles : MonoBehaviour
     void Start()
     {
         transform.parent = GameManager.cameraTrfm;
+        transform.position = GameManager.cameraTrfm.position;
         Destroy(GetComponent<AmbientParticles>());
     }
 }
