@@ -8,41 +8,31 @@ using Random = UnityEngine.Random;
 public class Money : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField]private int value;
+    [SerializeField] private int value;
+    [SerializeField] float speed, turnSpd;
     [SerializeField] private TextMeshProUGUI playerCoins;
-    private Vector2 off;
-    [SerializeField] private GameObject parent;
-    [SerializeField]private int moveDuration = 1;
+
+    [SerializeField] Transform emptyTrfm;
     private float delay = 0;
+    Vector3 velocity;
     void Awake()
     {
-        off = new Vector2(Random.Range(-3f, 3f), Random.Range(0f, 3f));
-        parent.GetComponent<Rigidbody2D>().velocity = off;
+        emptyTrfm.Rotate(Vector3.forward * Random.Range(0, 360));
         playerCoins = GameObject.Find("num_coins").GetComponent<TextMeshProUGUI>();
     }
     
     private void FixedUpdate()
     {
-        transform.position = parent.transform.position;
+        transform.position += emptyTrfm.up * speed;
+        emptyTrfm.eulerAngles += (GameManager.playerTrfm.eulerAngles - emptyTrfm.eulerAngles) * turnSpd;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
-        
-        
-        if (other.CompareTag("Player"))
+    {   
+        if (other.gameObject.layer == GameManager.PlayerTriggerLayer)
         {
-            Debug.Log("destroy");
-            Destroy(parent);
             playerCoins.text = Player.self.updateCoins(value).ToString();
-            
-        }
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+            Destroy(gameObject);
+        }        
     }
 }
