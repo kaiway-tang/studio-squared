@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class ShopMaster : MonoBehaviour
 {
+    private void Update()
+    {
+        //are we using the new input system?
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.SetActive(false);
+        }
+    }
     public void ItemSwitch(string item)
     {
         switch (item)
